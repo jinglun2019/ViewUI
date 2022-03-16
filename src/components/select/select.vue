@@ -61,6 +61,7 @@
                 ref="dropdown"
                 :data-transfer="transfer"
                 :transfer="transfer"
+                :vueScrollEnable="true"
                 v-transfer-dom
                 :eventsEnabled="eventsEnabled"
             >
@@ -975,7 +976,9 @@ export default {
                 if (!this.autoComplete)
                     this.$nextTick(() => inputField.focus());
             }
-            this.$emit('on-select', option); // # 4441
+            this.$nextTick(() => {
+                this.$emit('on-select', option); // # 4441
+            });
             this.broadcast('Drop', 'on-update-popper');
             setTimeout(() => {
                 this.filterQueryChange = false;

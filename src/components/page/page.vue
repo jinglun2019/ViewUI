@@ -1,5 +1,12 @@
 <template>
-    <ul :class="simpleWrapClasses" :style="styles" v-if="simple">
+    <ul
+        :class="simpleWrapClasses"
+        :style="{
+            ...styles,
+            visibility: total > pageSize ? 'visible' : 'hidden'
+        }"
+        v-if="simple"
+    >
         <li
             :title="t('i.page.prev')"
             :class="prevClasses"
@@ -38,7 +45,14 @@
             ></a>
         </li>
     </ul>
-    <ul :class="wrapClasses" :style="styles" v-else>
+    <ul
+        :class="wrapClasses"
+        :style="{
+            ...styles,
+            visibility: total > pageSize ? 'visible' : 'hidden'
+        }"
+        v-else
+    >
         <span :class="[prefixCls + '-total']" v-if="showTotal">
             <slot
                 >{{ t('i.page.total') }} {{ total }}
@@ -431,6 +445,7 @@ export default {
             if (this.disabled) return;
             this.currentPageSize = pageSize;
             this.$emit('on-page-size-change', pageSize);
+            this.$emit('update:pageSize', pageSize);
             this.changePage(1);
         },
         onPage(page) {

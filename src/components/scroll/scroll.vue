@@ -399,7 +399,9 @@ export default {
         this.pointerMoveHandler = throttle(
             this.onPointerMove,
             50,
-            { leading: false }
+            {
+                leading: false
+            }
         );
     }
 };

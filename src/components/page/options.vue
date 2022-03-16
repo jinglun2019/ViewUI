@@ -22,14 +22,19 @@
         <div v-if="showElevator" :class="ElevatorClasses">
             {{ t('i.page.goto') }}
             <input
-                type="text"
+                ref="input"
+                type="number"
                 :value="_current"
                 autocomplete="off"
                 spellcheck="false"
                 :disabled="disabled"
                 @keyup.enter="changePage"
+                :min="1"
             />
             {{ t('i.page.p') }}
+            <i-button class="btn1 jump-btn" @click="changePage"
+                >跳转</i-button
+            >
         </div>
     </div>
 </template>
@@ -37,7 +42,7 @@
 import iSelect from '../../components/select/select.vue';
 import iOption from '../../components/select/option.vue';
 import Locale from '../../mixins/locale';
-
+import iButton from '../../components/button/button.vue';
 const prefixCls = 'ivu-page';
 
 function isValueNumber(value) {
@@ -47,7 +52,7 @@ function isValueNumber(value) {
 export default {
     name: 'PageOption',
     mixins: [Locale],
-    components: { iSelect, iOption },
+    components: { iSelect, iOption, iButton },
     props: {
         pageSizeOpts: Array,
         showSizer: Boolean,
@@ -91,7 +96,7 @@ export default {
             this.$emit('on-size', this.currentPageSize);
         },
         changePage(event) {
-            let val = event.target.value.trim();
+            let val = this.$refs.input.value;
             let page = 0;
 
             if (isValueNumber(val)) {
@@ -117,3 +122,67 @@ export default {
     }
 };
 </script>
+<style lang="less" scoped>
+@import '../../styles/custom.less';
+.btn-small {
+    min-width: 80px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    // height: 30px;
+    // padding-right: 16px;
+    // padding-left: 16px;
+    // line-height: 30px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    // box-shadow: 0 4px 4px 0 rgba(1, 45, 47, 0.27);
+    transition: none;
+
+    &:hover {
+        color: white;
+        border-color: transparent;
+    }
+    &:focus {
+        // box-shadow: 0 4px 4px 0 rgba(1, 45, 47, 0.27);
+        box-shadow: none !important;
+    }
+    &:focus-visible {
+        outline: none;
+    }
+
+    &:active {
+        color: #fff !important;
+        border: none 0 !important;
+    }
+    &:disabled {
+        color: white;
+        cursor: not-allowed !important;
+        background: @primary-color;
+        &:hover {
+            color: white !important;
+            background: @primary-color !important;
+        }
+    }
+}
+
+.btn1 {
+    .btn-small();
+
+    background: linear-gradient(90deg, #0fc1fc 0%, #1da4fe 100%);
+
+    &:hover {
+        background: linear-gradient(
+            90deg,
+            #1da4fe 0%,
+            #1da4fe 100%
+        ) !important;
+    }
+}
+.jump-btn {
+    min-width: 60px;
+    margin-left: 8px;
+}
+</style>

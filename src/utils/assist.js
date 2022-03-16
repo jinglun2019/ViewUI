@@ -391,3 +391,8 @@ export function setMatchMedia() {
 }
 
 export const sharpMatcherRegx = /#([^#]+)$/;
+export function pxToNum(height) {
+    const heightHandle = height || '0px';
+    const [heightNum, px] = heightHandle.split('px');
+    return +heightNum;
+}

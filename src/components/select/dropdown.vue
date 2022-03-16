@@ -4,13 +4,29 @@
         :class="className"
         :style="styles"
     >
-        <slot></slot>
+        <div
+            class="vue-scroll-outer"
+            :style="{
+                height: dropHeight,
+                overflow: 'auto',
+                maxHeight: '200px'
+            }"
+            v-if="vueScrollEnable"
+        >
+            <vue-scroll :ops="vueScrollOpts">
+                <slot></slot>
+            </vue-scroll>
+        </div>
+
+        <slot v-else></slot>
     </div>
 </template>
 <script>
 import Vue from 'vue';
 const isServer = Vue.prototype.$isServer;
 import { getStyle } from '../../utils/assist';
+import vueScroll from 'vuescroll/dist/vuescroll-native';
+
 const Popper = isServer
     ? function () {}
     : require('popper.js/dist/umd/popper.js'); // eslint-disable-line
@@ -19,9 +35,16 @@ import {
     transferIndex,
     transferIncrease
 } from '../../utils/transfer-queue';
+import vueScrollConfig from '../../mixins/vueScrollConfig';
+import deepmerge from 'deepmerge';
+
+const vueScrollOpts = deepmerge(vueScrollConfig, {
+    bar: { keepShow: true }
+});
 
 export default {
     name: 'Drop',
+    components: { vueScroll },
     props: {
         placement: {
             type: String,
@@ -37,10 +60,15 @@ export default {
         eventsEnabled: {
             type: Boolean,
             default: false
+        },
+        vueScrollEnable: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         return {
+            vueScrollOpts,
             popper: null,
             width: '',
             popperStatus: false,
@@ -56,6 +84,17 @@ export default {
                 style['z-index'] = 1060 + this.tIndex;
 
             return style;
+        },
+        dropHeight() {
+            if (
+                this.$parent &&
+                this.$parent.selectOptions &&
+                this.$parent.selectOptions.length > 6
+            ) {
+                return '200px';
+            } else {
+                return 'auto';
+            }
         }
     },
     methods: {

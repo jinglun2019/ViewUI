@@ -112,7 +112,7 @@ export default {
         },
         // 3.4.0, global setting customArrow 有值时，arrow 赋值空
         arrowType() {
-            let type = 'ios-arrow-down';
+            let type = 'ios-arrow-forward';
 
             if (this.$IVIEW) {
                 if (this.$IVIEW.menu.customArrow) {

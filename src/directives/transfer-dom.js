@@ -63,7 +63,10 @@ const directive = {
             el.__transferDomData = Object.assign(
                 {},
                 el.__transferDomData,
-                { hasMovedOut: true, target: getTarget(value) }
+                {
+                    hasMovedOut: true,
+                    target: getTarget(value)
+                }
             );
         } else if (hasMovedOut && value === false) {
             // previously moved, coming back home
@@ -71,7 +74,10 @@ const directive = {
             el.__transferDomData = Object.assign(
                 {},
                 el.__transferDomData,
-                { hasMovedOut: false, target: getTarget(value) }
+                {
+                    hasMovedOut: false,
+                    target: getTarget(value)
+                }
             );
         } else if (value) {
             // already moved, going somewhere else
@@ -79,6 +85,9 @@ const directive = {
         }
     },
     unbind(el) {
+        if (el.nodeType === 8) {
+            return;
+        }
         if (el.dataset && el.dataset.transfer !== 'true')
             return false;
         el.className = el.className.replace(

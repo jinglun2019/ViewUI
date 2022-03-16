@@ -4,7 +4,10 @@
     </form>
 </template>
 <script>
-import { oneOf } from '../../utils/assist';
+import {
+    oneOf,
+    findComponentsDownward
+} from '../../utils/assist';
 
 const prefixCls = 'ivu-form';
 
@@ -135,7 +138,13 @@ export default {
     },
     watch: {
         rules() {
-            this.validate();
+            // this.validate()
+            const FormItems = findComponentsDownward(
+                this,
+                'FormItem'
+            );
+
+            FormItems.forEach(item => (item.validateState = ''));
         }
     },
     created() {

@@ -16,7 +16,9 @@ let i18nHandler = function () {
                 deepmerge(
                     lang,
                     Vue.locale(Vue.config.lang) || {},
-                    { clone: true }
+                    {
+                        clone: true
+                    }
                 )
             );
         }

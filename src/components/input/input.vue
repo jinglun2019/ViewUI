@@ -18,7 +18,15 @@
                 ]"
                 v-if="clearable && currentValue && !itemDisabled"
                 @click="handleClear"
-                :style="clearableStyles"
+                :style="{
+                    right:
+                        search || showSuffix || password
+                            ? $refs.searchIco &&
+                              $refs.searchIco.offsetWidth -
+                                  5 +
+                                  'px'
+                            : 0
+                }"
             ></i>
             <i
                 class="ivu-icon"
@@ -37,8 +45,9 @@
                     prefixCls + '-icon-normal',
                     prefixCls + '-search-icon'
                 ]"
-                v-else-if="search && enterButton === false"
+                v-if="search && enterButton === false"
                 @click="handleSearch"
+                ref="searchIco"
             ></i>
             <span class="ivu-input-suffix" v-else-if="showSuffix"
                 ><slot name="suffix"
@@ -311,8 +320,7 @@ export default {
             slotReady: false,
             textareaStyles: {},
             isOnComposition: false,
-            showPassword: false,
-            clearableIconOffset: 0
+            showPassword: false
         };
     },
     computed: {
@@ -418,13 +426,6 @@ export default {
             }
 
             return (this.value || '').length;
-        },
-        clearableStyles() {
-            const style = {};
-            let offset = this.clearableIconOffset;
-            if (offset)
-                style.transform = `translateX(-${offset}px)`;
-            return style;
         }
     },
     methods: {
@@ -575,33 +576,16 @@ export default {
             setTimeout(() => {
                 this.$refs.input.setSelectionRange(len, len);
             }, 0);
-        },
-        handleCalcIconOffset() {
-            const $el = this.$el.querySelectorAll(
-                '.ivu-input-group-append'
-            )[0];
-            if ($el) {
-                this.clearableIconOffset = $el.offsetWidth;
-            } else {
-                this.clearableIconOffset = 0;
-            }
         }
     },
     watch: {
         value(val) {
             this.setCurrentValue(val);
-        },
-        type() {
-            this.$nextTick(this.handleCalcIconOffset);
         }
     },
     mounted() {
         this.slotReady = true;
         this.resizeTextarea();
-        this.handleCalcIconOffset();
-    },
-    updated() {
-        this.$nextTick(this.handleCalcIconOffset);
     }
 };
 </script>

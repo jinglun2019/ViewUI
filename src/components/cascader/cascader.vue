@@ -50,9 +50,9 @@
                 :eventsEnabled="eventsEnabled"
                 :data-transfer="transfer"
                 :transfer="transfer"
-                v-transfer-dom
+                v-transfer-dom="transferDom"
             >
-                <div>
+                <div style="font-size: 0">
                     <Caspanel
                         v-show="
                             !filterable ||
@@ -225,6 +225,10 @@ export default {
         eventsEnabled: {
             type: Boolean,
             default: false
+        },
+        // jinglun
+        transferDom: {
+            type: String
         }
     },
     data() {

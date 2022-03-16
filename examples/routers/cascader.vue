@@ -1,14 +1,15 @@
 <template>
-    <div style="margin: 100px;width: 200px;">
+    <div style="margin: 100px; width: 200px">
         <Cascader :data="data" v-model="value1"></Cascader>
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                value1: [],
-                data: [{
+export default {
+    data() {
+        return {
+            value1: [],
+            data: [
+                {
                     value: 'beijing',
                     label: '北京',
                     children: [
@@ -23,9 +24,26 @@
                         {
                             value: 'wangfujing',
                             label: '王府井'
+                        },
+                        {
+                            value: 'gugong1',
+                            label: '故宫1'
+                        },
+                        {
+                            value: 'tiantan2',
+                            label: '天坛2'
+                        },
+                        {
+                            value: 'wangfujing3',
+                            label: '王府井3'
+                        },
+                        {
+                            value: 'wangfujing4',
+                            label: '王府井4'
                         }
                     ]
-                }, {
+                },
+                {
                     value: 'jiangsu',
                     label: '江苏',
                     children: [
@@ -35,7 +53,7 @@
                             children: [
                                 {
                                     value: 'fuzimiao',
-                                    label: '夫子庙',
+                                    label: '夫子庙'
                                 }
                             ]
                         },
@@ -45,17 +63,18 @@
                             children: [
                                 {
                                     value: 'zhuozhengyuan',
-                                    label: '拙政园',
+                                    label: '拙政园'
                                 },
                                 {
                                     value: 'shizilin',
-                                    label: '狮子林',
+                                    label: '狮子林'
                                 }
                             ]
                         }
-                    ],
-                }]
-            }
-        }
+                    ]
+                }
+            ]
+        };
     }
+};
 </script>

@@ -1,19 +1,34 @@
 <template>
-    <span>
-        <ul
-            v-if="data && data.length"
-            :class="[prefixCls + '-menu']"
+    <div style="display: inline-block">
+        <div
+            :style="{
+                display: 'inline-block',
+                height: '205px',
+                overflow: 'auto',
+                maxHeight: '205px'
+            }"
         >
-            <Casitem
-                v-for="item in data"
-                :key="getKey()"
-                :prefix-cls="prefixCls"
-                :data="item"
-                :tmp-item="tmpItem"
-                @click.native.stop="handleClickItem(item)"
-                @mouseenter.native.stop="handleHoverItem(item)"
-            ></Casitem>
-        </ul>
+            <vue-scroll :ops="vueScrollOps">
+                <ul
+                    v-if="data && data.length"
+                    :class="[prefixCls + '-menu']"
+                >
+                    <Casitem
+                        v-for="item in data"
+                        :key="getKey()"
+                        :prefix-cls="prefixCls"
+                        :data="item"
+                        :tmp-item="tmpItem"
+                        @click.native.stop="
+                            handleClickItem(item)
+                        "
+                        @mouseenter.native.stop="
+                            handleHoverItem(item)
+                        "
+                    ></Casitem>
+                </ul>
+            </vue-scroll>
+        </div>
         <Caspanel
             v-if="sublist && sublist.length"
             :prefix-cls="prefixCls"
@@ -22,7 +37,7 @@
             :trigger="trigger"
             :change-on-select="changeOnSelect"
         ></Caspanel>
-    </span>
+    </div>
 </template>
 <script>
 import Casitem from './casitem.vue';
@@ -31,13 +46,27 @@ import {
     findComponentUpward,
     findComponentDownward
 } from '../../utils/assist';
+import vueScroll from 'vuescroll/dist/vuescroll-native';
+import vueScrollConfig from '../../mixins/vueScrollConfig';
+import deepmerge from 'deepmerge';
+
+const vueScrollOps = deepmerge(vueScrollConfig, {
+    rail: { gutterOfEnds: '7px' },
+    bar: { keepShow: true },
+    vuescroll: {
+        locking: true
+    },
+    scrollPanel: {
+        scrollingX: false
+    }
+});
 
 let key = 1;
 
 export default {
     name: 'Caspanel',
     mixins: [Emitter],
-    components: { Casitem },
+    components: { Casitem, vueScroll },
     props: {
         data: {
             type: Array,
@@ -52,6 +81,7 @@ export default {
     },
     data() {
         return {
+            vueScrollOps,
             tmpItem: {},
             result: [],
             sublist: []

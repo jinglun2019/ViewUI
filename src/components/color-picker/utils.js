@@ -130,7 +130,10 @@ const keysToCheck = ['r', 'g', 'b', 'a', 'h', 's', 'l', 'v'];
 export function simpleCheckForValidColor(data) {
     const results = keysToCheck.reduce(
         checkIteratee.bind(null, data),
-        { checked: 0, passed: 0 }
+        {
+            checked: 0,
+            passed: 0
+        }
     );
 
     return results.checked === results.passed ? data : undefined;

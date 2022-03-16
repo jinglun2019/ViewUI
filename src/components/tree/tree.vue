@@ -1,5 +1,7 @@
 <template>
     <div :class="prefixCls" ref="treeWrap">
+        <loading :visible="loading" />
+        <empty :visible="!stateTree.length" />
         <Tree-node
             v-for="(item, i) in stateTree"
             :key="i"
@@ -10,12 +12,9 @@
             :children-key="childrenKey"
         >
         </Tree-node>
-        <div
-            :class="[prefixCls + '-empty']"
-            v-if="!stateTree.length"
-        >
+        <!-- <div :class="[prefixCls + '-empty']" v-if="!stateTree.length">
             {{ localeEmptyText }}
-        </div>
+        </div> -->
         <div
             class="ivu-tree-context-menu"
             :style="contextMenuStyles"
@@ -34,22 +33,44 @@
     </div>
 </template>
 <script>
+export function findLastNodeList(node) {
+    const lastNodeList = [];
+    const find = _node => {
+        if (_node.children) {
+            _node.children.forEach(item => {
+                find(item);
+            });
+        } else {
+            lastNodeList.push(_node);
+        }
+    };
+    find(node);
+    return lastNodeList;
+}
 import TreeNode from './node.vue';
 import Dropdown from '../dropdown/dropdown.vue';
 import DropdownMenu from '../dropdown/dropdown-menu.vue';
 import Emitter from '../../mixins/emitter';
 import Locale from '../../mixins/locale';
-
+import Loading from '../../lancoo/loading.vue';
+import Empty from '../../lancoo/empty.vue';
 const prefixCls = 'ivu-tree';
 
 export default {
     name: 'Tree',
     mixins: [Emitter, Locale],
-    components: { TreeNode, Dropdown, DropdownMenu },
+    components: {
+        TreeNode,
+        Dropdown,
+        DropdownMenu,
+        Empty,
+        Loading
+    },
     provide() {
         return { TreeInstance: this };
     },
     props: {
+        loading: {},
         data: {
             type: Array,
             default() {
@@ -294,11 +315,13 @@ export default {
                 checked,
                 indeterminate: false
             }); // reset `indeterminate` when going down
-
+            const nodes = this.getCheckedNodes();
+            // 多返回一个末节点参数
             this.$emit(
                 'on-check-change',
-                this.getCheckedNodes(),
-                node
+                nodes,
+                node,
+                findLastNodeList(node)
             );
         },
         handleContextmenu({ data, event }) {

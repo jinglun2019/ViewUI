@@ -1,44 +1,50 @@
 <template>
     <div :class="classes">
         <div :class="[prefixCls + '-list']" ref="hours">
-            <ul :class="[prefixCls + '-ul']">
-                <li
-                    :class="getCellCls(item)"
-                    v-for="item in hoursList"
-                    v-show="!item.hide"
-                    @click="handleClick('hours', item)"
-                >
-                    {{ formatTime(item.text) }}
-                </li>
-            </ul>
+            <vue-scroll :ops="vueScrollConfig">
+                <ul :class="[prefixCls + '-ul']">
+                    <li
+                        :class="getCellCls(item)"
+                        v-for="item in hoursList"
+                        v-show="!item.hide"
+                        @click="handleClick('hours', item)"
+                    >
+                        {{ formatTime(item.text) }}
+                    </li>
+                </ul>
+            </vue-scroll>
         </div>
         <div :class="[prefixCls + '-list']" ref="minutes">
-            <ul :class="[prefixCls + '-ul']">
-                <li
-                    :class="getCellCls(item)"
-                    v-for="item in minutesList"
-                    v-show="!item.hide"
-                    @click="handleClick('minutes', item)"
-                >
-                    {{ formatTime(item.text) }}
-                </li>
-            </ul>
+            <vue-scroll :ops="vueScrollConfig">
+                <ul :class="[prefixCls + '-ul']">
+                    <li
+                        :class="getCellCls(item)"
+                        v-for="item in minutesList"
+                        v-show="!item.hide"
+                        @click="handleClick('minutes', item)"
+                    >
+                        {{ formatTime(item.text) }}
+                    </li>
+                </ul>
+            </vue-scroll>
         </div>
         <div
             :class="[prefixCls + '-list']"
             v-show="showSeconds"
             ref="seconds"
         >
-            <ul :class="[prefixCls + '-ul']">
-                <li
-                    :class="getCellCls(item)"
-                    v-for="item in secondsList"
-                    v-show="!item.hide"
-                    @click="handleClick('seconds', item)"
-                >
-                    {{ formatTime(item.text) }}
-                </li>
-            </ul>
+            <vue-scroll :ops="vueScrollConfig">
+                <ul :class="[prefixCls + '-ul']">
+                    <li
+                        :class="getCellCls(item)"
+                        v-for="item in secondsList"
+                        v-show="!item.hide"
+                        @click="handleClick('seconds', item)"
+                    >
+                        {{ formatTime(item.text) }}
+                    </li>
+                </ul>
+            </vue-scroll>
         </div>
     </div>
 </template>
@@ -49,11 +55,13 @@ import {
     scrollTop,
     firstUpperCase
 } from '../../../utils/assist';
-
+import vueScroll from 'vuescroll/dist/vuescroll-native';
+import vueScrollConfig from '../../../mixins/vueScrollConfig';
 const prefixCls = 'ivu-time-picker-cells';
 const timeParts = ['hours', 'minutes', 'seconds'];
 
 export default {
+    components: { vueScroll },
     name: 'TimeSpinner',
     mixins: [Options],
     props: {
@@ -80,6 +88,7 @@ export default {
     },
     data() {
         return {
+            vueScrollConfig,
             spinerSteps: [1, 1, 1].map(
                 (one, i) => Math.abs(this.steps[i]) || one
             ),

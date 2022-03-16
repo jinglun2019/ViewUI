@@ -151,6 +151,10 @@ export default {
     },
     methods: {
         change(event) {
+            // fix修复ie preventDefault失效
+            if (this.indeterminate) {
+                return;
+            }
             if (this.itemDisabled) {
                 return false;
             }

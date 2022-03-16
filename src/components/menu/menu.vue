@@ -190,7 +190,7 @@ export default {
         this.updateOpened();
         this.$nextTick(() => this.updateActiveName());
         this.$on('on-menu-item-select', name => {
-            this.currentActiveName = name;
+            // this.currentActiveName = name
             this.$emit('on-select', name);
         });
     },
