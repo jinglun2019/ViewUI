@@ -1,45 +1,47 @@
-@cell-prefix-cls: ~"@{css-prefix}cell";
-
+@cell-prefix-cls: ~'@{css-prefix}cell';
 
 .@{cell-prefix-cls} {
     position: relative;
     overflow: hidden;
 
-    &-link, &-link:hover, &-link:active{
+    &-link,
+    &-link:hover,
+    &-link:active {
         color: inherit;
     }
 
-    &-icon{
+    &-icon {
         display: inline-block;
         margin-right: 4px;
         font-size: @font-size-base;
         vertical-align: middle;
-        &:empty{
-            display: none
+        &:empty {
+            display: none;
         }
     }
-    &-main{
+    &-main {
         display: inline-block;
         vertical-align: middle;
     }
-    &-title{
+    &-title {
         line-height: 24px;
         font-size: @font-size-base;
     }
-    &-label{
+    &-label {
         line-height: 1.2;
         font-size: @font-size-small;
         color: @subsidiary-color;
     }
-    &-selected &-label{
+    &-selected &-label {
         color: inherit;
     }
 
-    &-selected, &&-selected:hover{
-        background:  ~`colorPalette("@{primary-color}", 1)`;
+    &-selected,
+    &&-selected:hover {
+        background: ~`colorPalette('@{primary-color}', 1) `;
     }
 
-    &-footer{
+    &-footer {
         display: inline-block;
         position: absolute;
         transform: translateY(-50%);
@@ -47,14 +49,14 @@
         right: 16px;
         color: @text-color;
     }
-    &-with-link &-footer{
+    &-with-link &-footer {
         right: 32px;
     }
-    &-selected &-footer{
+    &-selected &-footer {
         color: inherit;
     }
 
-    &-arrow{
+    &-arrow {
         display: inline-block;
         position: absolute;
         transform: translateY(-50%);
@@ -63,11 +65,11 @@
         font-size: @font-size-base;
     }
 
-    &:focus{
+    &:focus {
         background: @background-color-select-hover;
         outline: none;
     }
-    &-selected:focus{
+    &-selected:focus {
         background: shade(@selected-color, 10%);
     }
 }

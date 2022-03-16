@@ -15,16 +15,24 @@ export default {
         }
     },
     render: (h, ctx) => {
-        return h('div', {
-            'class': {
-                'ivu-table-cell-slot': true,
-                'ivu-table-cell-slot-inline': ctx.props.display === 'inline',
-                'ivu-table-cell-slot-inline-block': ctx.props.display === 'inline-block'
-            }
-        }, ctx.injections.tableRoot.$scopedSlots[ctx.props.column.slot]({
-            row: ctx.props.row,
-            column: ctx.props.column,
-            index: ctx.props.index
-        }));
+        return h(
+            'div',
+            {
+                class: {
+                    'ivu-table-cell-slot': true,
+                    'ivu-table-cell-slot-inline':
+                        ctx.props.display === 'inline',
+                    'ivu-table-cell-slot-inline-block':
+                        ctx.props.display === 'inline-block'
+                }
+            },
+            ctx.injections.tableRoot.$scopedSlots[
+                ctx.props.column.slot
+            ]({
+                row: ctx.props.row,
+                column: ctx.props.column,
+                index: ctx.props.index
+            })
+        );
     }
 };

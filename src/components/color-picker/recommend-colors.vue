@@ -15,18 +15,27 @@
         <template v-for="(item, index) in list">
             <div
                 :key="item + ':' + index"
-                :class="[prefixCls + '-picker-colors-wrapper']">
+                :class="[prefixCls + '-picker-colors-wrapper']"
+            >
                 <div :data-color-id="index">
                     <div
-                        :style="{background: item}"
-                        :class="[prefixCls + '-picker-colors-wrapper-color']"
+                        :style="{ background: item }"
+                        :class="[
+                            prefixCls +
+                                '-picker-colors-wrapper-color'
+                        ]"
                     ></div>
                     <div
                         :ref="'color-circle-' + index"
-                        :class="[prefixCls + '-picker-colors-wrapper-circle', hideClass]"></div>
+                        :class="[
+                            prefixCls +
+                                '-picker-colors-wrapper-circle',
+                            hideClass
+                        ]"
+                    ></div>
                 </div>
             </div>
-            <br v-if="lineBreak(list, index)">
+            <br v-if="lineBreak(list, index)" />
         </template>
     </div>
 </template>
@@ -35,7 +44,7 @@
 import Emitter from '../../mixins/emitter';
 import HandleEscapeMixin from './handleEscapeMixin';
 import Prefixes from './prefixMixin';
-import {clamp} from './utils';
+import { clamp } from './utils';
 
 export default {
     name: 'RecommendedColors',
@@ -45,8 +54,8 @@ export default {
     props: {
         list: {
             type: Array,
-            default: undefined,
-        },
+            default: undefined
+        }
     },
 
     data() {
@@ -60,9 +69,9 @@ export default {
             up: -normalStep,
             down: normalStep,
             powerKey: 'shiftKey',
-            grid: {x: 1, y: 1},
+            grid: { x: 1, y: 1 },
             rows,
-            columns,
+            columns
         };
     },
 
@@ -74,8 +83,10 @@ export default {
             return this.getLinearIndex(this.grid);
         },
         currentCircle() {
-            return this.$refs[`color-circle-${this.linearIndex}`][0];
-        },
+            return this.$refs[
+                `color-circle-${this.linearIndex}`
+            ][0];
+        }
     },
 
     methods: {
@@ -91,7 +102,7 @@ export default {
 
             this.blurColor();
 
-            const grid = {...this.grid};
+            const grid = { ...this.grid };
 
             if (e[this.powerKey]) {
                 if (direction < 0) {
@@ -106,7 +117,11 @@ export default {
             const index = this.getLinearIndex(grid);
 
             if (index >= 0 && index < this.list.length) {
-                this.grid[axis] = clamp(grid[axis], 1, this.getMaxLimit(axis));
+                this.grid[axis] = clamp(
+                    grid[axis],
+                    1,
+                    this.getMaxLimit(axis)
+                );
             }
 
             this.focusColor();
@@ -127,7 +142,9 @@ export default {
             this.$refs.reference.focus();
 
             const target = circle || e.target;
-            const colorId = target.dataset.colorId || target.parentElement.dataset.colorId;
+            const colorId =
+                target.dataset.colorId ||
+                target.parentElement.dataset.colorId;
 
             if (colorId) {
                 this.blurColor();
@@ -136,7 +153,10 @@ export default {
                 this.grid.y = Math.ceil(id / this.columns);
                 this.focusColor();
                 this.$emit('picker-color', this.list[colorId]);
-                this.$emit('change', {hex: this.list[colorId], source: 'hex'});
+                this.$emit('change', {
+                    hex: this.list[colorId],
+                    source: 'hex'
+                });
             }
         },
         lineBreak(list, index) {
@@ -146,8 +166,11 @@ export default {
 
             const nextIndex = index + 1;
 
-            return nextIndex < list.length && nextIndex % this.columns === 0;
-        },
-    },
+            return (
+                nextIndex < list.length &&
+                nextIndex % this.columns === 0
+            );
+        }
+    }
 };
 </script>

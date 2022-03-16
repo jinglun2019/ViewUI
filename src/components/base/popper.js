@@ -3,7 +3,9 @@
  * */
 import Vue from 'vue';
 const isServer = Vue.prototype.$isServer;
-const Popper = isServer ? function() {} : require('popper.js/dist/umd/popper.js');  // eslint-disable-line
+const Popper = isServer
+    ? function () {}
+    : require('popper.js/dist/umd/popper.js'); // eslint-disable-line
 
 export default {
     props: {
@@ -31,25 +33,25 @@ export default {
         transition: String,
         options: {
             type: Object,
-            default () {
+            default() {
                 return {
                     modifiers: {
-                        computeStyle:{
-                            gpuAcceleration: false,
+                        computeStyle: {
+                            gpuAcceleration: false
                         },
-                        preventOverflow :{
+                        preventOverflow: {
                             boundariesElement: 'window'
                         }
                     }
                 };
             }
-        },
+        }
         // visible: {
         //     type: Boolean,
         //     default: false
         // }
     },
-    data () {
+    data() {
         return {
             visible: this.value
         };
@@ -64,7 +66,8 @@ export default {
         },
         visible(val) {
             if (val) {
-                if (this.handleIndexIncrease) this.handleIndexIncrease();  // just use for Poptip
+                if (this.handleIndexIncrease)
+                    this.handleIndexIncrease(); // just use for Poptip
                 this.updatePopper();
                 this.$emit('on-popper-show');
             } else {
@@ -76,20 +79,28 @@ export default {
     methods: {
         createPopper() {
             if (isServer) return;
-            if (!/^(top|bottom|left|right)(-start|-end)?$/g.test(this.placement)) {
+            if (
+                !/^(top|bottom|left|right)(-start|-end)?$/g.test(
+                    this.placement
+                )
+            ) {
                 return;
             }
 
             const options = this.options;
             const popper = this.popper || this.$refs.popper;
-            const reference = this.reference || this.$refs.reference;
+            const reference =
+                this.reference || this.$refs.reference;
 
             if (!popper || !reference) return;
 
-            if (this.popperJS && this.popperJS.hasOwnProperty('destroy')) {
+            if (
+                this.popperJS &&
+                this.popperJS.hasOwnProperty('destroy')
+            ) {
                 this.popperJS.destroy();
             }
-            
+
             options.eventsEnabled = this.eventsEnabled;
 
             options.placement = this.placement;
@@ -98,17 +109,22 @@ export default {
                 options.modifiers.offset = {};
             }
             options.modifiers.offset.offset = this.offset;
-            options.onCreate =()=>{
+            options.onCreate = () => {
                 this.$nextTick(this.updatePopper);
                 this.$emit('created', this);
             };
 
-            this.popperJS = new Popper(reference, popper, options);
-
+            this.popperJS = new Popper(
+                reference,
+                popper,
+                options
+            );
         },
         updatePopper() {
             if (isServer) return;
-            this.popperJS ? this.popperJS.update() : this.createPopper();
+            this.popperJS
+                ? this.popperJS.update()
+                : this.createPopper();
         },
         doDestroy() {
             if (isServer) return;
@@ -117,9 +133,8 @@ export default {
             this.popperJS = null;
         }
     },
-    updated (){
-        this.$nextTick(()=>this.updatePopper());
-
+    updated() {
+        this.$nextTick(() => this.updatePopper());
     },
     beforeDestroy() {
         if (isServer) return;

@@ -1,9 +1,11 @@
 @color-picker-prefix-cls: ~'@{css-prefix}color-picker';
 
-.circle-dot(){
+.circle-dot() {
     width: 4px;
     height: 4px;
-    box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0, 0, 0, 0.3), 0 0 1px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 1.5px #fff,
+        inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
+        0 0 1px 2px rgba(0, 0, 0, 0.4);
     border-radius: 50%;
     transform: translate(-2px, -2px);
 }
@@ -24,7 +26,8 @@
             .hover();
         }
     }
-    & > div:first-child.@{color-picker-prefix-cls}-disabled:hover {
+    &
+        > div:first-child.@{color-picker-prefix-cls}-disabled:hover {
         .ivu-input {
             border-color: tint(@input-border-color, 20%);
         }
@@ -33,7 +36,7 @@
         padding: 0;
     }
 
-    &-input.ivu-input:focus{
+    &-input.ivu-input:focus {
         box-shadow: none;
     }
     &-focused {
@@ -109,7 +112,8 @@
             margin-top: 8px;
             overflow: hidden;
             border-radius: 2px;
-            transition: border @transition-time @ease-in-out, box-shadow @transition-time @ease-in-out;
+            transition: border @transition-time @ease-in-out,
+                box-shadow @transition-time @ease-in-out;
             &:focus {
                 .active();
             }
@@ -128,7 +132,8 @@
                     margin: 2px;
                     cursor: pointer;
                     border-radius: 2px;
-                    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+                    box-shadow: inset 0 0 0 1px
+                        rgba(0, 0, 0, 0.15);
                 }
                 &-circle {
                     .circle-dot();
@@ -150,7 +155,8 @@
             padding-bottom: 75%;
             position: relative;
             //overflow: hidden;
-            transition: border @transition-time @ease-in-out, box-shadow @transition-time @ease-in-out;
+            transition: border @transition-time @ease-in-out,
+                box-shadow @transition-time @ease-in-out;
 
             &:focus {
                 .active();
@@ -167,10 +173,18 @@
             bottom: 0;
         }
         &--white {
-            background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+            background: linear-gradient(
+                to right,
+                #fff,
+                rgba(255, 255, 255, 0)
+            );
         }
         &--black {
-            background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
+            background: linear-gradient(
+                to top,
+                #000,
+                rgba(0, 0, 0, 0)
+            );
         }
         &-pointer {
             cursor: pointer;
@@ -188,9 +202,19 @@
         bottom: 0;
         left: 0;
         border-radius: 2px;
-        background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+        background: linear-gradient(
+            to right,
+            #f00 0%,
+            #ff0 17%,
+            #0f0 33%,
+            #0ff 50%,
+            #00f 67%,
+            #f0f 83%,
+            #f00 100%
+        );
 
-        transition: border @transition-time @ease-in-out, box-shadow @transition-time @ease-in-out;
+        transition: border @transition-time @ease-in-out,
+            box-shadow @transition-time @ease-in-out;
 
         &:focus {
             .active();
@@ -225,7 +249,8 @@
         left: 0;
         border-radius: 2px;
 
-        transition: border @transition-time @ease-in-out, box-shadow @transition-time @ease-in-out;
+        transition: border @transition-time @ease-in-out,
+            box-shadow @transition-time @ease-in-out;
 
         &:focus {
             .active();
@@ -290,7 +315,7 @@
             top: 11px;
             left: 8px;
 
-            &-editable{
+            &-editable {
                 top: 8px;
                 right: 110px;
             }

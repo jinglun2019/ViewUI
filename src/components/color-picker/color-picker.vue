@@ -1,16 +1,24 @@
 <template>
     <div
         v-click-outside:[capture]="handleClose"
-        :class="classes">
+        :class="classes"
+    >
         <div
             ref="reference"
             :class="wrapClasses"
-            @click="toggleVisible">
+            @click="toggleVisible"
+        >
             <input
                 :name="name"
                 :value="currentValue"
-                type="hidden">
-            <Icon :type="arrowType" :custom="customArrowType" :size="arrowSize" :class="arrowClasses"></Icon>
+                type="hidden"
+            />
+            <Icon
+                :type="arrowType"
+                :custom="customArrowType"
+                :size="arrowSize"
+                :class="arrowClasses"
+            ></Icon>
             <div
                 ref="input"
                 :tabindex="itemDisabled ? undefined : 0"
@@ -23,12 +31,19 @@
                 <div :class="[prefixCls + '-color']">
                     <div
                         v-show="value === '' && !visible"
-                        :class="[prefixCls + '-color-empty']">
-                        <i :class="[iconPrefixCls, iconPrefixCls + '-ios-close']"></i>
+                        :class="[prefixCls + '-color-empty']"
+                    >
+                        <i
+                            :class="[
+                                iconPrefixCls,
+                                iconPrefixCls + '-ios-close'
+                            ]"
+                        ></i>
                     </div>
                     <div
                         v-show="value || visible"
-                        :style="displayedColorStyle"></div>
+                        :style="displayedColorStyle"
+                    ></div>
                 </div>
             </div>
         </div>
@@ -46,48 +61,89 @@
                 <transition name="fade">
                     <div
                         v-if="visible"
-                        :class="[prefixCls + '-picker']">
-                        <div :class="[prefixCls + '-picker-wrapper']">
-                            <div :class="[prefixCls + '-picker-panel']">
+                        :class="[prefixCls + '-picker']"
+                    >
+                        <div
+                            :class="[
+                                prefixCls + '-picker-wrapper'
+                            ]"
+                        >
+                            <div
+                                :class="[
+                                    prefixCls + '-picker-panel'
+                                ]"
+                            >
                                 <Saturation
                                     ref="saturation"
                                     v-model="saturationColors"
                                     :focused="visible"
                                     @change="childChange"
-                                    @keydown.native.tab="handleFirstTab"
+                                    @keydown.native.tab="
+                                        handleFirstTab
+                                    "
                                 ></Saturation>
                             </div>
                             <div
                                 v-if="hue"
-                                :class="[prefixCls + '-picker-hue-slider']">
+                                :class="[
+                                    prefixCls +
+                                        '-picker-hue-slider'
+                                ]"
+                            >
                                 <Hue
                                     v-model="saturationColors"
-                                    @change="childChange"></Hue>
+                                    @change="childChange"
+                                ></Hue>
                             </div>
                             <div
                                 v-if="alpha"
-                                :class="[prefixCls + '-picker-alpha-slider']">
+                                :class="[
+                                    prefixCls +
+                                        '-picker-alpha-slider'
+                                ]"
+                            >
                                 <Alpha
                                     v-model="saturationColors"
-                                    @change="childChange"></Alpha>
+                                    @change="childChange"
+                                ></Alpha>
                             </div>
                             <recommend-colors
                                 v-if="colors.length"
                                 :list="colors"
-                                :class="[prefixCls + '-picker-colors']"
-                                @picker-color="handleSelectColor"></recommend-colors>
+                                :class="[
+                                    prefixCls + '-picker-colors'
+                                ]"
+                                @picker-color="handleSelectColor"
+                            ></recommend-colors>
                             <recommend-colors
-                                v-if="!colors.length && recommend"
+                                v-if="
+                                    !colors.length && recommend
+                                "
                                 :list="recommendedColor"
-                                :class="[prefixCls + '-picker-colors']"
-                                @picker-color="handleSelectColor"></recommend-colors>
+                                :class="[
+                                    prefixCls + '-picker-colors'
+                                ]"
+                                @picker-color="handleSelectColor"
+                            ></recommend-colors>
                         </div>
                         <div :class="[prefixCls + '-confirm']">
                             <span :class="confirmColorClasses">
                                 <template v-if="editable">
-                                    <i-input ref="editColorInput" :value="formatColor" size="small" @on-enter="handleEditColor" @on-blur="handleEditColor"></i-input>
+                                    <i-input
+                                        ref="editColorInput"
+                                        :value="formatColor"
+                                        size="small"
+                                        @on-enter="
+                                            handleEditColor
+                                        "
+                                        @on-blur="
+                                            handleEditColor
+                                        "
+                                    ></i-input>
                                 </template>
-                                <template v-else>{{formatColor}}</template>
+                                <template v-else>{{
+                                    formatColor
+                                }}</template>
                             </span>
                             <i-button
                                 ref="clear"
@@ -96,17 +152,25 @@
                                 @click.native="handleClear"
                                 @keydown.enter="handleClear"
                                 @keydown.native.esc="closer"
-                            >{{t('i.datepicker.clear')}}</i-button>
+                                >{{
+                                    t('i.datepicker.clear')
+                                }}</i-button
+                            >
                             <i-button
                                 ref="ok"
                                 :tabindex="0"
                                 size="small"
                                 type="primary"
                                 @click.native="handleSuccess"
-                                @keydown.native.tab="handleLastTab"
+                                @keydown.native.tab="
+                                    handleLastTab
+                                "
                                 @keydown.enter="handleSuccess"
                                 @keydown.native.esc="closer"
-                            >{{t('i.datepicker.ok')}}</i-button>
+                                >{{
+                                    t('i.datepicker.ok')
+                                }}</i-button
+                            >
                         </div>
                     </div>
                 </transition>
@@ -117,7 +181,7 @@
 
 <script>
 import tinycolor from 'tinycolor2';
-import {directive as clickOutside} from '../../directives/v-click-outside-x';
+import { directive as clickOutside } from '../../directives/v-click-outside-x';
 import TransferDom from '../../directives/transfer-dom';
 import Drop from '../../components/select/dropdown.vue';
 import RecommendColors from './recommend-colors.vue';
@@ -128,66 +192,86 @@ import iInput from '../input/input.vue';
 import iButton from '../button/button.vue';
 import Icon from '../icon/icon.vue';
 import Locale from '../../mixins/locale';
-import {oneOf} from '../../utils/assist';
+import { oneOf } from '../../utils/assist';
 import Emitter from '../../mixins/emitter';
 import mixinsForm from '../../mixins/form';
 import Prefixes from './prefixMixin';
-import {changeColor, toRGBAString} from './utils';
+import { changeColor, toRGBAString } from './utils';
 
 export default {
     name: 'ColorPicker',
 
-    components: {Drop, RecommendColors, Saturation, Hue, Alpha, iInput, iButton, Icon},
+    components: {
+        Drop,
+        RecommendColors,
+        Saturation,
+        Hue,
+        Alpha,
+        iInput,
+        iButton,
+        Icon
+    },
 
-    directives: {clickOutside, TransferDom},
+    directives: { clickOutside, TransferDom },
 
     mixins: [Emitter, Locale, Prefixes, mixinsForm],
 
     props: {
         value: {
             type: String,
-            default: undefined,
+            default: undefined
         },
         hue: {
             type: Boolean,
-            default: true,
+            default: true
         },
         alpha: {
             type: Boolean,
-            default: false,
+            default: false
         },
         recommend: {
             type: Boolean,
-            default: false,
+            default: false
         },
         format: {
             type: String,
             validator(value) {
-                return oneOf(value, ['hsl', 'hsv', 'hex', 'rgb']);
+                return oneOf(value, [
+                    'hsl',
+                    'hsv',
+                    'hex',
+                    'rgb'
+                ]);
             },
-            default: undefined,
+            default: undefined
         },
         colors: {
             type: Array,
             default() {
                 return [];
-            },
+            }
         },
         disabled: {
             type: Boolean,
-            default: false,
+            default: false
         },
         size: {
             validator(value) {
-                return oneOf(value, ['small', 'large', 'default']);
+                return oneOf(value, [
+                    'small',
+                    'large',
+                    'default'
+                ]);
             },
-            default () {
-                return !this.$IVIEW || this.$IVIEW.size === '' ? 'default' : this.$IVIEW.size;
+            default() {
+                return !this.$IVIEW || this.$IVIEW.size === ''
+                    ? 'default'
+                    : this.$IVIEW.size;
             }
         },
         hideDropDown: {
             type: Boolean,
-            default: false,
+            default: false
         },
         placement: {
             type: String,
@@ -204,20 +288,23 @@ export default {
                     'left-end',
                     'right',
                     'right-start',
-                    'right-end',
+                    'right-end'
                 ]);
             },
-            default: 'bottom',
+            default: 'bottom'
         },
         transfer: {
             type: Boolean,
-            default () {
-                return !this.$IVIEW || this.$IVIEW.transfer === '' ? false : this.$IVIEW.transfer;
+            default() {
+                return !this.$IVIEW ||
+                    this.$IVIEW.transfer === ''
+                    ? false
+                    : this.$IVIEW.transfer;
             }
         },
         name: {
             type: String,
-            default: undefined,
+            default: undefined
         },
         editable: {
             type: Boolean,
@@ -226,7 +313,7 @@ export default {
         // 4.0.0
         capture: {
             type: Boolean,
-            default () {
+            default() {
                 return !this.$IVIEW ? true : this.$IVIEW.capture;
             }
         },
@@ -270,8 +357,8 @@ export default {
                 '#cddc39',
                 '#607d8b',
                 '#000000',
-                '#ffffff',
-            ],
+                '#ffffff'
+            ]
         };
     },
 
@@ -279,11 +366,17 @@ export default {
         arrowClasses() {
             return [
                 `${this.inputPrefixCls}-icon`,
-                `${this.inputPrefixCls}-icon-normal`,
+                `${this.inputPrefixCls}-icon-normal`
             ];
         },
         transition() {
-            return oneOf(this.placement, ['bottom-start', 'bottom', 'bottom-end']) ? 'slide-up' : 'fade';
+            return oneOf(this.placement, [
+                'bottom-start',
+                'bottom',
+                'bottom-end'
+            ])
+                ? 'slide-up'
+                : 'fade';
         },
         saturationColors: {
             get() {
@@ -292,14 +385,14 @@ export default {
             set(newVal) {
                 this.val = newVal;
                 this.$emit('on-active-change', this.formatColor);
-            },
+            }
         },
         classes() {
             return [
                 `${this.prefixCls}`,
                 {
-                    [`${this.prefixCls}-transfer`]: this.transfer,
-                },
+                    [`${this.prefixCls}-transfer`]: this.transfer
+                }
             ];
         },
         wrapClasses() {
@@ -309,8 +402,9 @@ export default {
                 `${this.inputPrefixCls}-wrapper`,
                 `${this.inputPrefixCls}-wrapper-${this.size}`,
                 {
-                    [`${this.prefixCls}-disabled`]: this.itemDisabled,
-                },
+                    [`${this.prefixCls}-disabled`]:
+                        this.itemDisabled
+                }
             ];
         },
         inputClasses() {
@@ -320,33 +414,47 @@ export default {
                 `${this.inputPrefixCls}-${this.size}`,
                 {
                     [`${this.prefixCls}-focused`]: this.visible,
-                    [`${this.prefixCls}-disabled`]: this.itemDisabled,
-                },
+                    [`${this.prefixCls}-disabled`]:
+                        this.itemDisabled
+                }
             ];
         },
         dropClasses() {
             return [
                 `${this.transferPrefixCls}-no-max-height`,
                 {
-                    [`${this.prefixCls}-transfer`]: this.transfer,
-                    [`${this.prefixCls}-hide-drop`]: this.hideDropDown,
-                    [this.transferClassName]: this.transferClassName
-                },
+                    [`${this.prefixCls}-transfer`]:
+                        this.transfer,
+                    [`${this.prefixCls}-hide-drop`]:
+                        this.hideDropDown,
+                    [this.transferClassName]:
+                        this.transferClassName
+                }
             ];
         },
         displayedColorStyle() {
-            return {backgroundColor: toRGBAString(this.visible ? this.saturationColors.rgba : tinycolor(this.value).toRgb())};
+            return {
+                backgroundColor: toRGBAString(
+                    this.visible
+                        ? this.saturationColors.rgba
+                        : tinycolor(this.value).toRgb()
+                )
+            };
         },
         formatColor() {
-            const {format, saturationColors} = this;
+            const { format, saturationColors } = this;
 
             if (format) {
                 if (format === 'hsl') {
-                    return tinycolor(saturationColors.hsl).toHslString();
+                    return tinycolor(
+                        saturationColors.hsl
+                    ).toHslString();
                 }
 
                 if (format === 'hsv') {
-                    return tinycolor(saturationColors.hsv).toHsvString();
+                    return tinycolor(
+                        saturationColors.hsv
+                    ).toHsvString();
                 }
 
                 if (format === 'hex') {
@@ -362,16 +470,17 @@ export default {
 
             return saturationColors.hex;
         },
-        confirmColorClasses () {
+        confirmColorClasses() {
             return [
                 `${this.prefixCls}-confirm-color`,
                 {
-                    [`${this.prefixCls}-confirm-color-editable`]: this.editable
+                    [`${this.prefixCls}-confirm-color-editable`]:
+                        this.editable
                 }
             ];
         },
         // 3.4.0, global setting customArrow 有值时，arrow 赋值空
-        arrowType () {
+        arrowType() {
             let type = 'ios-arrow-down';
 
             if (this.$IVIEW) {
@@ -384,7 +493,7 @@ export default {
             return type;
         },
         // 3.4.0, global setting
-        customArrowType () {
+        customArrowType() {
             let type = '';
 
             if (this.$IVIEW) {
@@ -395,7 +504,7 @@ export default {
             return type;
         },
         // 3.4.0, global setting
-        arrowSize () {
+        arrowSize() {
             let size = '';
 
             if (this.$IVIEW) {
@@ -415,7 +524,7 @@ export default {
             this.val = changeColor(this.value || '');
             this.$refs.drop[val ? 'update' : 'destroy']();
             this.$emit('on-open-change', Boolean(val));
-        },
+        }
     },
 
     mounted() {
@@ -429,16 +538,28 @@ export default {
         },
         handleClose(event) {
             if (this.visible) {
-                if (this.dragging || event.type === 'mousedown') {
-                    if (this.$refs.editColorInput && event.target !== this.$refs.editColorInput.$el.querySelector('input')) {
+                if (
+                    this.dragging ||
+                    event.type === 'mousedown'
+                ) {
+                    if (
+                        this.$refs.editColorInput &&
+                        event.target !==
+                            this.$refs.editColorInput.$el.querySelector(
+                                'input'
+                            )
+                    ) {
                         event.preventDefault();
                     }
                     return;
                 }
 
                 if (this.transfer) {
-                    const {$el} = this.$refs.drop;
-                    if ($el === event.target || $el.contains(event.target)) {
+                    const { $el } = this.$refs.drop;
+                    if (
+                        $el === event.target ||
+                        $el.contains(event.target)
+                    ) {
                         return;
                     }
                 }
@@ -462,7 +583,10 @@ export default {
         },
         colorChange(data, oldHue) {
             this.oldHue = this.saturationColors.hsl.h;
-            this.saturationColors = changeColor(data, oldHue || this.oldHue);
+            this.saturationColors = changeColor(
+                data,
+                oldHue || this.oldHue
+            );
         },
         closer(event) {
             if (event) {
@@ -492,7 +616,7 @@ export default {
             this.val = changeColor(color);
             this.$emit('on-active-change', this.formatColor);
         },
-        handleEditColor (event) {
+        handleEditColor(event) {
             const value = event.target.value;
             this.handleSelectColor(value);
         },
@@ -526,7 +650,7 @@ export default {
                 event.stopPropagation();
                 this.visible = true;
             }
-        },
-    },
+        }
+    }
 };
 </script>

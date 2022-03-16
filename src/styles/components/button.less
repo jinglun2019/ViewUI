@@ -1,26 +1,29 @@
-@btn-prefix-cls: ~"@{css-prefix}btn";
+@btn-prefix-cls: ~'@{css-prefix}btn';
 
 .@{btn-prefix-cls} {
     .btn;
     .btn-default;
 
-    &-long{
+    &-long {
         width: 100%;
     }
 
-    & > .ivu-icon + span, & > span + .ivu-icon{
+    & > .ivu-icon + span,
+    & > span + .ivu-icon {
         margin-left: 4px;
     }
 
     &-primary {
         .btn-primary;
 
-        .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-vertical) &:not(:first-child):not(:last-child) {
+        .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-vertical)
+            &:not(:first-child):not(:last-child) {
             border-right-color: @btn-group-border;
             border-left-color: @btn-group-border;
         }
 
-        .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-vertical) &:first-child {
+        .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-vertical)
+            &:first-child {
             &:not(:last-child) {
                 border-right-color: @btn-group-border;
                 &[disabled] {
@@ -29,15 +32,19 @@
             }
         }
 
-        .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-vertical) &:last-child:not(:first-child),
-        .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-vertical) & + .@{btn-prefix-cls} {
+        .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-vertical)
+            &:last-child:not(:first-child),
+        .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-vertical)
+            &
+            + .@{btn-prefix-cls} {
             border-left-color: @btn-group-border;
             &[disabled] {
                 border-left-color: @btn-default-border;
             }
         }
 
-        .@{btn-prefix-cls}-group-vertical &:not(:first-child):not(:last-child) {
+        .@{btn-prefix-cls}-group-vertical
+            &:not(:first-child):not(:last-child) {
             border-top-color: @btn-group-border;
             border-bottom-color: @btn-group-border;
         }
@@ -51,8 +58,11 @@
             }
         }
 
-        .@{btn-prefix-cls}-group-vertical &:last-child:not(:first-child),
-        .@{btn-prefix-cls}-group-vertical & + .@{btn-prefix-cls} {
+        .@{btn-prefix-cls}-group-vertical
+            &:last-child:not(:first-child),
+        .@{btn-prefix-cls}-group-vertical
+            &
+            + .@{btn-prefix-cls} {
             border-top-color: @btn-group-border;
             &[disabled] {
                 border-bottom-color: @btn-default-border;
@@ -64,11 +74,11 @@
     //    .btn-ghost;
     //}
 
-    &-dashed{
+    &-dashed {
         .btn-dashed;
     }
 
-    &-text{
+    &-text {
         .btn-text;
     }
 
@@ -127,63 +137,70 @@
     }
 
     // The new ghost in 3.0
-    &-ghost{
+    &-ghost {
         color: #fff;
         background: transparent;
-        &:hover{
+        &:hover {
             background: transparent;
         }
     }
-    &-ghost&-dashed, &-ghost&-default{
+    &-ghost&-dashed,
+    &-ghost&-default {
         color: #fff;
         border-color: #fff;
-        &:hover{
+        &:hover {
             color: tint(@primary-color, 20%);
             border-color: tint(@primary-color, 20%);
         }
     }
-    &-ghost&-primary{
+    &-ghost&-primary {
         color: @primary-color;
-        &:hover{
+        &:hover {
             color: tint(@primary-color, 20%);
             background: fade(tint(@primary-color, 95%), 50%);
         }
     }
-    &-ghost&-info{
+    &-ghost&-info {
         color: @info-color;
-        &:hover{
+        &:hover {
             color: tint(@info-color, 20%);
             background: fade(tint(@info-color, 95%), 50%);
         }
     }
-    &-ghost&-success{
+    &-ghost&-success {
         color: @success-color;
-        &:hover{
+        &:hover {
             color: tint(@success-color, 20%);
             background: fade(tint(@success-color, 95%), 50%);
         }
     }
-    &-ghost&-warning{
+    &-ghost&-warning {
         color: @warning-color;
-        &:hover{
+        &:hover {
             color: tint(@warning-color, 20%);
             background: fade(tint(@warning-color, 95%), 50%);
         }
     }
-    &-ghost&-error{
+    &-ghost&-error {
         color: @error-color;
-        &:hover{
+        &:hover {
             color: tint(@error-color, 20%);
             background: fade(tint(@error-color, 95%), 50%);
         }
     }
 
-    &-ghost&-default[disabled], &-ghost&-dashed[disabled], &-ghost&-primary[disabled], &-ghost&-info[disabled], &-ghost&-success[disabled], &-ghost&-warning[disabled], &-ghost&-error[disabled]{
+    &-ghost&-default[disabled],
+    &-ghost&-dashed[disabled],
+    &-ghost&-primary[disabled],
+    &-ghost&-info[disabled],
+    &-ghost&-success[disabled],
+    &-ghost&-warning[disabled],
+    &-ghost&-error[disabled] {
         background: transparent;
         color: fade(#000, 25%);
         border-color: @btn-disable-border;
     }
-    &-ghost&-text[disabled]{
+    &-ghost&-text[disabled] {
         background: transparent;
         color: fade(#000, 25%);
     }

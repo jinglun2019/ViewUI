@@ -86,7 +86,7 @@ const lang = {
             item: 'položka',
             /* TODO: add third plural form for Czech,
              * If there is 2-4 items the translation should be "položky"
-             */ 
+             */
             items: 'položek', // Plural form for 5 or more items
             prev5: 'Předchozích 5 stránek',
             next5: 'Následujících 5 stránek',

@@ -1,4 +1,4 @@
-@rate-prefix-cls: ~"@{css-prefix}rate";
+@rate-prefix-cls: ~'@{css-prefix}rate';
 
 .@{rate-prefix-cls} {
     display: inline-block;
@@ -19,7 +19,8 @@
         }
     }
 
-    &-star-full, &-star-zero {
+    &-star-full,
+    &-star-zero {
         position: relative;
     }
     &-star-first {
@@ -32,9 +33,10 @@
         opacity: 0;
     }
 
-    &-star-first, &-star-second {
+    &-star-first,
+    &-star-second {
         user-select: none;
-        transition: all .3s ease;
+        transition: all 0.3s ease;
         color: #e9e9e9;
         cursor: pointer;
     }
@@ -56,14 +58,15 @@
             //}
         }
     }
-    &-star-chart&-star-full &-star-first, &-star-chart&-star-full &-star-second{
+    &-star-chart&-star-full &-star-first,
+    &-star-chart&-star-full &-star-second {
         color: @rate-star-color;
     }
-    &-star-chart&-star-half &-star-first{
+    &-star-chart&-star-half &-star-first {
         opacity: 1;
         color: @rate-star-color;
     }
-    
+
     &-star {
         display: inline-block;
         margin: 0;
@@ -81,7 +84,7 @@
         &-content:before {
             color: #e9e9e9;
             cursor: pointer;
-            content: "\F2BF";
+            content: '\F2BF';
             transition: all @transition-time @ease-in-out;
             display: block;
         }

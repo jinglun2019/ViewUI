@@ -10,7 +10,8 @@ const lang = {
         },
         table: {
             noDataText: 'ᠲᠣᠭ᠎ᠠ ᠪᠠᠷᠢᠮᠲᠠ ᠦᠭᠡᠶ',
-            noFilteredDataText: 'ᠨᠦᠬᠦᠴᠡᠯ ᠳᠦ ᠨᠡᠶᠢᠴᠡᠭᠰᠡᠨ ᠲᠣᠭ᠎ᠠ ᠪᠠᠷᠢᠮᠲᠠ ᠣᠯᠳᠠᠭᠰᠠᠨ ᠦᠭᠡᠢ',
+            noFilteredDataText:
+                'ᠨᠦᠬᠦᠴᠡᠯ ᠳᠦ ᠨᠡᠶᠢᠴᠡᠭᠰᠡᠨ ᠲᠣᠭ᠎ᠠ ᠪᠠᠷᠢᠮᠲᠠ ᠣᠯᠳᠠᠭᠰᠠᠨ ᠦᠭᠡᠢ',
             confirmFilter: 'ᠰᠢᠯᠢᠬᠦ',
             resetFilter: 'ᠪᠣᠴᠠᠭᠠᠬᠤ',
             clearFilter: 'ᠪᠦᠬᠦ',

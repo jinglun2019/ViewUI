@@ -7,18 +7,20 @@ let failedColor = 'error';
 let height = 2;
 let timer;
 
-function getLoadingBarInstance () {
-    loadingBarInstance = loadingBarInstance || LoadingBar.newInstance({
-        color: color,
-        failedColor: failedColor,
-        height: height
-    });
+function getLoadingBarInstance() {
+    loadingBarInstance =
+        loadingBarInstance ||
+        LoadingBar.newInstance({
+            color: color,
+            failedColor: failedColor,
+            height: height
+        });
 
     return loadingBarInstance;
 }
 
 function update(options) {
-    let instance  = getLoadingBarInstance();
+    let instance = getLoadingBarInstance();
 
     instance.update(options);
 }
@@ -44,7 +46,7 @@ function clearTimer() {
 }
 
 export default {
-    start () {
+    start() {
         if (timer) return;
 
         let percent = 0;
@@ -56,7 +58,7 @@ export default {
         });
 
         timer = setInterval(() => {
-            percent += Math.floor(Math.random () * 3 + 1);
+            percent += Math.floor(Math.random() * 3 + 1);
             if (percent > 95) {
                 clearTimer();
             }
@@ -67,7 +69,7 @@ export default {
             });
         }, 200);
     },
-    update (percent) {
+    update(percent) {
         clearTimer();
         update({
             percent: percent,
@@ -75,7 +77,7 @@ export default {
             show: true
         });
     },
-    finish () {
+    finish() {
         clearTimer();
         update({
             percent: 100,
@@ -84,7 +86,7 @@ export default {
         });
         hide();
     },
-    error () {
+    error() {
         clearTimer();
         update({
             percent: 100,
@@ -93,7 +95,7 @@ export default {
         });
         hide();
     },
-    config (options) {
+    config(options) {
         if (options.color) {
             color = options.color;
         }
@@ -107,7 +109,7 @@ export default {
             height = options.height;
         }
     },
-    destroy () {
+    destroy() {
         clearTimer();
         let instance = getLoadingBarInstance();
         loadingBarInstance = null;

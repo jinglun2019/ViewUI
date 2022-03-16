@@ -33,7 +33,7 @@ export default function upload(option) {
     if (xhr.upload) {
         xhr.upload.onprogress = function progress(e) {
             if (e.total > 0) {
-                e.percent = e.loaded / e.total * 100;
+                e.percent = (e.loaded / e.total) * 100;
             }
             option.onProgress(e);
         };
@@ -55,7 +55,10 @@ export default function upload(option) {
 
     xhr.onload = function onload() {
         if (xhr.status < 200 || xhr.status >= 300) {
-            return option.onError(getError(action, option, xhr), getBody(xhr));
+            return option.onError(
+                getError(action, option, xhr),
+                getBody(xhr)
+            );
         }
 
         option.onSuccess(getBody(xhr));
@@ -74,7 +77,10 @@ export default function upload(option) {
     // }
 
     for (let item in headers) {
-        if (headers.hasOwnProperty(item) && headers[item] !== null) {
+        if (
+            headers.hasOwnProperty(item) &&
+            headers[item] !== null
+        ) {
             xhr.setRequestHeader(item, headers[item]);
         }
     }

@@ -11,14 +11,18 @@ const instancesList = [captureInstances, nonCaptureInstances];
  * @param {Event} event - The event object.
  * @returns {undefined} Default.
  */
-const commonHandler = function _onCommonEvent(context, instances, event) {
-    const {target} = event;
+const commonHandler = function _onCommonEvent(
+    context,
+    instances,
+    event
+) {
+    const { target } = event;
 
     const itemIteratee = function _itemIteratee(item) {
-        const {el} = item;
+        const { el } = item;
 
         if (el !== target && !el.contains(target)) {
-            const {binding} = item;
+            const { binding } = item;
 
             if (binding.modifiers.stop) {
                 event.stopPropagation();
@@ -54,7 +58,9 @@ const captureEventHandler = function onCaptureEvent(event) {
  *
  * @param {Event} event - The event object.
  */
-const nonCaptureEventHandler = function onNonCaptureEvent(event) {
+const nonCaptureEventHandler = function onNonCaptureEvent(
+    event
+) {
     /* eslint-disable-next-line babel/no-invalid-this */
     commonHandler(this, nonCaptureInstances, event);
 };
@@ -67,7 +73,9 @@ const nonCaptureEventHandler = function onNonCaptureEvent(event) {
  * @returns {Function} - The event handler.
  */
 const getEventHandler = function _getEventHandler(useCapture) {
-    return useCapture ? captureEventHandler : nonCaptureEventHandler;
+    return useCapture
+        ? captureEventHandler
+        : nonCaptureEventHandler;
 };
 
 /**
@@ -89,19 +97,19 @@ export const directive = Object.defineProperties(
     {},
     {
         $_captureInstances: {
-            value: captureInstances,
+            value: captureInstances
         },
 
         $_nonCaptureInstances: {
-            value: nonCaptureInstances,
+            value: nonCaptureInstances
         },
 
         $_onCaptureEvent: {
-            value: captureEventHandler,
+            value: captureEventHandler
         },
 
         $_onNonCaptureEvent: {
-            value: nonCaptureEventHandler,
+            value: nonCaptureEventHandler
         },
 
         /**
@@ -110,14 +118,18 @@ export const directive = Object.defineProperties(
         bind: {
             value: function bind(el, binding) {
                 if (typeof binding.value !== 'function') {
-                    throw new TypeError('Binding value must be a function.');
+                    throw new TypeError(
+                        'Binding value must be a function.'
+                    );
                 }
 
                 let eventType;
                 const modifiers = binding.modifiers;
                 if (modifiers.click) eventType = 'click';
-                else if (modifiers.mousedown) eventType = 'mousedown';
-                else if (modifiers.touchstart) eventType = 'touchstart';
+                else if (modifiers.mousedown)
+                    eventType = 'mousedown';
+                else if (modifiers.touchstart)
+                    eventType = 'touchstart';
                 else eventType = CLICK;
 
                 const useCapture = binding.arg;
@@ -129,75 +141,106 @@ export const directive = Object.defineProperties(
                             ...{
                                 capture: false,
                                 prevent: false,
-                                stop: false,
+                                stop: false
                             },
-                            ...binding.modifiers,
-                        },
-                    },
+                            ...binding.modifiers
+                        }
+                    }
                 };
 
-                const instances = useCapture ? captureInstances : nonCaptureInstances;
+                const instances = useCapture
+                    ? captureInstances
+                    : nonCaptureInstances;
 
                 if (!Array.isArray(instances[eventType])) {
                     instances[eventType] = [];
                 }
 
-                if (instances[eventType].push({el, binding: normalisedBinding}) === 1) {
-                    if (typeof document === 'object' && document) {
+                if (
+                    instances[eventType].push({
+                        el,
+                        binding: normalisedBinding
+                    }) === 1
+                ) {
+                    if (
+                        typeof document === 'object' &&
+                        document
+                    ) {
                         document.addEventListener(
                             eventType,
                             getEventHandler(useCapture),
-                            useCapture,
+                            useCapture
                         );
                     }
                 }
-            },
+            }
         },
 
         unbind: {
             value: function unbind(el) {
-                const compareElements = function _compareElements(item) {
-                    return item.el !== el;
-                };
+                const compareElements =
+                    function _compareElements(item) {
+                        return item.el !== el;
+                    };
 
-                const instancesIteratee = function _instancesIteratee(instances) {
-                    const instanceKeys = Object.keys(instances);
+                const instancesIteratee =
+                    function _instancesIteratee(instances) {
+                        const instanceKeys =
+                            Object.keys(instances);
 
-                    if (instanceKeys.length) {
-                        const useCapture = instances === captureInstances;
+                        if (instanceKeys.length) {
+                            const useCapture =
+                                instances === captureInstances;
 
-                        const keysIteratee = function _keysIteratee(eventName) {
-                            const newInstance = instances[eventName].filter(compareElements);
+                            const keysIteratee =
+                                function _keysIteratee(
+                                    eventName
+                                ) {
+                                    const newInstance =
+                                        instances[
+                                            eventName
+                                        ].filter(
+                                            compareElements
+                                        );
 
-                            if (newInstance.length) {
-                                instances[eventName] = newInstance;
-                            } else {
-                                if (typeof document === 'object' && document) {
-                                    document.removeEventListener(
-                                        eventName,
-                                        getEventHandler(useCapture),
-                                        useCapture,
-                                    );
-                                }
+                                    if (newInstance.length) {
+                                        instances[eventName] =
+                                            newInstance;
+                                    } else {
+                                        if (
+                                            typeof document ===
+                                                'object' &&
+                                            document
+                                        ) {
+                                            document.removeEventListener(
+                                                eventName,
+                                                getEventHandler(
+                                                    useCapture
+                                                ),
+                                                useCapture
+                                            );
+                                        }
 
-                                delete instances[eventName];
-                            }
-                        };
+                                        delete instances[
+                                            eventName
+                                        ];
+                                    }
+                                };
 
-                        instanceKeys.forEach(keysIteratee);
-                    }
-                };
+                            instanceKeys.forEach(keysIteratee);
+                        }
+                    };
 
                 instancesList.forEach(instancesIteratee);
-            },
+            }
         },
 
         /* Note: This needs to be manually updated to match package.json. */
         version: {
             enumerable: true,
-            value: '3.7.1',
-        },
-    },
+            value: '3.7.1'
+        }
+    }
 );
 
 /**

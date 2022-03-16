@@ -10,32 +10,37 @@ let noticeInstance;
 let name = 1;
 
 const iconTypes = {
-    'info': 'ios-information-circle',
-    'success': 'ios-checkmark-circle',
-    'warning': 'ios-alert',
-    'error': 'ios-close-circle'
+    info: 'ios-information-circle',
+    success: 'ios-checkmark-circle',
+    warning: 'ios-alert',
+    error: 'ios-close-circle'
 };
 
-function getNoticeInstance () {
-    noticeInstance = noticeInstance || Notification.newInstance({
-        prefixCls: prefixCls,
-        styles: {
-            top: `${top}px`,
-            right: 0
-        }
-    });
+function getNoticeInstance() {
+    noticeInstance =
+        noticeInstance ||
+        Notification.newInstance({
+            prefixCls: prefixCls,
+            styles: {
+                top: `${top}px`,
+                right: 0
+            }
+        });
 
     return noticeInstance;
 }
 
-function notice (type, options) {
+function notice(type, options) {
     const title = options.title || '';
     const desc = options.desc || '';
     const noticeKey = options.name || `${prefixKey}${name}`;
     const onClose = options.onClose || function () {};
     const render = options.render;
     // todo const btn = options.btn || null;
-    const duration = (options.duration === 0) ? 0 : options.duration || defaultDuration;
+    const duration =
+        options.duration === 0
+            ? 0
+            : options.duration || defaultDuration;
 
     name++;
 
@@ -45,7 +50,12 @@ function notice (type, options) {
 
     let withIcon;
 
-    const with_desc = (options.render && !title) ? '' : (desc || options.render) ? ` ${prefixCls}-with-desc` : '';
+    const with_desc =
+        options.render && !title
+            ? ''
+            : desc || options.render
+            ? ` ${prefixCls}-with-desc`
+            : '';
 
     if (type == 'normal') {
         withIcon = false;
@@ -85,22 +95,22 @@ function notice (type, options) {
 }
 
 export default {
-    open (options) {
+    open(options) {
         return notice('normal', options);
     },
-    info (options) {
+    info(options) {
         return notice('info', options);
     },
-    success (options) {
+    success(options) {
         return notice('success', options);
     },
-    warning (options) {
+    warning(options) {
         return notice('warning', options);
     },
-    error (options) {
+    error(options) {
         return notice('error', options);
     },
-    config (options) {
+    config(options) {
         if (options.top) {
             top = options.top;
         }
@@ -108,7 +118,7 @@ export default {
             defaultDuration = options.duration;
         }
     },
-    close (name) {
+    close(name) {
         if (name) {
             name = name.toString();
             if (noticeInstance) {
@@ -118,7 +128,7 @@ export default {
             return false;
         }
     },
-    destroy () {
+    destroy() {
         let instance = getNoticeInstance();
         noticeInstance = null;
         instance.destroy('ivu-notice');

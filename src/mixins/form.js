@@ -5,9 +5,10 @@ export default {
         }
     },
     computed: {
-        itemDisabled () {
+        itemDisabled() {
             let state = this.disabled;
-            if (!state && this.FormInstance) state = this.FormInstance.disabled;
+            if (!state && this.FormInstance)
+                state = this.FormInstance.disabled;
             return state;
         }
     }

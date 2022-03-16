@@ -1,9 +1,9 @@
 import tinycolor from 'tinycolor2';
-import {oneOf} from '../../utils/assist';
+import { oneOf } from '../../utils/assist';
 
 function setAlpha(data, alpha) {
     const color = tinycolor(data);
-    const {_a} = color;
+    const { _a } = color;
 
     if (_a === undefined || _a === null) {
         color.setAlpha(alpha || 1);
@@ -36,7 +36,11 @@ export function changeColor(data, oldHue) {
     const hsv = color.toHsv();
 
     if (hsl.s === 0) {
-        hsl.h = colorData.h || (colorData.hsl && colorData.hsl.h) || oldHue || 0;
+        hsl.h =
+            colorData.h ||
+            (colorData.hsl && colorData.hsl.h) ||
+            oldHue ||
+            0;
         hsv.h = hsl.h;
     }
 
@@ -44,13 +48,25 @@ export function changeColor(data, oldHue) {
     // because of possible loss of precision
     // the result of hue and saturation would be miscalculated
     if (hsv.v < 0.0164) {
-        hsv.h = colorData.h || (colorData.hsv && colorData.hsv.h) || 0;
-        hsv.s = colorData.s || (colorData.hsv && colorData.hsv.s) || 0;
+        hsv.h =
+            colorData.h ||
+            (colorData.hsv && colorData.hsv.h) ||
+            0;
+        hsv.s =
+            colorData.s ||
+            (colorData.hsv && colorData.hsv.s) ||
+            0;
     }
 
     if (hsl.l < 0.01) {
-        hsl.h = colorData.h || (colorData.hsl && colorData.hsl.h) || 0;
-        hsl.s = colorData.s || (colorData.hsl && colorData.hsl.s) || 0;
+        hsl.h =
+            colorData.h ||
+            (colorData.hsl && colorData.hsl.h) ||
+            0;
+        hsl.s =
+            colorData.s ||
+            (colorData.hsl && colorData.hsl.s) ||
+            0;
     }
 
     return {
@@ -60,7 +76,7 @@ export function changeColor(data, oldHue) {
         hsv,
         oldHue: colorData.h || oldHue || hsl.h,
         source: colorData.source,
-        a: colorData.a || color.getAlpha(),
+        a: colorData.a || color.getAlpha()
     };
 }
 
@@ -85,7 +101,7 @@ export function getTouches(e, prop) {
 }
 
 export function toRGBAString(rgba) {
-    const {r, g, b, a} = rgba;
+    const { r, g, b, a } = rgba;
 
     return `rgba(${[r, g, b, a].join(',')})`;
 }
@@ -95,7 +111,7 @@ export function isValidHex(hex) {
 }
 
 function checkIteratee(data, counts, letter) {
-    let {checked, passed} = counts;
+    let { checked, passed } = counts;
     const value = data[letter];
 
     if (value) {
@@ -106,13 +122,16 @@ function checkIteratee(data, counts, letter) {
         }
     }
 
-    return {checked, passed};
+    return { checked, passed };
 }
 
 const keysToCheck = ['r', 'g', 'b', 'a', 'h', 's', 'l', 'v'];
 
 export function simpleCheckForValidColor(data) {
-    const results = keysToCheck.reduce(checkIteratee.bind(null, data), {checked: 0, passed: 0});
+    const results = keysToCheck.reduce(
+        checkIteratee.bind(null, data),
+        { checked: 0, passed: 0 }
+    );
 
     return results.checked === results.passed ? data : undefined;
 }

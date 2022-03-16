@@ -12,5 +12,5 @@ export default function (lang) {
             iview.langs[lang.i.locale] = lang;
         }
     }
-};
+}
 /*eslint-enable */

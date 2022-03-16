@@ -1,4 +1,4 @@
-@divider-prefix-cls: ~"@{css-prefix}divider";
+@divider-prefix-cls: ~'@{css-prefix}divider';
 
 .@{divider-prefix-cls} {
     .reset-component;
@@ -48,7 +48,7 @@
 
     &-horizontal&-small&-with-text-center,
     &-horizontal&-small&-with-text-left,
-    &-horizontal&-small&-with-text-right{
+    &-horizontal&-small&-with-text-right {
         font-size: @font-size-base;
         margin: 8px 0;
     }
@@ -101,7 +101,9 @@
             border-style: dashed none none;
         }
     }
-    &-plain&-with-text, &-plain&-with-text-left, &-plain&-with-text-right {
+    &-plain&-with-text,
+    &-plain&-with-text-left,
+    &-plain&-with-text-right {
         color: @text-color;
         font-weight: normal;
         font-size: @font-size-base;

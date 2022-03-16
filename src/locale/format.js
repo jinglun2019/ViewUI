@@ -6,9 +6,9 @@
 
 const RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
 
-export default function() {
+export default function () {
     // const { hasOwn } = Vue.util;
-    function hasOwn (obj, key) {
+    function hasOwn(obj, key) {
         return Object.prototype.hasOwnProperty.call(obj, key);
     }
 
@@ -29,21 +29,29 @@ export default function() {
             args = {};
         }
 
-        return string.replace(RE_NARGS, (match, prefix, i, index) => {
-            let result;
+        return string.replace(
+            RE_NARGS,
+            (match, prefix, i, index) => {
+                let result;
 
-            if (string[index - 1] === '{' &&
-                string[index + match.length] === '}') {
-                return i;
-            } else {
-                result = hasOwn(args, i) ? args[i] : null;
-                if (result === null || result === undefined) {
-                    return '';
+                if (
+                    string[index - 1] === '{' &&
+                    string[index + match.length] === '}'
+                ) {
+                    return i;
+                } else {
+                    result = hasOwn(args, i) ? args[i] : null;
+                    if (
+                        result === null ||
+                        result === undefined
+                    ) {
+                        return '';
+                    }
+
+                    return result;
                 }
-
-                return result;
             }
-        });
+        );
     }
 
     return template;

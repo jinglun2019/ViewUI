@@ -38,8 +38,22 @@ const getDate = (timeStamp, startType) => {
     const minutes = getHandledValue(d.getMinutes());
     const second = getHandledValue(d.getSeconds());
     let resStr = '';
-    if (startType === 'year') resStr = year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + second;
-    else resStr = month + '-' + date + ' ' + hours + ':' + minutes;
+    if (startType === 'year')
+        resStr =
+            year +
+            '-' +
+            month +
+            '-' +
+            date +
+            ' ' +
+            hours +
+            ':' +
+            minutes +
+            ':' +
+            second;
+    else
+        resStr =
+            month + '-' + date + ' ' + hours + ':' + minutes;
     return resStr;
 };
 
@@ -56,7 +70,7 @@ export const getRelativeTime = (timeStamp, locale) => {
     // timeStamp = Number(timeStamp);
     // 获取当前时间时间戳
     // const currentTime = Math.floor(Date.parse(new Date()) / 1000);
-    const currentTime = (new Date()).getTime();
+    const currentTime = new Date().getTime();
 
     // 判断传入时间戳是否早于当前时间戳
     const IS_EARLY = isEarly(timeStamp, currentTime);
@@ -65,19 +79,42 @@ export const getRelativeTime = (timeStamp, locale) => {
     // 如果IS_EARLY为false则差值取反
     if (!IS_EARLY) diff = -diff;
     let resStr = '';
-    let dirStr = IS_EARLY ? (locale('i.time.before') || '前') : (locale('i.time.after') || '后');
+    let dirStr = IS_EARLY
+        ? locale('i.time.before') || '前'
+        : locale('i.time.after') || '后';
 
     if (diff < 1000) resStr = locale('i.time.just') || '刚刚';
     // 少于等于59秒
-    else if (diff < 60000) resStr = parseInt(diff / 1000) + (locale('i.time.seconds') || '秒') + dirStr;
+    else if (diff < 60000)
+        resStr =
+            parseInt(diff / 1000) +
+            (locale('i.time.seconds') || '秒') +
+            dirStr;
     // 多于59秒，少于等于59分钟59秒
-    else if (diff >= 60000 && diff < 3600000) resStr = Math.floor(diff / 60000) + (locale('i.time.minutes') || '分钟') + dirStr;
+    else if (diff >= 60000 && diff < 3600000)
+        resStr =
+            Math.floor(diff / 60000) +
+            (locale('i.time.minutes') || '分钟') +
+            dirStr;
     // 多于59分钟59秒，少于等于23小时59分钟59秒
-    else if (diff >= 3600000 && diff < 86400000) resStr = Math.floor(diff / 3600000) + (locale('i.time.hours') || '小时') + dirStr;
+    else if (diff >= 3600000 && diff < 86400000)
+        resStr =
+            Math.floor(diff / 3600000) +
+            (locale('i.time.hours') || '小时') +
+            dirStr;
     // 多于23小时59分钟59秒，少于等于29天59分钟59秒
-    else if (diff >= 86400000 && diff < 2623860000) resStr = Math.floor(diff / 86400000) + (locale('i.time.days') || '天') + dirStr;
+    else if (diff >= 86400000 && diff < 2623860000)
+        resStr =
+            Math.floor(diff / 86400000) +
+            (locale('i.time.days') || '天') +
+            dirStr;
     // 多于29天59分钟59秒，少于364天23小时59分钟59秒，且传入的时间戳早于当前
-    else if (diff >= 2623860000 && diff <= 31567860000 && IS_EARLY) resStr = getDate(timeStamp);
+    else if (
+        diff >= 2623860000 &&
+        diff <= 31567860000 &&
+        IS_EARLY
+    )
+        resStr = getDate(timeStamp);
     else resStr = getDate(timeStamp, 'year');
     return resStr;
 };

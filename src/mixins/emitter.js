@@ -6,7 +6,10 @@ function broadcast(componentName, eventName, params) {
             child.$emit.apply(child, [eventName].concat(params));
         } else {
             // todo 如果 params 是空数组，接收到的会是 undefined
-            broadcast.apply(child, [componentName, eventName].concat([params]));
+            broadcast.apply(
+                child,
+                [componentName, eventName].concat([params])
+            );
         }
     });
 }
@@ -24,11 +27,19 @@ export default {
                 }
             }
             if (parent) {
-                parent.$emit.apply(parent, [eventName].concat(params));
+                parent.$emit.apply(
+                    parent,
+                    [eventName].concat(params)
+                );
             }
         },
         broadcast(componentName, eventName, params) {
-            broadcast.call(this, componentName, eventName, params);
+            broadcast.call(
+                this,
+                componentName,
+                eventName,
+                params
+            );
         }
     }
 };

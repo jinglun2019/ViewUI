@@ -1,7 +1,9 @@
-function has (browser) {
+function has(browser) {
     const ua = navigator.userAgent;
     if (browser === 'ie') {
-        const isIE = ua.indexOf('compatible') > -1 && ua.indexOf('MSIE') > -1;
+        const isIE =
+            ua.indexOf('compatible') > -1 &&
+            ua.indexOf('MSIE') > -1;
         if (isIE) {
             const reIE = new RegExp('MSIE (\\d+\\.\\d+);');
             reIE.test(ua);
@@ -15,10 +17,13 @@ function has (browser) {
 }
 
 const csv = {
-    _isIE11 () {
+    _isIE11() {
         let iev = 0;
-        const ieold = (/MSIE (\d+\.\d+);/.test(navigator.userAgent));
-        const trident = !!navigator.userAgent.match(/Trident\/7.0/);
+        const ieold = /MSIE (\d+\.\d+);/.test(
+            navigator.userAgent
+        );
+        const trident =
+            !!navigator.userAgent.match(/Trident\/7.0/);
         const rv = navigator.userAgent.indexOf('rv:11.0');
 
         if (ieold) {
@@ -34,33 +39,52 @@ const csv = {
         return iev === 11;
     },
 
-    _isEdge () {
+    _isEdge() {
         return /Edge/.test(navigator.userAgent);
     },
 
-    _getDownloadUrl (text) {
+    _getDownloadUrl(text) {
         const BOM = '\uFEFF';
         // Add BOM to text for open in excel correctly
-        if (window.Blob && window.URL && window.URL.createObjectURL) {
-            const csvData = new Blob([BOM + text], { type: 'text/csv' });
+        if (
+            window.Blob &&
+            window.URL &&
+            window.URL.createObjectURL
+        ) {
+            const csvData = new Blob([BOM + text], {
+                type: 'text/csv'
+            });
             return URL.createObjectURL(csvData);
         } else {
-            return 'data:attachment/csv;charset=utf-8,' + BOM + encodeURIComponent(text);
+            return (
+                'data:attachment/csv;charset=utf-8,' +
+                BOM +
+                encodeURIComponent(text)
+            );
         }
     },
 
-    download (filename, text) {
+    download(filename, text) {
         if (has('ie') && has('ie') < 10) {
             // has module unable identify ie11 and Edge
-            const oWin = window.top.open('about:blank', '_blank');
+            const oWin = window.top.open(
+                'about:blank',
+                '_blank'
+            );
             oWin.document.charset = 'utf-8';
             oWin.document.write(text);
             oWin.document.close();
             oWin.document.execCommand('SaveAs', filename);
             oWin.close();
-        } else if (has('ie') === 10 || this._isIE11() || this._isEdge()) {
+        } else if (
+            has('ie') === 10 ||
+            this._isIE11() ||
+            this._isEdge()
+        ) {
             const BOM = '\uFEFF';
-            const csvData = new Blob([BOM + text], { type: 'text/csv' });
+            const csvData = new Blob([BOM + text], {
+                type: 'text/csv'
+            });
             navigator.msSaveBlob(csvData, filename);
         } else {
             const link = document.createElement('a');

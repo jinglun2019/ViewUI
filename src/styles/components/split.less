@@ -1,4 +1,4 @@
-@split-prefix-cls: ~"@{css-prefix}split";
+@split-prefix-cls: ~'@{css-prefix}split';
 @box-shadow: 0 0 4px 0 rgba(28, 36, 56, 0.4);
 @trigger-bar-background: rgba(23, 35, 61, 0.25);
 @trigger-background: #f8f8f9;
@@ -7,7 +7,9 @@
 @trigger-bar-offset: (@trigger-width - @trigger-bar-width) / 2;
 @trigger-bar-interval: 3px;
 @trigger-bar-weight: 1px;
-@trigger-bar-con-height: (@trigger-bar-weight + @trigger-bar-interval) * 8;
+@trigger-bar-con-height: (
+        @trigger-bar-weight + @trigger-bar-interval
+    ) * 8;
 
 .@{split-prefix-cls} {
     &-wrapper {
@@ -17,7 +19,8 @@
     }
     &-pane {
         position: absolute;
-        &.left-pane, &.right-pane {
+        &.left-pane,
+        &.right-pane {
             top: 0;
             bottom: 0;
         }
@@ -27,7 +30,8 @@
         &.right-pane {
             right: 0;
         }
-        &.top-pane, &.bottom-pane {
+        &.top-pane,
+        &.bottom-pane {
             left: 0;
             right: 0;
         }
@@ -38,7 +42,7 @@
             bottom: 0;
         }
 
-        &-moving{
+        &-moving {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;

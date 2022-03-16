@@ -1,7 +1,7 @@
 import Vue from 'vue';
 const isServer = Vue.prototype.$isServer;
 // 判断参数是否是其中之一
-export function oneOf (value, validList) {
+export function oneOf(value, validList) {
     for (let i = 0; i < validList.length; i++) {
         if (value === validList[i]) {
             return true;
@@ -10,13 +10,13 @@ export function oneOf (value, validList) {
     return false;
 }
 
-export function camelcaseToHyphen (str) {
+export function camelcaseToHyphen(str) {
     return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
 // For Modal scrollBar hidden
 let cached;
-export function getScrollBarSize (fresh) {
+export function getScrollBarSize(fresh) {
     if (isServer) return 0;
     if (fresh || cached === undefined) {
         const inner = document.createElement('div');
@@ -55,57 +55,81 @@ export function getScrollBarSize (fresh) {
 }
 
 // watch DOM change
-export const MutationObserver = isServer ? false : window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || false;
+export const MutationObserver = isServer
+    ? false
+    : window.MutationObserver ||
+      window.WebKitMutationObserver ||
+      window.MozMutationObserver ||
+      false;
 
 const SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
 const MOZ_HACK_REGEXP = /^moz([A-Z])/;
 
 function camelCase(name) {
-    return name.replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
-        return offset ? letter.toUpperCase() : letter;
-    }).replace(MOZ_HACK_REGEXP, 'Moz$1');
+    return name
+        .replace(
+            SPECIAL_CHARS_REGEXP,
+            function (_, separator, letter, offset) {
+                return offset ? letter.toUpperCase() : letter;
+            }
+        )
+        .replace(MOZ_HACK_REGEXP, 'Moz$1');
 }
 // getStyle
-export function getStyle (element, styleName) {
+export function getStyle(element, styleName) {
     if (!element || !styleName) return null;
     styleName = camelCase(styleName);
     if (styleName === 'float') {
         styleName = 'cssFloat';
     }
     try {
-        const computed = document.defaultView.getComputedStyle(element, '');
-        return element.style[styleName] || computed ? computed[styleName] : null;
-    } catch(e) {
+        const computed = document.defaultView.getComputedStyle(
+            element,
+            ''
+        );
+        return element.style[styleName] || computed
+            ? computed[styleName]
+            : null;
+    } catch (e) {
         return element.style[styleName];
     }
 }
 
 // firstUpperCase
 function firstUpperCase(str) {
-    return str.toString()[0].toUpperCase() + str.toString().slice(1);
+    return (
+        str.toString()[0].toUpperCase() + str.toString().slice(1)
+    );
 }
-export {firstUpperCase};
+export { firstUpperCase };
 
 // Warn
-export function warnProp(component, prop, correctType, wrongType) {
+export function warnProp(
+    component,
+    prop,
+    correctType,
+    wrongType
+) {
     correctType = firstUpperCase(correctType);
     wrongType = firstUpperCase(wrongType);
-    console.error(`[iView warn]: Invalid prop: type check failed for prop ${prop}. Expected ${correctType}, got ${wrongType}. (found in component: ${component})`);    // eslint-disable-line
+    console.error(
+        `[iView warn]: Invalid prop: type check failed for prop ${prop}. Expected ${correctType}, got ${wrongType}. (found in component: ${component})`
+    ); // eslint-disable-line
 }
 
 function typeOf(obj) {
     const toString = Object.prototype.toString;
     const map = {
-        '[object Boolean]'  : 'boolean',
-        '[object Number]'   : 'number',
-        '[object String]'   : 'string',
-        '[object Function]' : 'function',
-        '[object Array]'    : 'array',
-        '[object Date]'     : 'date',
-        '[object RegExp]'   : 'regExp',
+        '[object Boolean]': 'boolean',
+        '[object Number]': 'number',
+        '[object String]': 'string',
+        '[object Function]': 'function',
+        '[object Array]': 'array',
+        '[object Date]': 'date',
+        '[object RegExp]': 'regExp',
         '[object Undefined]': 'undefined',
-        '[object Null]'     : 'null',
-        '[object Object]'   : 'object'
+        '[object Null]': 'null',
+        '[object Object]': 'object'
     };
     return map[toString.call(obj)];
 }
@@ -117,7 +141,7 @@ function deepCopy(data) {
 
     if (t === 'array') {
         o = [];
-    } else if ( t === 'object') {
+    } else if (t === 'object') {
         o = {};
     } else {
         return data;
@@ -127,7 +151,7 @@ function deepCopy(data) {
         for (let i = 0; i < data.length; i++) {
             o.push(deepCopy(data[i]));
         }
-    } else if ( t === 'object') {
+    } else if (t === 'object') {
         for (let i in data) {
             o[i] = deepCopy(data[i]);
         }
@@ -135,22 +159,27 @@ function deepCopy(data) {
     return o;
 }
 
-export {deepCopy};
+export { deepCopy };
 
 // scrollTop animation
-export function scrollTop(el, from = 0, to, duration = 500, endCallback) {
+export function scrollTop(
+    el,
+    from = 0,
+    to,
+    duration = 500,
+    endCallback
+) {
     if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = (
+        window.requestAnimationFrame =
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             window.msRequestAnimationFrame ||
             function (callback) {
-                return window.setTimeout(callback, 1000/60);
-            }
-        );
+                return window.setTimeout(callback, 1000 / 60);
+            };
     }
     const difference = Math.abs(from - to);
-    const step = Math.ceil(difference / duration * 50);
+    const step = Math.ceil((difference / duration) * 50);
 
     function scroll(start, end, step) {
         if (start === end) {
@@ -158,9 +187,9 @@ export function scrollTop(el, from = 0, to, duration = 500, endCallback) {
             return;
         }
 
-        let d = (start + step > end) ? end : start + step;
+        let d = start + step > end ? end : start + step;
         if (start > end) {
-            d = (start - step < end) ? end : start - step;
+            d = start - step < end ? end : start - step;
         }
 
         if (el === window) {
@@ -174,7 +203,11 @@ export function scrollTop(el, from = 0, to, duration = 500, endCallback) {
 }
 
 // Find components upward
-function findComponentUpward (context, componentName, componentNames) {
+function findComponentUpward(
+    context,
+    componentName,
+    componentNames
+) {
     if (typeof componentName === 'string') {
         componentNames = [componentName];
     } else {
@@ -183,16 +216,19 @@ function findComponentUpward (context, componentName, componentNames) {
 
     let parent = context.$parent;
     let name = parent.$options.name;
-    while (parent && (!name || componentNames.indexOf(name) < 0)) {
+    while (
+        parent &&
+        (!name || componentNames.indexOf(name) < 0)
+    ) {
         parent = parent.$parent;
         if (parent) name = parent.$options.name;
     }
     return parent;
 }
-export {findComponentUpward};
+export { findComponentUpward };
 
 // Find component downward
-export function findComponentDownward (context, componentName) {
+export function findComponentDownward(context, componentName) {
     const $children = context.$children;
     let children = null;
 
@@ -203,7 +239,10 @@ export function findComponentDownward (context, componentName) {
                 children = child;
                 break;
             } else {
-                children = findComponentDownward(child, componentName);
+                children = findComponentDownward(
+                    child,
+                    componentName
+                );
                 if (children) break;
             }
         }
@@ -212,49 +251,69 @@ export function findComponentDownward (context, componentName) {
 }
 
 // Find components downward
-export function findComponentsDownward (context, componentName) {
+export function findComponentsDownward(context, componentName) {
     return context.$children.reduce((components, child) => {
-        if (child.$options.name === componentName) components.push(child);
-        const foundChilds = findComponentsDownward(child, componentName);
+        if (child.$options.name === componentName)
+            components.push(child);
+        const foundChilds = findComponentsDownward(
+            child,
+            componentName
+        );
         return components.concat(foundChilds);
     }, []);
 }
 
 // Find components upward
-export function findComponentsUpward (context, componentName) {
+export function findComponentsUpward(context, componentName) {
     let parents = [];
     const parent = context.$parent;
     if (parent) {
-        if (parent.$options.name === componentName) parents.push(parent);
-        return parents.concat(findComponentsUpward(parent, componentName));
+        if (parent.$options.name === componentName)
+            parents.push(parent);
+        return parents.concat(
+            findComponentsUpward(parent, componentName)
+        );
     } else {
         return [];
     }
 }
 
 // Find brothers components
-export function findBrothersComponents (context, componentName, exceptMe = true) {
+export function findBrothersComponents(
+    context,
+    componentName,
+    exceptMe = true
+) {
     let res = context.$parent.$children.filter(item => {
         return item.$options.name === componentName;
     });
-    let index = res.findIndex(item => item._uid === context._uid);
+    let index = res.findIndex(
+        item => item._uid === context._uid
+    );
     if (exceptMe) res.splice(index, 1);
     return res;
 }
 
 /* istanbul ignore next */
-const trim = function(string) {
-    return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
+const trim = function (string) {
+    return (string || '').replace(
+        /^[\s\uFEFF]+|[\s\uFEFF]+$/g,
+        ''
+    );
 };
 
 /* istanbul ignore next */
 export function hasClass(el, cls) {
     if (!el || !cls) return false;
-    if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.');
+    if (cls.indexOf(' ') !== -1)
+        throw new Error('className should not contain space.');
     if (el.classList) {
         return el.classList.contains(cls);
     } else {
-        return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
+        return (
+            (' ' + el.className + ' ').indexOf(' ' + cls + ' ') >
+            -1
+        );
     }
 }
 
@@ -295,7 +354,10 @@ export function removeClass(el, cls) {
             el.classList.remove(clsName);
         } else {
             if (hasClass(el, clsName)) {
-                curClass = curClass.replace(' ' + clsName + ' ', ' ');
+                curClass = curClass.replace(
+                    ' ' + clsName + ' ',
+                    ' '
+                );
             }
         }
     }
@@ -310,20 +372,21 @@ export const dimensionMap = {
     md: '768px',
     lg: '992px',
     xl: '1200px',
-    xxl: '1600px',
+    xxl: '1600px'
 };
 
-export function setMatchMedia () {
+export function setMatchMedia() {
     if (typeof window !== 'undefined') {
         const matchMediaPolyfill = mediaQuery => {
             return {
                 media: mediaQuery,
                 matches: false,
                 on() {},
-                off() {},
+                off() {}
             };
         };
-        window.matchMedia = window.matchMedia || matchMediaPolyfill;
+        window.matchMedia =
+            window.matchMedia || matchMediaPolyfill;
     }
 }
 

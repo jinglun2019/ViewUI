@@ -1,5 +1,4 @@
-
-import {clearHours} from '../util';
+import { clearHours } from '../util';
 
 export default {
     name: 'PanelTable',
@@ -29,31 +28,34 @@ export default {
         },
         focusedDate: {
             type: Date,
-            required: true,
+            required: true
         }
     },
     computed: {
-        dates(){
-            const {selectionMode, value, rangeState} = this;
-            const rangeSelecting = selectionMode === 'range' && rangeState.selecting;
+        dates() {
+            const { selectionMode, value, rangeState } = this;
+            const rangeSelecting =
+                selectionMode === 'range' &&
+                rangeState.selecting;
             return rangeSelecting ? [rangeState.from] : value;
-        },
+        }
     },
     methods: {
-        handleClick (cell, e) {
+        handleClick(cell, e) {
             e.stopPropagation();
 
-            if (cell.disabled || cell.type === 'weekLabel') return;
+            if (cell.disabled || cell.type === 'weekLabel')
+                return;
             const newDate = new Date(clearHours(cell.date));
 
             this.$emit('on-pick', newDate);
             this.$emit('on-pick-click');
         },
-        handleMouseMove (cell) {
+        handleMouseMove(cell) {
             if (!this.rangeState.selecting) return;
             if (cell.disabled) return;
             const newDate = cell.date;
             this.$emit('on-change-range', newDate);
-        },
+        }
     }
 };

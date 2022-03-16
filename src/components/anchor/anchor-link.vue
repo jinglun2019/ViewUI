@@ -1,6 +1,14 @@
 <template>
-	<div :class="anchorLinkClasses">
-        <a :class="linkTitleClasses" :href="href" :data-scroll-offset="scrollOffset" :data-href="href" @click.prevent="goAnchor" :title="title">{{ title }}</a>
+    <div :class="anchorLinkClasses">
+        <a
+            :class="linkTitleClasses"
+            :href="href"
+            :data-scroll-offset="scrollOffset"
+            :data-href="href"
+            @click.prevent="goAnchor"
+            :title="title"
+            >{{ title }}</a
+        >
         <slot></slot>
     </div>
 </template>
@@ -13,31 +21,31 @@ export default {
         title: String,
         scrollOffset: {
             type: Number,
-            default () {
+            default() {
                 return this.anchorCom.scrollOffset;
             }
         }
     },
-    data () {
+    data() {
         return {
             prefix: 'ivu-anchor-link'
         };
     },
     computed: {
-        anchorLinkClasses () {
+        anchorLinkClasses() {
             return [
                 this.prefix,
-                this.anchorCom.currentLink === this.href ? `${this.prefix}-active` : ''
+                this.anchorCom.currentLink === this.href
+                    ? `${this.prefix}-active`
+                    : ''
             ];
         },
-        linkTitleClasses () {
-            return [
-                `${this.prefix}-title`
-            ];
+        linkTitleClasses() {
+            return [`${this.prefix}-title`];
         }
     },
     methods: {
-        goAnchor () {
+        goAnchor() {
             this.currentLink = this.href;
             this.anchorCom.handleHashChange();
             this.anchorCom.handleScrollTo();
@@ -50,7 +58,7 @@ export default {
             }
         }
     },
-    mounted () {
+    mounted() {
         this.$nextTick(() => {
             this.anchorCom.init();
         });

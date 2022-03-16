@@ -7,44 +7,47 @@
             :class="linkClasses"
             @click.exact="handleCheckClick($event, false)"
             @click.ctrl="handleCheckClick($event, true)"
-            @click.meta="handleCheckClick($event, true)">
+            @click.meta="handleCheckClick($event, true)"
+        >
             <slot></slot>
         </a>
         <span v-else :class="linkClasses">
             <slot></slot>
         </span>
-        <span :class="separatorClasses" v-html="separator" v-if="!showSeparator"></span>
+        <span
+            :class="separatorClasses"
+            v-html="separator"
+            v-if="!showSeparator"
+        ></span>
         <span :class="separatorClasses" v-else>
             <slot name="separator"></slot>
         </span>
     </span>
 </template>
 <script>
-    import mixinsLink from '../../mixins/link';
-    const prefixCls = 'ivu-breadcrumb-item';
+import mixinsLink from '../../mixins/link';
+const prefixCls = 'ivu-breadcrumb-item';
 
-    export default {
-        name: 'BreadcrumbItem',
-        mixins: [ mixinsLink ],
-        props: {
-
+export default {
+    name: 'BreadcrumbItem',
+    mixins: [mixinsLink],
+    props: {},
+    data() {
+        return {
+            separator: '',
+            showSeparator: false
+        };
+    },
+    computed: {
+        linkClasses() {
+            return `${prefixCls}-link`;
         },
-        data () {
-            return {
-                separator: '',
-                showSeparator: false
-            };
-        },
-        computed: {
-            linkClasses () {
-                return `${prefixCls}-link`;
-            },
-            separatorClasses () {
-                return `${prefixCls}-separator`;
-            }
-        },
-        mounted () {
-            this.showSeparator = this.$slots.separator !== undefined;
+        separatorClasses() {
+            return `${prefixCls}-separator`;
         }
-    };
+    },
+    mounted() {
+        this.showSeparator = this.$slots.separator !== undefined;
+    }
+};
 </script>

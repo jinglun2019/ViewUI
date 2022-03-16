@@ -3,7 +3,7 @@ import { deepCopy } from '../../utils/assist';
 const convertColumnOrder = (columns, fixedType) => {
     let list = [];
     let other = [];
-    columns.forEach((col) => {
+    columns.forEach(col => {
         if (col.fixed && col.fixed === fixedType) {
             list.push(col);
         } else {
@@ -13,16 +13,19 @@ const convertColumnOrder = (columns, fixedType) => {
     return list.concat(other);
 };
 
-export {convertColumnOrder};
+export { convertColumnOrder };
 
 // set forTableHead to true when convertToRows, false in normal cases like table.vue
 const getAllColumns = (cols, forTableHead = false) => {
     const columns = deepCopy(cols);
     const result = [];
-    columns.forEach((column) => {
+    columns.forEach(column => {
         if (column.children) {
             if (forTableHead) result.push(column);
-            result.push.apply(result, getAllColumns(column.children, forTableHead));
+            result.push.apply(
+                result,
+                getAllColumns(column.children, forTableHead)
+            );
         } else {
             result.push(column);
         }
@@ -30,10 +33,14 @@ const getAllColumns = (cols, forTableHead = false) => {
     return result;
 };
 
-export {getAllColumns};
+export { getAllColumns };
 
 const convertToRows = (columns, fixedType = false) => {
-    const originColumns = fixedType ? fixedType === 'left' ? deepCopy(convertColumnOrder(columns, 'left')) : deepCopy(convertColumnOrder(columns, 'right')) : deepCopy(columns);
+    const originColumns = fixedType
+        ? fixedType === 'left'
+            ? deepCopy(convertColumnOrder(columns, 'left'))
+            : deepCopy(convertColumnOrder(columns, 'right'))
+        : deepCopy(columns);
     let maxLevel = 1;
     const traverse = (column, parent) => {
         if (parent) {
@@ -44,7 +51,7 @@ const convertToRows = (columns, fixedType = false) => {
         }
         if (column.children) {
             let colSpan = 0;
-            column.children.forEach((subColumn) => {
+            column.children.forEach(subColumn => {
                 traverse(subColumn, column);
                 colSpan += subColumn.colSpan;
             });
@@ -54,7 +61,7 @@ const convertToRows = (columns, fixedType = false) => {
         }
     };
 
-    originColumns.forEach((column) => {
+    originColumns.forEach(column => {
         column.level = 1;
         traverse(column);
     });
@@ -66,7 +73,7 @@ const convertToRows = (columns, fixedType = false) => {
 
     const allColumns = getAllColumns(originColumns, true);
 
-    allColumns.forEach((column) => {
+    allColumns.forEach(column => {
         if (!column.children) {
             column.rowSpan = maxLevel - column.level + 1;
         } else {
@@ -78,10 +85,11 @@ const convertToRows = (columns, fixedType = false) => {
     return rows;
 };
 
-export {convertToRows};
+export { convertToRows };
 
 const getRandomStr = function (len = 32) {
-    const $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    const $chars =
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     const maxPos = $chars.length;
     let str = '';
     for (let i = 0; i < len; i++) {
@@ -90,4 +98,4 @@ const getRandomStr = function (len = 32) {
     return str;
 };
 
-export {getRandomStr};
+export { getRandomStr };

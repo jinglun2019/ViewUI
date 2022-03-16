@@ -1,11 +1,11 @@
-@badge-prefix-cls: ~"@{css-prefix}badge";
+@badge-prefix-cls: ~'@{css-prefix}badge';
 
 .@{badge-prefix-cls} {
     position: relative;
     display: inline-block;
 
     &-count {
-        font-family: "Monospaced Number";
+        font-family: 'Monospaced Number';
         line-height: 1;
         vertical-align: middle;
         position: absolute;
@@ -27,7 +27,7 @@
         z-index: 10;
         box-shadow: 0 0 0 1px #fff;
 
-        &-custom{
+        &-custom {
             background: transparent;
             color: inherit;
             border-color: transparent;
@@ -46,22 +46,22 @@
             transform: translateX(0);
         }
 
-        &-primary{
+        &-primary {
             background: @primary-color;
         }
-        &-success{
+        &-success {
             background: @success-color;
         }
-        &-error{
+        &-error {
             background: @error-color;
         }
-        &-warning{
+        &-warning {
             background: @warning-color;
         }
-        &-info{
+        &-info {
             background: @info-color;
         }
-        &-normal{
+        &-normal {
             background: @normal-color;
             color: @subsidiary-color;
         }
@@ -109,7 +109,8 @@
                 border-radius: 50%;
                 border: 1px solid @processing-color;
                 content: '';
-                animation: aniStatusProcessing 1.2s infinite ease-in-out;
+                animation: aniStatusProcessing 1.2s infinite
+                    ease-in-out;
             }
         }
         &-default {
@@ -128,7 +129,8 @@
             margin-left: 6px;
         }
 
-        @colors: pink, magenta, red, volcano, orange, yellow, gold, cyan, lime, green, blue, geekblue, purple;
+        @colors: pink, magenta, red, volcano, orange, yellow,
+            gold, cyan, lime, green, blue, geekblue, purple;
 
         .make-color-classes(@i: length(@colors)) when (@i > 0) {
             .make-color-classes(@i - 1);

@@ -1,4 +1,4 @@
-@page-prefix-cls: ~"@{css-prefix}page";
+@page-prefix-cls: ~'@{css-prefix}page';
 
 .@{page-prefix-cls} {
     &:after {
@@ -28,7 +28,8 @@
         border: 1px solid @border-color-base;
         border-radius: @btn-border-radius;
         //transition: all @transition-time @ease-in-out;
-        transition: border @transition-time @ease-in-out, color @transition-time @ease-in-out;
+        transition: border @transition-time @ease-in-out,
+            color @transition-time @ease-in-out;
 
         a {
             margin: 0 6px;
@@ -47,13 +48,15 @@
         &-active {
             border-color: @primary-color;
 
-            a, &:hover a {
+            a,
+            &:hover a {
                 color: @primary-color;
             }
         }
     }
 
-    &-with-disabled &-item, &-with-disabled &-disabled{
+    &-with-disabled &-item,
+    &-with-disabled &-disabled {
         cursor: @cursor-disabled;
         background-color: @input-disabled-bg;
         a {
@@ -70,13 +73,15 @@
             background-color: @border-color-base;
             border-color: @border-color-base;
 
-            a, &:hover a {
+            a,
+            &:hover a {
                 color: #fff;
             }
         }
     }
 
-    &-item-jump-prev, &-item-jump-next {
+    &-item-jump-prev,
+    &-item-jump-next {
         //&:after {
         //    content: "•••";
         //    display: block;
@@ -84,10 +89,10 @@
         //    color: #ccc;
         //    text-align: center;
         //}
-        i{
+        i {
             color: #ccc;
         }
-        i:first-child{
+        i:first-child {
             display: none;
         }
 
@@ -95,29 +100,30 @@
             //&:after{
             //    display: none;
             //}
-            i:first-child{
+            i:first-child {
                 display: inline;
                 color: @primary-color;
             }
-            i:last-child{
+            i:last-child {
                 display: none;
             }
         }
     }
 
-    &-with-disabled &-item-jump-prev, &-with-disabled &-item-jump-next{
+    &-with-disabled &-item-jump-prev,
+    &-with-disabled &-item-jump-next {
         cursor: @cursor-disabled;
-        i{
+        i {
             color: #ccc;
         }
         &:hover {
             //&:after{
             //    display: block;
             //}
-            i:first-child{
+            i:first-child {
                 display: none;
             }
-            i:last-child{
+            i:last-child {
                 display: inline;
             }
         }
@@ -125,24 +131,24 @@
 
     &-item-jump-prev:hover {
         i:first-child:after {
-            content: "\F115";
+            content: '\F115';
             margin-left: -8px;
         }
     }
 
     &-item-jump-next:hover {
         i:first-child:after {
-            content: "\F11F";
+            content: '\F11F';
             margin-left: -8px;
         }
     }
 
-    &-prev{
+    &-prev {
         margin-right: 4px;
     }
 
     &-item-jump-prev,
-    &-item-jump-next{
+    &-item-jump-next {
         margin-right: 4px;
     }
 
@@ -167,7 +173,7 @@
         transition: all @transition-time @ease-in-out;
     }
     &-item-jump-prev,
-    &-item-jump-next{
+    &-item-jump-next {
         border-color: transparent;
     }
 
@@ -265,19 +271,21 @@
             outline: none;
             border: 1px solid @border-color-base;
             border-radius: @btn-border-radius;
-            transition: border-color @transition-time @ease-in-out;
+            transition: border-color @transition-time
+                @ease-in-out;
 
             &:hover {
                 border-color: @primary-color;
             }
         }
 
-        span{
+        span {
             padding: 0 8px 0 2px;
         }
     }
 
-    &-custom-text, &-custom-text:hover{
+    &-custom-text,
+    &-custom-text:hover {
         border-color: transparent;
     }
 }

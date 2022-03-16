@@ -9,31 +9,32 @@ export default {
         }
     },
     methods: {
-        iconBtnCls (direction, type = '') {
+        iconBtnCls(direction, type = '') {
             return [
                 `${prefixCls}-icon-btn`,
                 `${datePrefixCls}-${direction}-btn`,
-                `${datePrefixCls}-${direction}-btn-arrow${type}`,
+                `${datePrefixCls}-${direction}-btn-arrow${type}`
             ];
         },
-        handleShortcutClick (shortcut) {
-            if (shortcut.value) this.$emit('on-pick', shortcut.value());
+        handleShortcutClick(shortcut) {
+            if (shortcut.value)
+                this.$emit('on-pick', shortcut.value());
             if (shortcut.onClick) shortcut.onClick(this);
         },
-        handlePickClear () {
+        handlePickClear() {
             this.resetView();
             this.$emit('on-pick-clear');
         },
-        handlePickSuccess () {
+        handlePickSuccess() {
             this.resetView();
             this.$emit('on-pick-success');
         },
-        handlePickClick () {
+        handlePickClick() {
             this.$emit('on-pick-click');
         },
-        resetView(){
+        resetView() {
             setTimeout(
-                () => this.currentView = this.selectionMode,
+                () => (this.currentView = this.selectionMode),
                 500 // 500ms so the dropdown can close before changing
             );
         },
@@ -45,12 +46,18 @@ export default {
             //  if (this.showTime) this.$refs.timePicker.handleClear();
         },
         handleConfirm(visible, type) {
-            this.$emit('on-pick', this.dates, visible, type || this.type);
+            this.$emit(
+                'on-pick',
+                this.dates,
+                visible,
+                type || this.type
+            );
         },
-        onToggleVisibility(open){
-            const {timeSpinner, timeSpinnerEnd} = this.$refs;
+        onToggleVisibility(open) {
+            const { timeSpinner, timeSpinnerEnd } = this.$refs;
             if (open && timeSpinner) timeSpinner.updateScroll();
-            if (open && timeSpinnerEnd) timeSpinnerEnd.updateScroll();
+            if (open && timeSpinnerEnd)
+                timeSpinnerEnd.updateScroll();
         }
     }
 };

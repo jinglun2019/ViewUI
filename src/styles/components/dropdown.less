@@ -1,5 +1,5 @@
-@dropdown-prefix-cls: ~"@{css-prefix}dropdown";
-@dropdown-item-prefix-cls: ~"@{dropdown-prefix-cls}-item";
+@dropdown-prefix-cls: ~'@{css-prefix}dropdown';
+@dropdown-item-prefix-cls: ~'@{dropdown-prefix-cls}-item';
 
 .@{dropdown-prefix-cls} {
     display: inline-block;
@@ -13,25 +13,26 @@
         width: 100%;
     }
 
-    &-rel{
+    &-rel {
         //display: inline-block;
         position: relative;
-        &-user-select-none{
+        &-user-select-none {
             -webkit-user-select: none;
             -moz-user-select: none;
             user-select: none;
         }
     }
 
-    &-menu{
+    &-menu {
         min-width: 100px;
     }
 
-    &-transfer{
+    &-transfer {
         width: auto;
     }
-    &-item-selected, &-item&-item-selected:hover{
-        background:  ~`colorPalette("@{primary-color}", 1)`;
+    &-item-selected,
+    &-item&-item-selected:hover {
+        background: ~`colorPalette('@{primary-color}', 1) `;
     }
 }
 

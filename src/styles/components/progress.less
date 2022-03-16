@@ -1,4 +1,4 @@
-@progress-prefix-cls: ~"@{css-prefix}progress";
+@progress-prefix-cls: ~'@{css-prefix}progress';
 
 .@{progress-prefix-cls} {
     display: inline-block;
@@ -35,7 +35,7 @@
         border-radius: 100px;
         vertical-align: middle;
         position: relative;
-        &-text{
+        &-text {
             display: inline-block;
             vertical-align: middle;
             color: #fff;
@@ -47,7 +47,8 @@
         height: 100%;
         width: auto;
 
-        & > *, &:after {
+        & > *,
+        &:after {
             display: inline-block;
             vertical-align: bottom;
         }
@@ -64,14 +65,14 @@
         background-color: @primary-color;
         transition: all @transition-time linear;
         position: relative;
-        &:after{
+        &:after {
             content: '';
             display: inline-block;
             height: 100%;
             vertical-align: middle;
         }
     }
-    &-success-bg{
+    &-success-bg {
         border-radius: 100px;
         background-color: @success-color;
         transition: all @transition-time linear;
@@ -100,14 +101,16 @@
             bottom: 0;
             background: #fff;
             border-radius: 10px;
-            animation: ivu-progress-active 2s @ease-in-out infinite;
+            animation: ivu-progress-active 2s @ease-in-out
+                infinite;
         }
     }
 
-    &-vertical&-active{
+    &-vertical&-active {
         .@{progress-prefix-cls}-bg:before {
             top: auto;
-            animation: ivu-progress-active-vertical 2s @ease-in-out infinite;
+            animation: ivu-progress-active-vertical 2s
+                @ease-in-out infinite;
         }
     }
 
@@ -132,7 +135,7 @@
 
 @keyframes ivu-progress-active {
     0% {
-        opacity: .3;
+        opacity: 0.3;
         width: 0;
     }
     100% {
@@ -143,7 +146,7 @@
 
 @keyframes ivu-progress-active-vertical {
     0% {
-        opacity: .3;
+        opacity: 0.3;
         height: 0;
     }
     100% {

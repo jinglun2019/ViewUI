@@ -9,7 +9,7 @@ Modal.newInstance = properties => {
     const _props = properties || {};
 
     const Instance = new Vue({
-        mixins: [ Locale ],
+        mixins: [Locale],
         data: Object.assign({}, _props, {
             visible: false,
             width: 416,
@@ -26,128 +26,165 @@ Modal.newInstance = properties => {
             closable: false,
             closing: false // 关闭有动画，期间使用此属性避免重复点击
         }),
-        render (h) {
+        render(h) {
             let footerVNodes = [];
             if (this.showCancel) {
-                footerVNodes.push(h(Button, {
-                    props: {
-                        type: 'text'
-                    },
-                    on: {
-                        click: this.cancel
-                    }
-                }, this.localeCancelText));
+                footerVNodes.push(
+                    h(
+                        Button,
+                        {
+                            props: {
+                                type: 'text'
+                            },
+                            on: {
+                                click: this.cancel
+                            }
+                        },
+                        this.localeCancelText
+                    )
+                );
             }
-            footerVNodes.push(h(Button, {
-                props: {
-                    type: 'primary',
-                    loading: this.buttonLoading
-                },
-                on: {
-                    click: this.ok
-                }
-            }, this.localeOkText));
+            footerVNodes.push(
+                h(
+                    Button,
+                    {
+                        props: {
+                            type: 'primary',
+                            loading: this.buttonLoading
+                        },
+                        on: {
+                            click: this.ok
+                        }
+                    },
+                    this.localeOkText
+                )
+            );
 
             // render content
             let body_render;
             if (this.render) {
-                body_render = h('div', {
-                    attrs: {
-                        class: `${prefixCls}-body ${prefixCls}-body-render`
-                    }
-                }, [this.render(h)]);
-            } else {
-                body_render = h('div', {
-                    attrs: {
-                        class: `${prefixCls}-body`
-                    }
-                }, [
-                    h('div', {
-                        domProps: {
-                            innerHTML: this.body
+                body_render = h(
+                    'div',
+                    {
+                        attrs: {
+                            class: `${prefixCls}-body ${prefixCls}-body-render`
                         }
-                    })
-                ]);
+                    },
+                    [this.render(h)]
+                );
+            } else {
+                body_render = h(
+                    'div',
+                    {
+                        attrs: {
+                            class: `${prefixCls}-body`
+                        }
+                    },
+                    [
+                        h('div', {
+                            domProps: {
+                                innerHTML: this.body
+                            }
+                        })
+                    ]
+                );
             }
 
             // when render with no title, hide head
             let head_render;
             if (this.title) {
-                head_render = h('div', {
-                    attrs: {
-                        class: `${prefixCls}-head`
-                    }
-                }, [
-                    h('div', {
-                        class: this.iconTypeCls
-                    }, [
-                        h('i', {
-                            class: this.iconNameCls
-                        })
-                    ]),
-                    h('div', {
+                head_render = h(
+                    'div',
+                    {
                         attrs: {
-                            class: `${prefixCls}-head-title`
-                        },
-                        domProps: {
-                            innerHTML: this.title
+                            class: `${prefixCls}-head`
                         }
-                    })
-                ]);
+                    },
+                    [
+                        h(
+                            'div',
+                            {
+                                class: this.iconTypeCls
+                            },
+                            [
+                                h('i', {
+                                    class: this.iconNameCls
+                                })
+                            ]
+                        ),
+                        h('div', {
+                            attrs: {
+                                class: `${prefixCls}-head-title`
+                            },
+                            domProps: {
+                                innerHTML: this.title
+                            }
+                        })
+                    ]
+                );
             }
 
-            return h(Modal, {
-                props: Object.assign({}, _props, {
-                    width: this.width,
-                    scrollable: this.scrollable,
-                    closable: this.closable
-                }),
-                domProps: {
-                    value: this.visible
-                },
-                on: {
-                    input: (status) => {
-                        this.visible = status;
+            return h(
+                Modal,
+                {
+                    props: Object.assign({}, _props, {
+                        width: this.width,
+                        scrollable: this.scrollable,
+                        closable: this.closable
+                    }),
+                    domProps: {
+                        value: this.visible
                     },
-                    'on-cancel': this.cancel
-                }
-            }, [
-                h('div', {
-                    attrs: {
-                        class: prefixCls
+                    on: {
+                        input: status => {
+                            this.visible = status;
+                        },
+                        'on-cancel': this.cancel
                     }
-                }, [
-                    head_render,
-                    body_render,
-                    h('div', {
-                        attrs: {
-                            class: `${prefixCls}-footer`
-                        }
-                    }, footerVNodes)
-                ])
-            ]);
+                },
+                [
+                    h(
+                        'div',
+                        {
+                            attrs: {
+                                class: prefixCls
+                            }
+                        },
+                        [
+                            head_render,
+                            body_render,
+                            h(
+                                'div',
+                                {
+                                    attrs: {
+                                        class: `${prefixCls}-footer`
+                                    }
+                                },
+                                footerVNodes
+                            )
+                        ]
+                    )
+                ]
+            );
         },
         computed: {
-            iconTypeCls () {
+            iconTypeCls() {
                 return [
                     `${prefixCls}-head-icon`,
                     `${prefixCls}-head-icon-${this.iconType}`
                 ];
             },
-            iconNameCls () {
-                return [
-                    'ivu-icon',
-                    `ivu-icon-${this.iconName}`
-                ];
+            iconNameCls() {
+                return ['ivu-icon', `ivu-icon-${this.iconName}`];
             },
-            localeOkText () {
+            localeOkText() {
                 if (this.okText) {
                     return this.okText;
                 } else {
                     return this.t('i.modal.okText');
                 }
             },
-            localeCancelText () {
+            localeCancelText() {
                 if (this.cancelText) {
                     return this.cancelText;
                 } else {
@@ -156,14 +193,14 @@ Modal.newInstance = properties => {
             }
         },
         methods: {
-            cancel () {
+            cancel() {
                 if (this.closing) return;
                 this.$children[0].visible = false;
                 this.buttonLoading = false;
                 this.onCancel();
                 this.remove();
             },
-            ok () {
+            ok() {
                 if (this.closing) return;
                 if (this.loading) {
                     this.buttonLoading = true;
@@ -173,21 +210,22 @@ Modal.newInstance = properties => {
                 }
                 this.onOk();
             },
-            remove () {
+            remove() {
                 this.closing = true;
                 setTimeout(() => {
                     this.closing = false;
                     this.destroy();
                 }, 300);
             },
-            destroy () {
+            destroy() {
                 this.$destroy();
-                if (this.$el) document.body.removeChild(this.$el);
+                if (this.$el)
+                    document.body.removeChild(this.$el);
                 this.onRemove();
             },
-            onOk () {},
-            onCancel () {},
-            onRemove () {}
+            onOk() {},
+            onCancel() {},
+            onRemove() {}
         }
     });
 
@@ -196,16 +234,18 @@ Modal.newInstance = properties => {
     const modal = Instance.$children[0];
 
     return {
-        show (props) {
+        show(props) {
             modal.$parent.showCancel = props.showCancel;
             modal.$parent.iconType = props.icon;
 
             switch (props.icon) {
                 case 'info':
-                    modal.$parent.iconName = 'ios-information-circle';
+                    modal.$parent.iconName =
+                        'ios-information-circle';
                     break;
                 case 'success':
-                    modal.$parent.iconName = 'ios-checkmark-circle';
+                    modal.$parent.iconName =
+                        'ios-checkmark-circle';
                     break;
                 case 'warning':
                     modal.$parent.iconName = 'ios-alert';
@@ -264,7 +304,7 @@ Modal.newInstance = properties => {
 
             modal.visible = true;
         },
-        remove () {
+        remove() {
             modal.visible = false;
             modal.$parent.buttonLoading = false;
             modal.$parent.remove();

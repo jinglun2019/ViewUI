@@ -1,9 +1,9 @@
 import dateUtil from '../../utils/date';
 
-export const toDate = function(date) {
+export const toDate = function (date) {
     let _date = new Date(date);
     // IE patch start (#1422)
-    if (isNaN(_date.getTime()) && typeof date === 'string'){
+    if (isNaN(_date.getTime()) && typeof date === 'string') {
         _date = date.split('-').map(Number);
         _date[1] += 1;
         _date = new Date(..._date);
@@ -26,30 +26,33 @@ export const isInRange = (time, a, b) => {
     return time >= start && time <= end;
 };
 
-export const formatDate = function(date, format) {
+export const formatDate = function (date, format) {
     date = toDate(date);
     if (!date) return '';
     return dateUtil.format(date, format || 'yyyy-MM-dd');
 };
 
-export const parseDate = function(string, format) {
+export const parseDate = function (string, format) {
     return dateUtil.parse(string, format || 'yyyy-MM-dd');
 };
 
-export const getDayCountOfMonth = function(year, month) {
+export const getDayCountOfMonth = function (year, month) {
     return new Date(year, month + 1, 0).getDate();
 };
 
-export const getFirstDayOfMonth = function(date) {
+export const getFirstDayOfMonth = function (date) {
     const temp = new Date(date.getTime());
     temp.setDate(1);
     return temp.getDay();
 };
 
-export const siblingMonth = function(src, diff) {
+export const siblingMonth = function (src, diff) {
     const temp = new Date(src); // lets copy it so we don't change the original
     const newMonth = temp.getMonth() + diff;
-    const newMonthDayCount = getDayCountOfMonth(temp.getFullYear(), newMonth);
+    const newMonthDayCount = getDayCountOfMonth(
+        temp.getFullYear(),
+        newMonth
+    );
     if (newMonthDayCount < temp.getDate()) {
         temp.setDate(newMonthDayCount);
     }
@@ -58,15 +61,15 @@ export const siblingMonth = function(src, diff) {
     return temp;
 };
 
-export const prevMonth = function(src) {
+export const prevMonth = function (src) {
     return siblingMonth(src, -1);
 };
 
-export const nextMonth = function(src) {
+export const nextMonth = function (src) {
     return siblingMonth(src, 1);
 };
 
-export const initTimeDate = function() {
+export const initTimeDate = function () {
     const date = new Date();
     date.setHours(0);
     date.setMinutes(0);
@@ -74,7 +77,7 @@ export const initTimeDate = function() {
     return date;
 };
 
-export const formatDateLabels = (function() {
+export const formatDateLabels = (function () {
     /*
       Formats:
       yyyy - 4 digit year
@@ -100,7 +103,10 @@ export const formatDateLabels = (function() {
             const monthName = date.toLocaleDateString(locale, {
                 month: 'long'
             });
-            return (monthName[0].toUpperCase() + monthName.slice(1).toLowerCase()).slice(0, 3);
+            return (
+                monthName[0].toUpperCase() +
+                monthName.slice(1).toLowerCase()
+            ).slice(0, 3);
         },
         mmmm: (date, locale) =>
             date.toLocaleDateString(locale, {
@@ -110,24 +116,45 @@ export const formatDateLabels = (function() {
             const monthName = date.toLocaleDateString(locale, {
                 month: 'long'
             });
-            return monthName[0].toUpperCase() + monthName.slice(1).toLowerCase();
+            return (
+                monthName[0].toUpperCase() +
+                monthName.slice(1).toLowerCase()
+            );
         }
     };
-    const formatRegex = new RegExp(['yyyy', 'Mmmm', 'mmmm', 'Mmm', 'mmm', 'mm', 'm'].join('|'), 'g');
+    const formatRegex = new RegExp(
+        ['yyyy', 'Mmmm', 'mmmm', 'Mmm', 'mmm', 'mm', 'm'].join(
+            '|'
+        ),
+        'g'
+    );
 
-    return function(locale, format, date) {
-        const componetsRegex = /(\[[^\]]+\])([^\[\]]+)(\[[^\]]+\])/;
+    return function (locale, format, date) {
+        const componetsRegex =
+            /(\[[^\]]+\])([^\[\]]+)(\[[^\]]+\])/;
         const components = format.match(componetsRegex).slice(1);
         const separator = components[1];
-        const labels = [components[0], components[2]].map(component => {
-            const label = component.replace(/\[[^\]]+\]/, str => {
-                return str.slice(1, -1).replace(formatRegex, match => formats[match](date, locale));
-            });
-            return {
-                label: label,
-                type: component.indexOf('yy') != -1 ? 'year' : 'month'
-            };
-        });
+        const labels = [components[0], components[2]].map(
+            component => {
+                const label = component.replace(
+                    /\[[^\]]+\]/,
+                    str => {
+                        return str
+                            .slice(1, -1)
+                            .replace(formatRegex, match =>
+                                formats[match](date, locale)
+                            );
+                    }
+                );
+                return {
+                    label: label,
+                    type:
+                        component.indexOf('yy') != -1
+                            ? 'year'
+                            : 'month'
+                };
+            }
+        );
         return {
             separator: separator,
             labels: labels
@@ -149,34 +176,48 @@ export const DEFAULT_FORMATS = {
 
 // export const RANGE_SEPARATOR = ' - ';  // use picker.vue prop separator
 
-const DATE_FORMATTER = function(value, format) {
+const DATE_FORMATTER = function (value, format) {
     return formatDate(value, format);
 };
-const DATE_PARSER = function(text, format) {
+const DATE_PARSER = function (text, format) {
     return parseDate(text, format);
 };
-const RANGE_FORMATTER = function(value, format, RANGE_SEPARATOR) {
+const RANGE_FORMATTER = function (
+    value,
+    format,
+    RANGE_SEPARATOR
+) {
     if (Array.isArray(value) && value.length === 2) {
         const start = value[0];
         const end = value[1];
 
         if (start && end) {
-            return formatDate(start, format) + RANGE_SEPARATOR + formatDate(end, format);
+            return (
+                formatDate(start, format) +
+                RANGE_SEPARATOR +
+                formatDate(end, format)
+            );
         }
-    } else if (!Array.isArray(value) && value instanceof Date){
+    } else if (!Array.isArray(value) && value instanceof Date) {
         return formatDate(value, format);
     }
     return '';
 };
-const RANGE_PARSER = function(text, format, RANGE_SEPARATOR) {
-    const array = Array.isArray(text) ? text : text.split(RANGE_SEPARATOR);
+const RANGE_PARSER = function (text, format, RANGE_SEPARATOR) {
+    const array = Array.isArray(text)
+        ? text
+        : text.split(RANGE_SEPARATOR);
     if (array.length === 2) {
         const range1 = array[0];
         const range2 = array[1];
 
         return [
-            range1 instanceof Date ? range1 : parseDate(range1, format),
-            range2 instanceof Date ? range2 : parseDate(range2, format),
+            range1 instanceof Date
+                ? range1
+                : parseDate(range1, format),
+            range2 instanceof Date
+                ? range2
+                : parseDate(range2, format)
         ];
     }
     return [];
@@ -227,14 +268,22 @@ export const TYPE_VALUE_RESOLVER_MAP = {
     },
     multiple: {
         formatter: (value, format) => {
-            return value.filter(Boolean).map(date => formatDate(date, format)).join(',');
+            return value
+                .filter(Boolean)
+                .map(date => formatDate(date, format))
+                .join(',');
         },
         parser: (value, format) => {
-            const values = typeof value === 'string' ? value.split(',') : value;
+            const values =
+                typeof value === 'string'
+                    ? value.split(',')
+                    : value;
             return values.map(value => {
                 if (value instanceof Date) return value;
-                if (typeof value === 'string') value = value.trim();
-                else if (typeof value !== 'number' && !value) value = '';
+                if (typeof value === 'string')
+                    value = value.trim();
+                else if (typeof value !== 'number' && !value)
+                    value = '';
                 return parseDate(value, format);
             });
         }
@@ -255,4 +304,3 @@ export const TYPE_VALUE_RESOLVER_MAP = {
         }
     }
 };
-

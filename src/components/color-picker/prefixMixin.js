@@ -4,7 +4,7 @@ export default {
             prefixCls: 'ivu-color-picker',
             inputPrefixCls: 'ivu-input',
             iconPrefixCls: 'ivu-icon',
-            transferPrefixCls: 'ivu-transfer',
+            transferPrefixCls: 'ivu-transfer'
         };
-    },
+    }
 };

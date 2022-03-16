@@ -1,5 +1,5 @@
-@carousel-prefix-cls: ~"@{css-prefix}carousel";
-@carousel-item-prefix-cls: ~"@{css-prefix}carousel-item";
+@carousel-prefix-cls: ~'@{css-prefix}carousel';
+@carousel-item-prefix-cls: ~'@{css-prefix}carousel-item';
 
 .@{carousel-prefix-cls} {
     position: relative;
@@ -9,7 +9,8 @@
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
 
-    &-track, &-list {
+    &-track,
+    &-list {
         transform: translate3d(0, 0, 0);
     }
 
@@ -46,7 +47,6 @@
     }
 
     &-arrow {
-
         border: none;
         outline: none;
 
@@ -67,7 +67,7 @@
         transform: translateY(-50%);
 
         transition: @transition-time;
-        background-color: rgba(31, 45, 61, .11);
+        background-color: rgba(31, 45, 61, 0.11);
         color: #fff;
 
         &:hover {
@@ -163,7 +163,7 @@
                 font-size: 0;
                 color: transparent;
 
-                transition: all .5s;
+                transition: all 0.5s;
                 &.radius {
                     width: 6px;
                     height: 6px;
@@ -178,7 +178,7 @@
             &.@{carousel-prefix-cls}-active > button {
                 opacity: 1;
                 width: 24px;
-                &.radius{
+                &.radius {
                     width: 6px;
                 }
             }

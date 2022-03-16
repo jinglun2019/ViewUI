@@ -29,7 +29,9 @@
         "dist:prod": "webpack --config build/webpack.dist.prod.config.js",
         "dist:locale": "webpack --config build/webpack.dist.locale.config.js",
         "dist": "npm run dist:style && npm run dist:dev && npm run dist:prod && npm run dist:locale",
-        "lint": "eslint --fix --ext .js,.vue src",
+        "lint:eslint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx,.vue ./src",
+        "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md,ts}\"",
+        "lint:all": "npm run lint:eslint && npm run lint:prettier",
         "tslint": "tslint --type-check --fix --project .",
         "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
         "test": "npm run lint && npm run tslint && npm run unit",
@@ -51,6 +53,7 @@
         "js-calendar": "^1.2.3",
         "lodash.throttle": "^4.1.1",
         "popper.js": "^1.14.6",
+        "prettier": "^2.5.1",
         "tinycolor2": "^1.4.1",
         "v-click-outside-x": "^3.7.1"
     },

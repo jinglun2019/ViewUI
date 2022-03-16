@@ -1,4 +1,4 @@
-@switch-prefix-cls: ~"@{css-prefix}switch";
+@switch-prefix-cls: ~'@{css-prefix}switch';
 
 .@{switch-prefix-cls} {
     display: inline-block;
@@ -14,8 +14,8 @@
     user-select: none;
     transition: all @transition-time @ease-in-out;
 
-    &-loading{
-        opacity: .4;
+    &-loading {
+        opacity: 0.4;
     }
 
     &-inner {
@@ -43,14 +43,15 @@
         left: 1px;
         top: 1px;
         cursor: pointer;
-        transition: left @transition-time @ease-in-out, width @transition-time @ease-in-out;
+        transition: left @transition-time @ease-in-out,
+            width @transition-time @ease-in-out;
     }
 
     &:active:after {
         width: 26px;
     }
 
-    &:before{
+    &:before {
         content: '';
         display: none;
         width: 14px;
@@ -62,11 +63,12 @@
         top: 3px;
         z-index: 1;
         border: 1px solid @primary-color;
-        border-color: transparent transparent transparent @primary-color;
+        border-color: transparent transparent transparent
+            @primary-color;
         animation: switch-loading 1s linear;
         animation-iteration-count: infinite;
     }
-    &-loading:before{
+    &-loading:before {
         display: block;
     }
 
@@ -90,7 +92,7 @@
         &:active:after {
             width: 14px;
         }
-        &:before{
+        &:before {
             width: 10px;
             height: 10px;
             left: 2px;
@@ -109,7 +111,7 @@
         left: 11px;
     }
 
-    &-large{
+    &-large {
         width: 56px;
         &:active:after {
             width: 26px;
@@ -142,7 +144,7 @@
         &:after {
             left: 23px;
         }
-        &:before{
+        &:before {
             left: 25px;
         }
 
@@ -153,7 +155,7 @@
 
     &-disabled {
         cursor: @cursor-disabled;
-        opacity: .4;
+        opacity: 0.4;
 
         &:after {
             background: #fff;
@@ -165,10 +167,10 @@
         }
     }
 
-    &-disabled&-checked{
+    &-disabled&-checked {
         border-color: @primary-color;
         background-color: @primary-color;
-        opacity: .4;
+        opacity: 0.4;
 
         &:after {
             background: #fff;
@@ -178,7 +180,6 @@
             color: #fff;
         }
     }
-
 }
 
 @keyframes switch-loading {

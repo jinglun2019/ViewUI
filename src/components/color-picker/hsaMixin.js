@@ -1,6 +1,6 @@
 import Emitter from '../../mixins/emitter';
 import handleEscapeMixin from './handleEscapeMixin';
-import {getTouches} from './utils';
+import { getTouches } from './utils';
 import { on, off } from '../../utils/dom';
 
 export default {
@@ -9,12 +9,12 @@ export default {
     props: {
         focused: {
             type: Boolean,
-            default: false,
+            default: false
         },
         value: {
             type: Object,
-            default: undefined,
-        },
+            default: undefined
+        }
     },
 
     beforeDestroy() {
@@ -58,21 +58,33 @@ export default {
             off(window, 'mouseup', this.handleMouseUp);
             // This timeout is required so that the click handler for click-outside
             // has the chance to run before the mouseup removes the dragging flag.
-            setTimeout(() => this.dispatch('ColorPicker', 'on-dragging', false), 1);
+            setTimeout(
+                () =>
+                    this.dispatch(
+                        'ColorPicker',
+                        'on-dragging',
+                        false
+                    ),
+                1
+            );
         },
         getLeft(e) {
-            const {container} = this.$refs;
-            const xOffset = container.getBoundingClientRect().left + window.pageXOffset;
+            const { container } = this.$refs;
+            const xOffset =
+                container.getBoundingClientRect().left +
+                window.pageXOffset;
             const pageX = e.pageX || getTouches(e, 'PageX');
 
             return pageX - xOffset;
         },
         getTop(e) {
-            const {container} = this.$refs;
-            const yOffset = container.getBoundingClientRect().top + window.pageYOffset;
+            const { container } = this.$refs;
+            const yOffset =
+                container.getBoundingClientRect().top +
+                window.pageYOffset;
             const pageY = e.pageY || getTouches(e, 'PageY');
 
             return pageY - yOffset;
-        },
-    },
+        }
+    }
 };

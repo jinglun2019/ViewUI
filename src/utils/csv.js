@@ -8,7 +8,10 @@ const appendLine = (content, row, { separator, quoted }) => {
     const line = row.map(data => {
         if (!quoted) return data;
         // quote data
-        data = typeof data === 'string' ? data.replace(/"/g, '"') : data;
+        data =
+            typeof data === 'string'
+                ? data.replace(/"/g, '"')
+                : data;
         return `"${data}"`;
     });
     content.push(line.join(separator));
@@ -19,7 +22,12 @@ const defaults = {
     quoted: false
 };
 
-export default function csv(columns, datas, options, noHeader = false) {
+export default function csv(
+    columns,
+    datas,
+    options,
+    noHeader = false
+) {
     options = Object.assign({}, defaults, options);
     let columnOrder;
     const content = [];
@@ -29,11 +37,16 @@ export default function csv(columns, datas, options, noHeader = false) {
         columnOrder = columns.map(v => {
             if (typeof v === 'string') return v;
             if (!noHeader) {
-                column.push(typeof v.title !== 'undefined' ? v.title : v.key);
+                column.push(
+                    typeof v.title !== 'undefined'
+                        ? v.title
+                        : v.key
+                );
             }
             return v.key;
         });
-        if (column.length > 0) appendLine(content, column, options);
+        if (column.length > 0)
+            appendLine(content, column, options);
     } else {
         columnOrder = [];
         datas.forEach(v => {
@@ -42,15 +55,21 @@ export default function csv(columns, datas, options, noHeader = false) {
             }
         });
         if (columnOrder.length > 0) {
-            columnOrder = columnOrder.filter((value, index, self) => self.indexOf(value) === index);
-            if (!noHeader) appendLine(content, columnOrder, options);
+            columnOrder = columnOrder.filter(
+                (value, index, self) =>
+                    self.indexOf(value) === index
+            );
+            if (!noHeader)
+                appendLine(content, columnOrder, options);
         }
     }
 
     if (Array.isArray(datas)) {
         datas.forEach(row => {
             if (!Array.isArray(row)) {
-                row = columnOrder.map(k => (typeof row[k] !== 'undefined' ? row[k] : ''));
+                row = columnOrder.map(k =>
+                    typeof row[k] !== 'undefined' ? row[k] : ''
+                );
             }
             appendLine(content, row, options);
         });

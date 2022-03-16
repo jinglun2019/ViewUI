@@ -1,26 +1,39 @@
 <template>
-    <component :is="wrapperComponent" :offset-top="offsetTop" :offset-bottom="offsetBottom" @on-change="handleAffixStateChange">
-		<div :class="`${prefix}-wrapper`" :style="wrapperStyle">
+    <component
+        :is="wrapperComponent"
+        :offset-top="offsetTop"
+        :offset-bottom="offsetBottom"
+        @on-change="handleAffixStateChange"
+    >
+        <div :class="`${prefix}-wrapper`" :style="wrapperStyle">
             <div :class="`${prefix}`">
                 <div :class="`${prefix}-ink`">
-                    <span v-show="showInk" :class="`${prefix}-ink-ball`" :style="{top: `${inkTop}px`}"></span>
+                    <span
+                        v-show="showInk"
+                        :class="`${prefix}-ink-ball`"
+                        :style="{ top: `${inkTop}px` }"
+                    ></span>
                 </div>
                 <slot></slot>
             </div>
         </div>
-	</component>
+    </component>
 </template>
 <script>
-import { scrollTop, findComponentsDownward, sharpMatcherRegx } from '../../utils/assist';
+import {
+    scrollTop,
+    findComponentsDownward,
+    sharpMatcherRegx
+} from '../../utils/assist';
 import { on, off } from '../../utils/dom';
 export default {
     name: 'Anchor',
-    provide () {
+    provide() {
         return {
             anchorCom: this
         };
     },
-    data () {
+    data() {
         return {
             prefix: 'ivu-anchor',
             isAffixed: false, // current affixed state
@@ -49,7 +62,7 @@ export default {
             type: Number,
             default: 5
         },
-//        container: [String, HTMLElement],  // HTMLElement 在 SSR 下不支持
+        //        container: [String, HTMLElement],  // HTMLElement 在 SSR 下不支持
         container: null,
         showInk: {
             type: Boolean,
@@ -61,61 +74,89 @@ export default {
         }
     },
     computed: {
-        wrapperComponent () {
+        wrapperComponent() {
             return this.affix ? 'Affix' : 'div';
         },
-        wrapperStyle () {
+        wrapperStyle() {
             return {
-                maxHeight: this.offsetTop ? `calc(100vh - ${this.offsetTop}px)` : '100vh'
+                maxHeight: this.offsetTop
+                    ? `calc(100vh - ${this.offsetTop}px)`
+                    : '100vh'
             };
         },
-        containerIsWindow () {
+        containerIsWindow() {
             return this.scrollContainer === window;
         }
     },
     methods: {
-        handleAffixStateChange (state) {
+        handleAffixStateChange(state) {
             this.isAffixed = this.affix && state;
         },
-        handleScroll (e) {
-            this.upperFirstTitle = e.target.scrollTop < this.titlesOffsetArr[0].offset;
+        handleScroll(e) {
+            this.upperFirstTitle =
+                e.target.scrollTop <
+                this.titlesOffsetArr[0].offset;
             if (this.animating) return;
             this.updateTitleOffset();
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop || e.target.scrollTop;
+            const scrollTop =
+                document.documentElement.scrollTop ||
+                document.body.scrollTop ||
+                e.target.scrollTop;
             this.getCurrentScrollAtTitleId(scrollTop);
         },
-        handleHashChange () {
+        handleHashChange() {
             const url = window.location.href;
             const sharpLinkMatch = sharpMatcherRegx.exec(url);
             if (!sharpLinkMatch) return;
             this.currentLink = sharpLinkMatch[0];
             this.currentId = sharpLinkMatch[1];
         },
-        handleScrollTo () {
-            const anchor = document.getElementById(this.currentId);
-            const currentLinkElementA = document.querySelector(`a[data-href="${this.currentLink}"]`);
+        handleScrollTo() {
+            const anchor = document.getElementById(
+                this.currentId
+            );
+            const currentLinkElementA = document.querySelector(
+                `a[data-href="${this.currentLink}"]`
+            );
             let offset = this.scrollOffset;
             if (currentLinkElementA) {
-                offset = parseFloat(currentLinkElementA.getAttribute('data-scroll-offset'));
+                offset = parseFloat(
+                    currentLinkElementA.getAttribute(
+                        'data-scroll-offset'
+                    )
+                );
             }
 
             if (!anchor) return;
-            const offsetTop = anchor.offsetTop - this.wrapperTop - offset;
+            const offsetTop =
+                anchor.offsetTop - this.wrapperTop - offset;
             this.animating = true;
-            scrollTop(this.scrollContainer, this.scrollElement.scrollTop, offsetTop, 600, () => {
-                this.animating = false;
-            });
+            scrollTop(
+                this.scrollContainer,
+                this.scrollElement.scrollTop,
+                offsetTop,
+                600,
+                () => {
+                    this.animating = false;
+                }
+            );
             this.handleSetInkTop();
         },
-        handleSetInkTop () {
-            const currentLinkElementA = document.querySelector(`a[data-href="${this.currentLink}"]`);
+        handleSetInkTop() {
+            const currentLinkElementA = document.querySelector(
+                `a[data-href="${this.currentLink}"]`
+            );
             if (!currentLinkElementA) return;
             const elementATop = currentLinkElementA.offsetTop;
-            const top = (elementATop < 0 ? this.offsetTop : elementATop);
+            const top =
+                elementATop < 0 ? this.offsetTop : elementATop;
             this.inkTop = top;
         },
-        updateTitleOffset () {
-            const links = findComponentsDownward(this, 'AnchorLink').map(link => {
+        updateTitleOffset() {
+            const links = findComponentsDownward(
+                this,
+                'AnchorLink'
+            ).map(link => {
                 return link.href;
             });
             const idArr = links.map(link => {
@@ -124,14 +165,17 @@ export default {
             let offsetArr = [];
             idArr.forEach(id => {
                 const titleEle = document.getElementById(id);
-                if (titleEle) offsetArr.push({
-                    link: `#${id}`,
-                    offset: titleEle.offsetTop - this.scrollElement.offsetTop
-                });
+                if (titleEle)
+                    offsetArr.push({
+                        link: `#${id}`,
+                        offset:
+                            titleEle.offsetTop -
+                            this.scrollElement.offsetTop
+                    });
             });
             this.titlesOffsetArr = offsetArr;
         },
-        getCurrentScrollAtTitleId (scrollTop) {
+        getCurrentScrollAtTitleId(scrollTop) {
             let i = -1;
             let len = this.titlesOffsetArr.length;
             let titleItem = {
@@ -142,7 +186,11 @@ export default {
             while (++i < len) {
                 let currentEle = this.titlesOffsetArr[i];
                 let nextEle = this.titlesOffsetArr[i + 1];
-                if (scrollTop >= currentEle.offset && scrollTop < ((nextEle && nextEle.offset) || Infinity)) {
+                if (
+                    scrollTop >= currentEle.offset &&
+                    scrollTop <
+                        ((nextEle && nextEle.offset) || Infinity)
+                ) {
                     titleItem = this.titlesOffsetArr[i];
                     break;
                 }
@@ -150,50 +198,68 @@ export default {
             this.currentLink = titleItem.link;
             this.handleSetInkTop();
         },
-        getContainer () {
-            this.scrollContainer = this.container ? (typeof this.container === 'string' ? document.querySelector(this.container) : this.container) : window;
-            this.scrollElement = this.container ? this.scrollContainer : (document.documentElement || document.body);
+        getContainer() {
+            this.scrollContainer = this.container
+                ? typeof this.container === 'string'
+                    ? document.querySelector(this.container)
+                    : this.container
+                : window;
+            this.scrollElement = this.container
+                ? this.scrollContainer
+                : document.documentElement || document.body;
         },
-        removeListener () {
-            off(this.scrollContainer, 'scroll', this.handleScroll);
+        removeListener() {
+            off(
+                this.scrollContainer,
+                'scroll',
+                this.handleScroll
+            );
             off(window, 'hashchange', this.handleHashChange);
         },
-        init () {
+        init() {
             // const anchorLink = findComponentDownward(this, 'AnchorLink');
             this.handleHashChange();
             this.$nextTick(() => {
                 this.removeListener();
                 this.getContainer();
-                this.wrapperTop = this.containerIsWindow ? 0 : this.scrollElement.offsetTop;
+                this.wrapperTop = this.containerIsWindow
+                    ? 0
+                    : this.scrollElement.offsetTop;
                 this.handleScrollTo();
                 this.handleSetInkTop();
                 this.updateTitleOffset();
                 if (this.titlesOffsetArr[0]) {
-                    this.upperFirstTitle = this.scrollElement.scrollTop < this.titlesOffsetArr[0].offset;
+                    this.upperFirstTitle =
+                        this.scrollElement.scrollTop <
+                        this.titlesOffsetArr[0].offset;
                 }
-                on(this.scrollContainer, 'scroll', this.handleScroll);
+                on(
+                    this.scrollContainer,
+                    'scroll',
+                    this.handleScroll
+                );
                 on(window, 'hashchange', this.handleHashChange);
             });
         }
     },
     watch: {
-        '$route' () {
+        $route() {
             this.handleHashChange();
             this.$nextTick(() => {
                 this.handleScrollTo();
             });
         },
-        container () {
+        container() {
             this.init();
         },
-        currentLink (newHref, oldHref) {
+        currentLink(newHref, oldHref) {
             this.$emit('on-change', newHref, oldHref);
         }
     },
-    mounted () {
+    mounted() {
         this.init();
     },
-    beforeDestroy () {
+    beforeDestroy() {
         this.removeListener();
     }
 };

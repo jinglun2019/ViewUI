@@ -1,4 +1,4 @@
-@list-prefix-cls: ~"@{css-prefix}list";
+@list-prefix-cls: ~'@{css-prefix}list';
 
 .@{list-prefix-cls} {
     position: relative;
@@ -9,7 +9,7 @@
         list-style: none;
     }
 
-    &-item{
+    &-item {
         display: flex;
         align-items: center;
         padding: @list-item-padding;
@@ -18,7 +18,7 @@
             color: @text-color;
         }
 
-        &-meta{
+        &-meta {
             display: flex;
             flex: 1;
             align-items: flex-start;
@@ -67,7 +67,7 @@
                 text-align: center;
                 cursor: pointer;
 
-                &:after{
+                &:after {
                     content: '';
                     position: absolute;
                     top: 50%;
@@ -82,12 +82,11 @@
                 padding-left: 0;
             }
             & > li:last-child {
-                &:after{
+                &:after {
                     display: none;
                 }
             }
             &-split {
-
             }
         }
     }
@@ -116,7 +115,7 @@
     &-split &-header {
         border-bottom: 1px solid @border-color-split;
     }
-    &-split &-footer{
+    &-split &-footer {
         border-top: 1px solid @border-color-split;
     }
 
