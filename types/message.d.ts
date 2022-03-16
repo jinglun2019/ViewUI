@@ -2,9 +2,11 @@
 // Project: https://github.com/iview/iview
 // Definitions by: yangdan
 // Definitions: https://github.com/yangdan8/iview.git
-import Vue, { VNode, CreateElement } from "vue";
+import Vue, { VNode, CreateElement } from 'vue';
 
-export declare class Message extends Vue {
+export const Message: MessageClass;
+
+export declare class MessageClass extends Vue {
     /**
      * 消息
      * @param config MessageConfig为相关配置,string为待显示的内容
@@ -72,7 +74,7 @@ export declare class MessageConfig {
     duration?: number;
 }
 
-declare module "vue/types/vue" {
+declare module 'vue/types/vue' {
     interface Vue {
         /**
          * 全局提示
