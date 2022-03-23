@@ -249,3 +249,10 @@
 @list-item-meta-margin-bottom: @padding-md;
 @list-item-meta-avatar-margin-right: @padding-md;
 @list-item-meta-title-margin-bottom: @padding-sm;
+
+//hack,@supports是非ie才支持的属性
+.not-ie(@css-property) {
+    @supports (display: block) {
+        @css-property();
+    }
+}

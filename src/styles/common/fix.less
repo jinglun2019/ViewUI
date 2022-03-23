@@ -1,0 +1,226 @@
+// // 降级到less-loader@6.0.0才正常
+// @import '../custom.less';
+// @text-color: #333;
+
+// //iview样式重定义
+// //checkbox ie兼容处理
+// .ivu-checkbox-checked .ivu-checkbox-inner::after {
+//     display: block;
+//     transform: rotate(45deg) scale(1);
+// }
+
+// .ivu-checkbox-indeterminate .ivu-checkbox-inner::after {
+//     display: block;
+// }
+
+// .ivu-date-picker {
+//     .ivu-icon-ios-time-outline {
+//         transform: scaleX(-1);
+//     }
+// }
+
+// .ivu-date-picker-cells-cell[disabled] {
+//     color: @btn-disable-color;
+
+//     &:hover {
+//         em {
+//             background: none;
+//         }
+//     }
+// }
+
+// .ivu-icon-ios-calendar-outline {
+//     width: 16px;
+//     height: 32px;
+//     margin: 8px;
+//     font-size: 0 !important;
+//     background: url('../../../assets/日期-原始.png') no-repeat;
+
+//     &:hover {
+//         background: url('../../../assets/日期-经过.png')
+//             no-repeat;
+//     }
+// }
+
+// .ivu-input-wrapper-disabled .ivu-icon-ios-calendar-outline {
+//     background: url('../../../assets/日期-禁用.png') no-repeat;
+// }
+
+// .ivu-input-wrapper-small {
+//     .ivu-input-suffix {
+//         width: 22px;
+//     }
+//     .ivu-input {
+//         padding-right: 22px;
+//     }
+//     .ivu-icon-ios-calendar-outline {
+//         height: 16px;
+//         margin: 4px 0 0;
+//         transform: scale(0.8);
+//     }
+// }
+
+// .ivu-page {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+// .ivu-load-loop {
+//     width: 14px;
+//     line-height: 1 !important;
+//     vertical-align: -0.1em;
+// }
+
+// .not-ie({.ivu-load-loop {height: 12px;}});
+
+// .ivu-spin-fix {
+//     background-color: rgba(255, 255, 255, 0.8);
+// }
+// .ivu-spin-fullscreen {
+//     background-color: rgba(255, 255, 255, 0.92) !important;
+// }
+
+// .close-circle() {
+//     .ivu-icon-ios-close-circle {
+//         color: #b4b4b4 !important;
+//         &:hover {
+//             color: #848484 !important;
+//             cursor: pointer;
+//         }
+//     }
+// }
+
+// .ivu-btn {
+//     padding: 0 12px;
+//     line-height: 1.6;
+// }
+
+// .ivu-cascader {
+//     .close-circle();
+// }
+
+// .ivu-input-wrapper {
+//     .close-circle();
+// }
+
+// .ivu-btn-loading {
+//     &::before {
+//         bottom: 0;
+//     }
+// }
+
+// //table
+// // .ivu-table-wrapper {
+// //     // table为空时，page组件不显示，需要把empty-content下沉些以居中
+// //     .empty-content {
+// //         margin-top: 25px;
+// //     }
+// // }
+// // .ivu-table::before {
+// //     background-color: initial !important;
+// // }
+// // .ivu-table th {
+// //     height: 40px !important;
+// //     color: #399cd0;
+// //     background-color: @primary-bg;
+// //     border-bottom: none 0 !important;
+// // }
+// // .ivu-table-row {
+// //     height: 48px;
+// //     // box-shadow: 0 1px 0 0 #dbeeff;
+// //     border-bottom: #dbeeff 1px solid;
+// // }
+
+// // .ivu-table-cell {
+// //     padding-right: 6px;
+// //     padding-left: 6px;
+// //     white-space: nowrap;
+// // }
+
+// // .ivu-table-column-child {
+// //     background: #f6fbff !important;
+// // }
+
+// // .ivu-table-sort i {
+// //     color: #8fbae0;
+// // }
+
+// .ivu-menu-light::after {
+//     display: none !important;
+// }
+
+// //
+// // .ivu-form .ivu-form-item-label {
+// //     padding: 10px 8px 10px 0;
+// //     color: @label-gray;
+// // }
+// // .ivu-form-item {
+// //     margin-bottom: 20px;
+// // }
+// // .ivu-form-item-error-tip {
+// //     padding-top: 4px;
+// // }
+// // .ivu-form-item-required .ivu-form-item-label::before {
+// //     display: none;
+// // }
+// .ivu-tabs {
+//     height: 100%;
+// }
+
+// .ivu-tabs-nav .ivu-tabs-tab {
+//     padding: 12px 0;
+// }
+
+// .ivu-card-body {
+//     padding: 0;
+// }
+
+// .ivu-cascader-menu .ivu-cascader-menu-item i {
+//     right: 8px;
+// }
+// .ivu-cascader-menu {
+//     height: auto !important;
+// }
+
+// .ivu-poptip-popper {
+//     min-width: unset;
+//     .ivu-poptip-body {
+//         padding: 8px 8px;
+//     }
+// }
+
+// .ivu-picker-confirm {
+//     .ivu-btn {
+//         & + .ivu-btn {
+//             margin-left: 4px;
+//         }
+//     }
+// }
+
+// .ivu-page-item {
+//     a {
+//         font-weight: bold;
+//         color: @primary-color;
+//     }
+// }
+// .ivu-page-item-active {
+//     background: @primary-color;
+
+//     a {
+//         font-weight: bold;
+//         color: white !important;
+//     }
+// }
+// .ivu-page-prev,
+// .ivu-page-next {
+//     a {
+//         font-weight: bold;
+//         color: @primary-color;
+//     }
+// }
+// .ivu-page-disabled {
+//     a {
+//         color: #8dd2fe;
+//     }
+// }
