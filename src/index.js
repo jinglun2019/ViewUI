@@ -63,8 +63,13 @@ import {
     OptionGroup
 } from './components/select';
 import locale from './locale/index';
+import Empty from './extends/empty.vue';
+import Loading from './extends/loading.vue';
 
 const components = {
+    Empty,
+    Loading,
+
     Affix,
     Alert,
     Anchor,

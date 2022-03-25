@@ -31,11 +31,11 @@ export default {
             type: String,
             default: '暂无内容'
         },
-        showImg: {
+        isShowImg: {
             type: Boolean,
             default: true
         },
-        showText: {
+        isShowText: {
             type: Boolean,
             default: true
         }

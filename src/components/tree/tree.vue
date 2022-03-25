@@ -52,8 +52,8 @@ import Dropdown from '../dropdown/dropdown.vue';
 import DropdownMenu from '../dropdown/dropdown-menu.vue';
 import Emitter from '../../mixins/emitter';
 import Locale from '../../mixins/locale';
-import Loading from '../../lancoo/loading.vue';
-import Empty from '../../lancoo/empty.vue';
+import Loading from '../../extends/loading.vue';
+import Empty from '../../extends/empty.vue';
 const prefixCls = 'ivu-tree';
 
 export default {
