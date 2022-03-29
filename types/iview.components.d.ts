@@ -25,7 +25,11 @@ export { Content } from './content';
 export { DatePicker, DatePickerOptions } from './date-picker';
 export { Divider } from './divider';
 export { Drawer } from './drawer';
-export { Dropdown, DropdownMenu, DropdownItem } from './dropdown';
+export {
+    Dropdown,
+    DropdownMenu,
+    DropdownItem
+} from './dropdown';
 export { Footer } from './footer';
 export { Form, FormItem } from './form';
 export { Row, Col } from './grid';
@@ -40,7 +44,11 @@ export { LoadingBar, LoadingBarConfig } from './loading-bar';
 export { Menu, MenuGroup, MenuItem, Submenu } from './menu';
 export { Message, MessageConfig } from './message';
 export { Modal, ModalInstance, ModalConfig } from './modal';
-export { Notice, NoticeConfig, NoticeGlobalConfig } from './notice';
+export {
+    Notice,
+    NoticeConfig,
+    NoticeGlobalConfig
+} from './notice';
 export { Page } from './page';
 export { Poptip } from './poptip';
 export { Progress } from './progress';
@@ -52,7 +60,14 @@ export { Slider } from './slider';
 export { Spin } from './spin';
 export { Steps, StepsStep } from './steps';
 export { Switch, Switch as ISwitch } from './switch';
-export { Table, TableColumn, TableRenderCreateElementData, TableColumnRenderParams, TableColumnRenderHeadParams, TableExportCsvParams } from './table';
+export {
+    Table,
+    TableColumn,
+    TableRenderCreateElementData,
+    TableColumnRenderParams,
+    TableColumnRenderHeadParams,
+    TableExportCsvParams
+} from './table';
 export { Tabs, TabPane } from './tabs';
 export { Tag } from './tag';
 export { Time } from './time';
@@ -62,8 +77,9 @@ export { Tooltip } from './tooltip';
 export { Transfer } from './transfer';
 export { Tree, TreeChild } from './tree';
 export { Upload } from './upload';
-
-interface IViewGlobalOptions{
+export { Loading } from './loading';
+export { Empty } from './empty';
+interface IViewGlobalOptions {
     size?: string;
     transfer?: boolean | string;
     select: {
@@ -119,7 +135,7 @@ interface IViewGlobalOptions{
     };
 }
 
-interface IViewInstallOptions extends IViewGlobalOptions{
+interface IViewInstallOptions extends IViewGlobalOptions {
     locale?: any;
     i18n?: any;
 }
@@ -128,10 +144,7 @@ declare const API: {
     version: string;
     locale: (l: any) => void;
     i18n: (fn: any) => void;
-    install: (
-        Vue: Vue,
-        opts: IViewInstallOptions
-    ) => void;
+    install: (Vue: Vue, opts: IViewInstallOptions) => void;
     lang: (code: string) => void;
 };
 
