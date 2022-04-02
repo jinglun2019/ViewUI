@@ -11,8 +11,8 @@
                 :width="setCellWidth(column)"
             />
             <col
-                v-if="$parent.showVerticalScrollBar"
-                :width="$parent.scrollBarWidth"
+                v-if="tableRoot.showVerticalScrollBar"
+                :width="tableRoot.scrollBarWidth"
             />
         </colgroup>
         <thead>
@@ -42,10 +42,10 @@
                                 column.type === 'selection'
                             "
                             ><Checkbox
-                                v-if="!column.hideSelectAll"
+                                :indeterminate="isIndeterminate"
                                 :value="isSelectAll"
                                 :disabled="isSelectDisabled"
-                                @on-change="selectAll"
+                                @click.prevent.native="selectAll"
                             ></Checkbox
                         ></template>
                         <template v-else>
@@ -64,7 +64,7 @@
                                             )._index
                                         )
                                 "
-                                >{{ column.title || '#' }}</span
+                                >{{ column.title || '' }}</span
                             >
                             <render-header
                                 v-else
@@ -322,7 +322,7 @@
 
                 <th
                     v-if="
-                        $parent.showVerticalScrollBar &&
+                        tableRoot.showVerticalScrollBar &&
                         rowIndex === 0
                     "
                     :class="scrollBarCellClass()"
@@ -363,7 +363,8 @@ export default {
             default: false
         },
         columnRows: Array,
-        fixedColumnRows: Array
+        fixedColumnRows: Array,
+        enableIndeterminate: { type: Boolean },
     },
     data() {
         return {
@@ -372,6 +373,7 @@ export default {
             dragState: {}
         };
     },
+    inject: ['tableRoot'],
     computed: {
         styles() {
             const style = Object.assign({}, this.styleObject);
@@ -421,6 +423,61 @@ export default {
             if (isAllDisabledAndUnSelected) isSelectAll = false;
 
             return isSelectAll;
+        },
+        isIndeterminate() {
+            if (!this.enableIndeterminate) {
+                return false
+            }
+            // 如果已经是全选，半选必为false
+            if (this.isSelectAll) {
+                return false
+            }
+            //没有数据必为false
+            if (!this.data.length) {
+                return false
+            }
+
+            let someNotSelect = false
+            let someSelected = false
+            for (let i in this.objData) {
+                const objData = this.objData[i]
+                if (
+                    !objData._isChecked &&
+                    !objData._isDisabled
+                ) {
+                    someNotSelect = true
+                }
+                if (objData._isChecked && !objData._isDisabled) {
+                    someSelected = true
+                }
+                if (someNotSelect && someSelected) {
+                    return true
+                }
+                if (
+                    objData.children &&
+                    objData.children.length
+                ) {
+                    for (let j in objData.children) {
+                        const childData = objData.children[j]
+                        if (
+                            !childData._isChecked &&
+                            !childData._isDisabled
+                        ) {
+                            someNotSelect = true
+                        }
+                        if (
+                            childData._isChecked &&
+                            !childData._isDisabled
+                        ) {
+                            someSelected = true
+                        }
+                        if (someNotSelect && someSelected) {
+                            return true
+                        }
+                    }
+                }
+            }
+            return false
         },
         headRows() {
             const isGroup = this.columnRows.length > 1;
@@ -504,9 +561,20 @@ export default {
                 }
             ];
         },
-        selectAll() {
-            const status = !this.isSelectAll;
-            this.$parent.selectAll(status);
+        selectAll(event) {
+            if (window.event) {
+                window.event.returnValue = false
+            }
+            event.preventDefault()
+            if (!this.enableIndeterminate) {
+                const status = !this.isSelectAll
+                this.tableRoot.selectAll(status)
+            } else {
+                const status =
+                    this.isSelectAll || this.isIndeterminate
+                this.tableRoot.selectAll(!status)
+            }
+            return false
         },
         handleSort(index, type) {
             // 在固定列时，寻找正确的 index #5580
@@ -518,7 +586,7 @@ export default {
             if (column._sortType === type) {
                 type = 'normal';
             }
-            this.$parent.handleSort(_index, type);
+            this.tableRoot.handleSort(_index, type)
         },
         handleSortByHead(index) {
             // 在固定列时，寻找正确的 index #5580
@@ -537,16 +605,16 @@ export default {
             }
         },
         handleFilter(index) {
-            this.$parent.handleFilter(index);
+            this.tableRoot.handleFilter(index)
         },
         handleSelect(index, value) {
-            this.$parent.handleFilterSelect(index, value);
+            this.tableRoot.handleFilterSelect(index, value)
         },
         handleReset(index) {
-            this.$parent.handleFilterReset(index);
+            this.tableRoot.handleFilterReset(index)
         },
         handleFilterHide(index) {
-            this.$parent.handleFilterHide(index);
+            this.tableRoot.handleFilterHide(index)
         },
         // 因为表头嵌套不是深拷贝，所以没有 _ 开头的方法，在 isGroup 下用此列
         getColumn(rowIndex, index) {
@@ -567,8 +635,8 @@ export default {
             if (this.draggingColumn) {
                 this.dragging = true;
 
-                const table = this.$parent;
-                const tableEl = table.$el;
+                const table = this.tableRoot
+                const tableEl = table.$el
                 const tableLeft =
                     tableEl.getBoundingClientRect().left;
                 const columnEl = this.$el.querySelector(

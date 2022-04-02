@@ -16,6 +16,8 @@ export default {
                     [`${column.className}`]: column.className, // column className
                     [`${this.prefixCls}-column-${column.align}`]:
                         column.align,
+                    [`${this.prefixCls}-column-center`]:
+                        column.align === undefined,
                     [`${this.prefixCls}-hidden`]:
                         (this.fixed === 'left' &&
                             column.fixed !== 'left') ||

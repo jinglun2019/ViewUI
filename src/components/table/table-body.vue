@@ -71,6 +71,7 @@ export default {
             default: false
         }
     },
+    inject: ['tableRoot'],
     computed: {
         expandRender() {
             let render = function () {
@@ -105,26 +106,26 @@ export default {
             );
         },
         rowStatusByRowKey(type, rowKey) {
-            const data = this.$parent.getDataByRowKey(rowKey);
-            return data[type];
+            const data = this.tableRoot.getDataByRowKey(rowKey)
+            return data[type]
         },
         handleMouseIn(_index, event, rowKey) {
-            event.stopPropagation();
-            this.$parent.handleMouseIn(_index, rowKey);
+            event.stopPropagation()
+            this.tableRoot.handleMouseIn(_index, rowKey)
         },
         handleMouseOut(_index, event, rowKey) {
-            event.stopPropagation();
-            this.$parent.handleMouseOut(_index, rowKey);
+            event.stopPropagation()
+            this.tableRoot.handleMouseOut(_index, rowKey)
         },
         clickCurrentRow(_index, event, rowKey) {
-            this.$parent.clickCurrentRow(_index, rowKey);
+            this.tableRoot.clickCurrentRow(_index, rowKey)
         },
         dblclickCurrentRow(_index, event, rowKey) {
             event.stopPropagation();
-            this.$parent.dblclickCurrentRow(_index, rowKey);
+            this.tableRoot.dblclickCurrentRow(_index, rowKey);
         },
         clickCell(row, column, key, event) {
-            this.$parent.$emit(
+            this.tableRoot.$emit(
                 'on-cell-click',
                 row,
                 column,
@@ -134,21 +135,21 @@ export default {
         },
         contextmenuCurrentRow(_index, event, rowKey) {
             event.stopPropagation();
-            if (this.$parent.contextMenu) event.preventDefault();
-            this.$parent.contextmenuCurrentRow(
+            if (this.tableRoot.contextMenu) event.preventDefault();
+            this.tableRoot.contextmenuCurrentRow(
                 _index,
                 rowKey,
                 event
             );
         },
         selectStartCurrentRow() {
-            if (this.$parent.contextMenu) {
+            if (this.tableRoot.contextMenu) {
                 // event.stopPropagation();
                 // event.preventDefault();
             }
         },
         getSpan(row, column, rowIndex, columnIndex) {
-            const fn = this.$parent.spanMethod;
+            const fn = this.tableRoot.spanMethod
             if (typeof fn === 'function') {
                 const result = fn({
                     row,

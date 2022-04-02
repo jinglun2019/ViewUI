@@ -20,8 +20,14 @@ tree 添加 empty 组件，on-check-change 多返回一个末节点，添加 loa
 
 Message 组件修复 type 错误
 
-<!-- # 修改 table 默认序号 -->
+table 修改 loading 样式、添加滚动条、cell 默认开启 ellipsis；
 
-<!-- # table tooltip 改为 title，cell 默认改为居中，添加 pageSize、current、enableIndeterminate、virtualScroll、selectedRowList 参数，滚到底部 bottom 事件
+table 添加 current、pageSize 字段，行 type 为 index 时，根据传入的 current、pageSize 自动计算 index；
 
-selectedRowList -->
+table 的 cell 添加 title；将 head 中的’#‘修改为’‘；
+
+table 列默认 align 改为 center；
+
+table 添加 enableIndeterminate 字段，type 为 selection 自动启用，可用.selectedRowList.sync 获取当前选中的行
+
+table 添加滚到底部 bottom 事件（scrollBottom）

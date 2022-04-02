@@ -19,6 +19,7 @@
 </template>
 <script>
 export default {
+    inject: ['tableRoot'],
     props: {
         row: Object,
         prefixCls: String,
@@ -36,7 +37,10 @@ export default {
         },
         onDrop(e, index) {
             const dragIndex = e.dataTransfer.getData('index');
-            this.$parent.$parent.dragAndDrop(dragIndex, index);
+            this.$parent.$parent.$parent.$parent.dragAndDrop(
+                dragIndex,
+                index
+            );
             e.preventDefault();
         },
         allowDrop(e) {
@@ -44,7 +48,7 @@ export default {
         },
         rowClasses(_index) {
             const objData = this.isChildren
-                ? this.$parent.$parent.getDataByRowKey(
+                ? this.$parent.$parent.$parent.$parent.getDataByRowKey(
                       this.row._rowKey
                   )
                 : this.objData[_index];
@@ -60,7 +64,7 @@ export default {
             ];
         },
         rowClsName(_index) {
-            return this.$parent.$parent.rowClassName(
+            return this.tableRoot.rowClassName(
                 this.objData[_index],
                 _index
             );

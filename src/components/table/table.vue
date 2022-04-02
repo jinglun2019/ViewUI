@@ -1,5 +1,6 @@
 <template>
     <div :class="wrapClasses" :style="styles" ref="tableWrap">
+        <loading :visible="loading" />
         <div :class="classes">
             <div
                 :class="[prefixCls + '-title']"
@@ -22,13 +23,17 @@
                     :obj-data="objData"
                     :columns-width="columnsWidth"
                     :data="rebuildData"
+                    :enableIndeterminate="enableIndeterminate"
+                    ref="tableHeadRef"
                 ></table-head>
             </div>
-            <div
+
+            <vue-scroll
+                :ops="vueScrollOpts"
                 :class="[prefixCls + '-body']"
                 :style="bodyStyle"
                 ref="body"
-                @scroll="handleBodyScroll"
+                @handle-scroll="onTableScroll"
                 v-show="
                     !(
                         (!!localeNoDataText &&
@@ -39,18 +44,20 @@
                     )
                 "
             >
-                <table-body
-                    ref="tbody"
-                    :draggable="draggable"
-                    :prefix-cls="prefixCls"
-                    :styleObject="tableStyle"
-                    :columns="cloneColumns"
-                    :data="rebuildData"
-                    :row-key="rowKey"
-                    :columns-width="columnsWidth"
-                    :obj-data="objData"
-                ></table-body>
-            </div>
+                <div>
+                    <table-body
+                        ref="tbody"
+                        :draggable="draggable"
+                        :prefix-cls="prefixCls"
+                        :styleObject="tableStyle"
+                        :columns="cloneColumns"
+                        :data="rebuildData"
+                        :row-key="rowKey"
+                        :columns-width="columnsWidth"
+                        :obj-data="objData"
+                    ></table-body>
+                </div>
+            </vue-scroll>
             <table-summary
                 v-if="showSummary && data && data.length"
                 ref="summary"
@@ -122,6 +129,9 @@
                         :obj-data="objData"
                         :columns-width="columnsWidth"
                         :data="rebuildData"
+                        :enableIndeterminate="
+                            enableIndeterminate
+                        "
                     ></table-head>
                 </div>
                 <div
@@ -177,6 +187,9 @@
                         :obj-data="objData"
                         :columns-width="columnsWidth"
                         :data="rebuildData"
+                        :enableIndeterminate="
+                            enableIndeterminate
+                        "
                     ></table-head>
                 </div>
                 <div
@@ -247,9 +260,9 @@
                 </DropdownMenu>
             </Dropdown>
         </div>
-        <Spin fix size="large" v-if="loading">
+        <!-- <Spin fix size="large" v-if="loading">
             <slot name="loading"></slot>
-        </Spin>
+        </Spin> -->
     </div>
 </template>
 <script>
@@ -276,6 +289,14 @@ import {
     convertColumnOrder,
     getRandomStr
 } from './util';
+import Loading from '../../extends/loading.vue';
+import vueScrollConfig from '../../mixins/vueScrollConfig';
+import deepmerge from 'deepmerge';
+import vueScroll from 'vuescroll/dist/vuescroll-native';
+
+const vueScrollOpts = deepmerge(vueScrollConfig, {
+    bar: { keepShow: true }
+});
 
 const prefixCls = 'ivu-table';
 
@@ -291,7 +312,9 @@ export default {
         tableSummary,
         Spin,
         Dropdown,
-        DropdownMenu
+        DropdownMenu,
+        Loading,
+        vueScroll
     },
     provide() {
         return {
@@ -299,6 +322,15 @@ export default {
         };
     },
     props: {
+        pageSize: {
+            type: Number,
+            default: 0
+        },
+        //页码
+        current: {
+            type: Number,
+            default: 1
+        },
         data: {
             type: Array,
             default() {
@@ -435,12 +467,17 @@ export default {
             type: Boolean,
             default: false
         },
-        // 4.7.0
-        fixedShadow: {
-            validator(value) {
-                return oneOf(value, ['auto', 'show', 'hide']);
-            },
-            default: 'show'
+        // 新增字段，用于判断表格中checkbox是否启用indeterminate
+        // 默认开启
+        enableIndeterminate: {
+            type: Boolean,
+            default: true
+        },
+
+        // 选中的行列表
+        selectedRowList: {
+            type: Array,
+            default: () => []
         }
     },
     data() {
@@ -481,7 +518,8 @@ export default {
                 left: 0
             },
             scrollOnTheLeft: false,
-            scrollOnTheRight: false
+            scrollOnTheRight: false,
+            vueScrollOpts
         };
     },
     computed: {
@@ -910,7 +948,7 @@ export default {
             // 4.7.0 auto fixed shadow
             if (this.fixedShadow === 'auto') {
                 this.$nextTick(() => {
-                    const $body = this.$refs.body;
+                    const $body = this.$refs.body.getPosition();
                     this.scrollOnTheLeft =
                         $body.scrollLeft === 0;
                     this.scrollOnTheRight =
@@ -1219,6 +1257,7 @@ export default {
                 JSON.parse(JSON.stringify(selectedData))
             );
             this.$emit('on-selection-change', selection);
+            this.$emit('update:selectedRowList', selection);
         },
         toggleExpand(_index) {
             let data = {};
@@ -1552,6 +1591,15 @@ export default {
                 col => (col._filterVisible = false)
             );
         },
+        onTableScroll(v, h, native) {
+            // this.onVirtualScroll(v, h, native);
+            this.handleBodyScroll(native);
+            const { v: verticalProgress } =
+                this.$refs['body'].getScrollProcess();
+            if (verticalProgress === 1) {
+                this.$emit('scrollBottom');
+            }
+        },
         handleBodyScroll(event) {
             // 4.7.0
             this.scrollOnTheLeft = event.target.scrollLeft === 0;
@@ -1586,7 +1634,7 @@ export default {
                 deltaY = -event.wheelDelta;
             }
             if (!deltaY) return;
-            const body = this.$refs.body;
+            const body = this.$refs.body.getPosition();
             const currentScrollTop = body.scrollTop;
             if (deltaY < 0 && currentScrollTop !== 0) {
                 event.preventDefault();
@@ -1614,7 +1662,7 @@ export default {
         },
         handleMouseWheel(event) {
             const deltaX = event.deltaX;
-            const $body = this.$refs.body;
+            const $body = this.$refs.body.getPosition();
 
             if (deltaX > 0) {
                 $body.scrollLeft = $body.scrollLeft + 10;

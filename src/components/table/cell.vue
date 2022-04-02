@@ -4,6 +4,11 @@
             ><span>{{
                 column.indexMethod
                     ? column.indexMethod(row, naturalIndex)
+                    : tableRoot.current && tableRoot.pageSize
+                    ? naturalIndex +
+                      1 +
+                      (tableRoot.current - 1) *
+                          tableRoot.pageSize
                     : naturalIndex + 1
             }}</span></template
         >
@@ -69,7 +74,9 @@
                     >
                 </Tooltip>
             </template>
-            <span v-else>{{ row[column.key] }}</span>
+            <span v-else :title="row[column.key]">{{
+                row[column.key] || '--'
+            }}</span>
         </template>
         <template
             v-if="renderType === 'expand' && !row._disableExpand"
@@ -135,7 +142,9 @@ export default {
         return {
             renderType: '',
             uid: -1,
-            context: this.$parent.$parent.$parent.currentContext,
+            context:
+                this.$parent.$parent.$parent.$parent.$parent
+                    .currentContext,
             showTooltip: false // 鼠标滑过overflow文本时，再检查是否需要显示
         };
     },
@@ -150,7 +159,7 @@ export default {
                         (this.column.fixed === 'left' ||
                             this.column.fixed === 'right'),
                     [`${this.prefixCls}-cell-ellipsis`]:
-                        this.column.ellipsis || false,
+                        this.column.ellipsis !== false,
                     [`${this.prefixCls}-cell-with-expand`]:
                         this.renderType === 'expand',
                     [`${this.prefixCls}-cell-with-selection`]:
@@ -234,18 +243,18 @@ export default {
     methods: {
         toggleSelect() {
             if (this.treeNode) {
-                this.$parent.$parent.$parent.toggleSelect(
+                this.$parent.$parent.$parent.$parent.$parent.toggleSelect(
                     this.index,
                     this.row._rowKey
                 );
             } else {
-                this.$parent.$parent.$parent.toggleSelect(
+                this.$parent.$parent.$parent.$parent.$parent.toggleSelect(
                     this.index
                 );
             }
         },
         toggleExpand() {
-            this.$parent.$parent.$parent.toggleExpand(
+            this.$parent.$parent.$parent.$parent.$parent.toggleExpand(
                 this.index
             );
         },
@@ -263,7 +272,7 @@ export default {
             range = null;
         },
         handleToggleTree() {
-            this.$parent.$parent.$parent.toggleTree(
+            this.$parent.$parent.$parent.$parent.$parent.toggleTree(
                 this.row._rowKey
             );
         }
