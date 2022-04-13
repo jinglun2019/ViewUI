@@ -2,19 +2,10 @@
     <div :class="wrapClasses" :style="styles" ref="tableWrap">
         <loading :visible="loading" />
         <div :class="classes">
-            <div
-                :class="[prefixCls + '-title']"
-                v-if="showSlotHeader"
-                ref="title"
-            >
+            <div :class="[prefixCls + '-title']" v-if="showSlotHeader" ref="title">
                 <slot name="header"></slot>
             </div>
-            <div
-                :class="[prefixCls + '-header']"
-                v-if="showHeader"
-                ref="header"
-                @mousewheel="handleMouseWheel"
-            >
+            <div :class="[prefixCls + '-header']" v-if="showHeader" ref="header" @mousewheel="handleMouseWheel">
                 <table-head
                     :prefix-cls="prefixCls"
                     :styleObject="tableHeaderStyle"
@@ -36,11 +27,8 @@
                 @handle-scroll="onTableScroll"
                 v-show="
                     !(
-                        (!!localeNoDataText &&
-                            (!data || data.length === 0)) ||
-                        (!!localeNoFilteredDataText &&
-                            (!rebuildData ||
-                                rebuildData.length === 0))
+                        (!!localeNoDataText && (!data || data.length === 0)) ||
+                        (!!localeNoFilteredDataText && (!rebuildData || rebuildData.length === 0))
                     )
                 "
             >
@@ -72,18 +60,11 @@
                 :style="bodyStyle"
                 @scroll="handleBodyScroll"
                 v-show="
-                    (!!localeNoDataText &&
-                        (!data || data.length === 0)) ||
-                    (!!localeNoFilteredDataText &&
-                        (!rebuildData ||
-                            rebuildData.length === 0))
+                    (!!localeNoDataText && (!data || data.length === 0)) ||
+                    (!!localeNoFilteredDataText && (!rebuildData || rebuildData.length === 0))
                 "
             >
-                <table
-                    cellspacing="0"
-                    cellpadding="0"
-                    border="0"
-                >
+                <table cellspacing="0" cellpadding="0" border="0">
                     <tbody>
                         <tr>
                             <td
@@ -92,33 +73,15 @@
                                     width: `${this.headerWidth}px`
                                 }"
                             >
-                                <span
-                                    v-html="localeNoDataText"
-                                    v-if="
-                                        !data ||
-                                        data.length === 0
-                                    "
-                                ></span>
-                                <span
-                                    v-html="
-                                        localeNoFilteredDataText
-                                    "
-                                    v-else
-                                ></span>
+                                <span v-html="localeNoDataText" v-if="!data || data.length === 0"></span>
+                                <span v-html="localeNoFilteredDataText" v-else></span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div
-                :class="fixedTableClasses"
-                :style="fixedTableStyle"
-                v-if="isLeftFixed"
-            >
-                <div
-                    :class="fixedHeaderClasses"
-                    v-if="showHeader"
-                >
+            <div :class="fixedTableClasses" :style="fixedTableStyle" v-if="isLeftFixed">
+                <div :class="fixedHeaderClasses" v-if="showHeader">
                     <table-head
                         fixed="left"
                         :prefix-cls="prefixCls"
@@ -129,9 +92,7 @@
                         :obj-data="objData"
                         :columns-width="columnsWidth"
                         :data="rebuildData"
-                        :enableIndeterminate="
-                            enableIndeterminate
-                        "
+                        :enableIndeterminate="enableIndeterminate"
                     ></table-head>
                 </div>
                 <div
@@ -162,21 +123,12 @@
                     :data="summaryData"
                     :columns-width="columnsWidth"
                     :style="{
-                        'margin-top': showHorizontalScrollBar
-                            ? scrollBarWidth + 'px'
-                            : 0
+                        'margin-top': showHorizontalScrollBar ? scrollBarWidth + 'px' : 0
                     }"
                 />
             </div>
-            <div
-                :class="fixedRightTableClasses"
-                :style="fixedRightTableStyle"
-                v-if="isRightFixed"
-            >
-                <div
-                    :class="fixedHeaderClasses"
-                    v-if="showHeader"
-                >
+            <div :class="fixedRightTableClasses" :style="fixedRightTableStyle" v-if="isRightFixed">
+                <div :class="fixedHeaderClasses" v-if="showHeader">
                     <table-head
                         fixed="right"
                         :prefix-cls="prefixCls"
@@ -187,9 +139,7 @@
                         :obj-data="objData"
                         :columns-width="columnsWidth"
                         :data="rebuildData"
-                        :enableIndeterminate="
-                            enableIndeterminate
-                        "
+                        :enableIndeterminate="enableIndeterminate"
                     ></table-head>
                 </div>
                 <div
@@ -220,35 +170,17 @@
                     :data="summaryData"
                     :columns-width="columnsWidth"
                     :style="{
-                        'margin-top': showHorizontalScrollBar
-                            ? scrollBarWidth + 'px'
-                            : 0
+                        'margin-top': showHorizontalScrollBar ? scrollBarWidth + 'px' : 0
                     }"
                 />
             </div>
-            <div
-                :class="[prefixCls + '-fixed-right-header']"
-                :style="fixedRightHeaderStyle"
-                v-if="isRightFixed"
-            ></div>
-            <div
-                :class="[prefixCls + '-footer']"
-                v-if="showSlotFooter"
-                ref="footer"
-            >
+            <div :class="[prefixCls + '-fixed-right-header']" :style="fixedRightHeaderStyle" v-if="isRightFixed"></div>
+            <div :class="[prefixCls + '-footer']" v-if="showSlotFooter" ref="footer">
                 <slot name="footer"></slot>
             </div>
         </div>
-        <div
-            class="ivu-table-resize-line"
-            v-show="showResizeLine"
-            ref="resizeLine"
-        ></div>
-        <div
-            class="ivu-table-context-menu"
-            :style="contextMenuStyles"
-            v-if="showContextMenu"
-        >
+        <div class="ivu-table-resize-line" v-show="showResizeLine" ref="resizeLine"></div>
+        <div class="ivu-table-context-menu" :style="contextMenuStyles" v-if="showContextMenu">
             <Dropdown
                 trigger="custom"
                 :visible="contextMenuVisible"
@@ -272,30 +204,21 @@ import tableSummary from './summary.vue';
 import Dropdown from '../dropdown/dropdown.vue';
 import DropdownMenu from '../dropdown/dropdown-menu.vue';
 import Spin from '../spin/spin.vue';
-import {
-    oneOf,
-    getStyle,
-    deepCopy,
-    getScrollBarSize
-} from '../../utils/assist';
+import { oneOf, getStyle, deepCopy, getScrollBarSize } from '../../utils/assist';
 import { on, off } from '../../utils/dom';
 import Csv from '../../utils/csv';
 import ExportCsv from './export-csv';
 import Locale from '../../mixins/locale';
 import elementResizeDetectorMaker from 'element-resize-detector';
-import {
-    getAllColumns,
-    convertToRows,
-    convertColumnOrder,
-    getRandomStr
-} from './util';
+import { getAllColumns, convertToRows, convertColumnOrder, getRandomStr } from './util';
 import Loading from '../../extends/loading.vue';
 import vueScrollConfig from '../../mixins/vueScrollConfig';
 import deepmerge from 'deepmerge';
 import vueScroll from 'vuescroll/dist/vuescroll-native';
 
 const vueScrollOpts = deepmerge(vueScrollConfig, {
-    bar: { keepShow: true }
+    bar: { keepShow: true },
+    rail: { gutterOfEnds: '2px' }
 });
 
 const prefixCls = 'ivu-table';
@@ -345,16 +268,10 @@ export default {
         },
         size: {
             validator(value) {
-                return oneOf(value, [
-                    'small',
-                    'large',
-                    'default'
-                ]);
+                return oneOf(value, ['small', 'large', 'default']);
             },
             default() {
-                return !this.$IVIEW || this.$IVIEW.size === ''
-                    ? 'default'
-                    : this.$IVIEW.size;
+                return !this.$IVIEW || this.$IVIEW.size === '' ? 'default' : this.$IVIEW.size;
             }
         },
         width: {
@@ -492,14 +409,8 @@ export default {
             rebuildData: [], // for sort or filter
             cloneColumns: this.makeColumns(colsWithId),
             columnRows: this.makeColumnRows(false, colsWithId),
-            leftFixedColumnRows: this.makeColumnRows(
-                'left',
-                colsWithId
-            ),
-            rightFixedColumnRows: this.makeColumnRows(
-                'right',
-                colsWithId
-            ),
+            leftFixedColumnRows: this.makeColumnRows('left', colsWithId),
+            rightFixedColumnRows: this.makeColumnRows('right', colsWithId),
             allColumns: getAllColumns(colsWithId), // for multiple table-head, get columns that have no children
             showSlotHeader: true,
             showSlotFooter: true,
@@ -549,14 +460,11 @@ export default {
                 `${prefixCls}-wrapper`,
                 {
                     [`${prefixCls}-hide`]: !this.ready,
-                    [`${prefixCls}-with-header`]:
-                        this.showSlotHeader,
-                    [`${prefixCls}-with-footer`]:
-                        this.showSlotFooter,
-                    [`${prefixCls}-with-summary`]:
-                        this.showSummary,
-                    [`${prefixCls}-wrapper-with-border`]:
-                        this.border
+                    [`${prefixCls}-with-header`]: this.showSlotHeader,
+                    [`${prefixCls}-with-footer`]: this.showSlotFooter,
+                    [`${prefixCls}-with-summary`]: this.showSummary,
+                    [`${prefixCls}-wrapper-with-border`]: this.border,
+                    [`${prefixCls}-empty`]: this.data.length
                 }
             ];
         },
@@ -567,8 +475,7 @@ export default {
                     [`${prefixCls}-${this.size}`]: !!this.size,
                     [`${prefixCls}-border`]: this.border,
                     [`${prefixCls}-stripe`]: this.stripe,
-                    [`${prefixCls}-with-fixed-top`]:
-                        !!this.height
+                    [`${prefixCls}-with-fixed-top`]: !!this.height
                 }
             ];
         },
@@ -577,9 +484,7 @@ export default {
                 `${prefixCls}-fixed`,
                 {
                     [`${prefixCls}-fixed-shadow`]:
-                        this.fixedShadow === 'show' ||
-                        (this.fixedShadow === 'auto' &&
-                            !this.scrollOnTheLeft)
+                        this.fixedShadow === 'show' || (this.fixedShadow === 'auto' && !this.scrollOnTheLeft)
                 }
             ];
         },
@@ -588,9 +493,7 @@ export default {
                 `${prefixCls}-fixed-right`,
                 {
                     [`${prefixCls}-fixed-shadow`]:
-                        this.fixedShadow === 'show' ||
-                        (this.fixedShadow === 'auto' &&
-                            !this.scrollOnTheRight)
+                        this.fixedShadow === 'show' || (this.fixedShadow === 'auto' && !this.scrollOnTheRight)
                 }
             ];
         },
@@ -598,8 +501,7 @@ export default {
             return [
                 `${prefixCls}-fixed-header`,
                 {
-                    [`${prefixCls}-fixed-header-with-empty`]:
-                        !this.rebuildData.length
+                    [`${prefixCls}-fixed-header-with-empty`]: !this.rebuildData.length
                 }
             ];
         },
@@ -608,18 +510,15 @@ export default {
             let summaryHeight = 0;
             if (this.showSummary) {
                 if (this.size === 'small') summaryHeight = 40;
-                else if (this.size === 'large')
-                    summaryHeight = 60;
+                else if (this.size === 'large') summaryHeight = 60;
                 else summaryHeight = 48;
             }
             if (this.height) {
-                let height =
-                    parseInt(this.height) + summaryHeight;
+                let height = parseInt(this.height) + summaryHeight;
                 style.height = `${height}px`;
             }
             if (this.maxHeight) {
-                const maxHeight =
-                    parseInt(this.maxHeight) + summaryHeight;
+                const maxHeight = parseInt(this.maxHeight) + summaryHeight;
                 style.maxHeight = `${maxHeight}px`;
             }
             if (this.width) style.width = `${this.width}px`;
@@ -632,11 +531,7 @@ export default {
                 if (this.bodyHeight === 0) {
                     width = this.tableWidth;
                 } else {
-                    width =
-                        this.tableWidth -
-                        (this.showVerticalScrollBar
-                            ? this.scrollBarWidth
-                            : 0);
+                    width = this.tableWidth - (this.showVerticalScrollBar ? this.scrollBarWidth : 0);
                 }
                 //                    const width = this.bodyHeight === 0 ? this.tableWidth : this.tableWidth - this.scrollBarWidth;
                 style.width = `${width}px`;
@@ -656,8 +551,7 @@ export default {
             let style = {};
             let width = 0;
             this.leftFixedColumns.forEach(col => {
-                if (col.fixed && col.fixed === 'left')
-                    width += col._width;
+                if (col.fixed && col.fixed === 'left') width += col._width;
             });
             style.width = `${width}px`;
             return style;
@@ -666,16 +560,11 @@ export default {
             let style = {};
             let width = 0;
             this.rightFixedColumns.forEach(col => {
-                if (col.fixed && col.fixed === 'right')
-                    width += col._width;
+                if (col.fixed && col.fixed === 'right') width += col._width;
             });
             //width += this.scrollBarWidth;
             style.width = `${width}px`;
-            style.right = `${
-                this.showVerticalScrollBar
-                    ? this.scrollBarWidth
-                    : 0
-            }px`;
+            style.right = `${this.showVerticalScrollBar ? this.scrollBarWidth : 0}px`;
             return style;
         },
         fixedRightHeaderStyle() {
@@ -704,17 +593,10 @@ export default {
         fixedBodyStyle() {
             let style = {};
             if (this.bodyHeight !== 0) {
-                let height =
-                    this.bodyHeight -
-                    (this.showHorizontalScrollBar
-                        ? this.scrollBarWidth
-                        : 0);
-                const bodyHeight = this.showHorizontalScrollBar
-                    ? `${height}px`
-                    : `${height - 1}px`;
+                let height = this.bodyHeight - (this.showHorizontalScrollBar ? this.scrollBarWidth : 0);
+                const bodyHeight = this.showHorizontalScrollBar ? `${height}px` : `${height - 1}px`;
                 if (this.height) style.height = bodyHeight;
-                else if (this.maxHeight)
-                    style.maxHeight = bodyHeight;
+                else if (this.maxHeight) style.maxHeight = bodyHeight;
             }
             return style;
         },
@@ -722,20 +604,13 @@ export default {
             return convertColumnOrder(this.cloneColumns, 'left');
         },
         rightFixedColumns() {
-            return convertColumnOrder(
-                this.cloneColumns,
-                'right'
-            );
+            return convertColumnOrder(this.cloneColumns, 'right');
         },
         isLeftFixed() {
-            return this.columns.some(
-                col => col.fixed && col.fixed === 'left'
-            );
+            return this.columns.some(col => col.fixed && col.fixed === 'left');
         },
         isRightFixed() {
-            return this.columns.some(
-                col => col.fixed && col.fixed === 'right'
-            );
+            return this.columns.some(col => col.fixed && col.fixed === 'right');
         },
         // for summary data
         summaryData() {
@@ -757,45 +632,26 @@ export default {
                         };
                         return;
                     }
-                    const values = this.rebuildData.map(item =>
-                        Number(item[column.key])
-                    );
+                    const values = this.rebuildData.map(item => Number(item[column.key]));
                     const precisions = [];
                     let notNumber = true;
                     values.forEach(value => {
                         if (!isNaN(value)) {
                             notNumber = false;
-                            let decimal = ('' + value).split(
-                                '.'
-                            )[1];
-                            precisions.push(
-                                decimal ? decimal.length : 0
-                            );
+                            let decimal = ('' + value).split('.')[1];
+                            precisions.push(decimal ? decimal.length : 0);
                         }
                     });
-                    const precision = Math.max.apply(
-                        null,
-                        precisions
-                    );
+                    const precision = Math.max.apply(null, precisions);
                     if (!notNumber) {
-                        const currentValue = values.reduce(
-                            (prev, curr) => {
-                                const value = Number(curr);
-                                if (!isNaN(value)) {
-                                    return parseFloat(
-                                        (prev + curr).toFixed(
-                                            Math.min(
-                                                precision,
-                                                20
-                                            )
-                                        )
-                                    );
-                                } else {
-                                    return prev;
-                                }
-                            },
-                            0
-                        );
+                        const currentValue = values.reduce((prev, curr) => {
+                            const value = Number(curr);
+                            if (!isNaN(value)) {
+                                return parseFloat((prev + curr).toFixed(Math.min(precision, 20)));
+                            } else {
+                                return prev;
+                            }
+                        }, 0);
                         sums[key] = {
                             key: column.key,
                             value: currentValue
@@ -817,8 +673,9 @@ export default {
             return this.rowClassName(this.data[index], index);
         },
         handleResize() {
-            //let tableWidth = parseInt(getStyle(this.$el, 'width')) - 1;
+            // let tableWidth = parseInt(getStyle(this.$el, 'width')) - 1;
             let tableWidth = this.$el.offsetWidth - 1;
+
             let columnsWidth = {};
             let sumMinWidth = 0;
             let hasWidthColumns = [];
@@ -842,30 +699,18 @@ export default {
                 col._width = null;
             });
 
-            let unUsableWidth = hasWidthColumns
-                .map(cell => cell.width)
-                .reduce((a, b) => a + b, 0);
+            let unUsableWidth = hasWidthColumns.map(cell => cell.width).reduce((a, b) => a + b, 0);
             let usableWidth =
-                tableWidth -
-                unUsableWidth -
-                sumMinWidth -
-                (this.showVerticalScrollBar
-                    ? this.scrollBarWidth
-                    : 0) -
-                1;
+                tableWidth - unUsableWidth - sumMinWidth - (this.showVerticalScrollBar ? this.scrollBarWidth : 0) - 1;
             let usableLength = noWidthColumns.length;
             let columnWidth = 0;
             if (usableWidth > 0 && usableLength > 0) {
-                columnWidth = parseInt(
-                    usableWidth / usableLength
-                );
+                columnWidth = parseInt(usableWidth / usableLength);
             }
 
             for (let i = 0; i < this.cloneColumns.length; i++) {
                 const column = this.cloneColumns[i];
-                let width =
-                    columnWidth +
-                    (column.minWidth ? column.minWidth : 0);
+                let width = columnWidth + (column.minWidth ? column.minWidth : 0);
                 if (column.width) {
                     width = column.width;
                 } else {
@@ -879,16 +724,10 @@ export default {
                         }
 
                         if (usableWidth > 0) {
-                            usableWidth -=
-                                width -
-                                (column.minWidth
-                                    ? column.minWidth
-                                    : 0);
+                            usableWidth -= width - (column.minWidth ? column.minWidth : 0);
                             usableLength--;
                             if (usableLength > 0) {
-                                columnWidth = parseInt(
-                                    usableWidth / usableLength
-                                );
+                                columnWidth = parseInt(usableWidth / usableLength);
                             } else {
                                 columnWidth = 0;
                             }
@@ -906,22 +745,14 @@ export default {
             }
             if (usableWidth > 0) {
                 usableLength = noMaxWidthColumns.length;
-                columnWidth = parseInt(
-                    usableWidth / usableLength
-                );
-                for (
-                    let i = 0;
-                    i < noMaxWidthColumns.length;
-                    i++
-                ) {
+                columnWidth = parseInt(usableWidth / usableLength);
+                for (let i = 0; i < noMaxWidthColumns.length; i++) {
                     const column = noMaxWidthColumns[i];
                     let width = column._width + columnWidth;
                     if (usableLength > 1) {
                         usableLength--;
                         usableWidth -= columnWidth;
-                        columnWidth = parseInt(
-                            usableWidth / usableLength
-                        );
+                        columnWidth = parseInt(usableWidth / usableLength);
                     } else {
                         columnWidth = 0;
                     }
@@ -935,12 +766,8 @@ export default {
             }
 
             this.tableWidth =
-                this.cloneColumns
-                    .map(cell => cell._width)
-                    .reduce((a, b) => a + b, 0) +
-                (this.showVerticalScrollBar
-                    ? this.scrollBarWidth
-                    : 0) +
+                this.cloneColumns.map(cell => cell._width).reduce((a, b) => a + b, 0) +
+                (this.showVerticalScrollBar ? this.scrollBarWidth : 0) +
                 1;
             this.columnsWidth = columnsWidth;
             this.fixedHeader();
@@ -949,34 +776,25 @@ export default {
             if (this.fixedShadow === 'auto') {
                 this.$nextTick(() => {
                     const $body = this.$refs.body.getPosition();
-                    this.scrollOnTheLeft =
-                        $body.scrollLeft === 0;
-                    this.scrollOnTheRight =
-                        $body.scrollWidth ===
-                        $body.scrollLeft + $body.clientWidth;
+                    this.scrollOnTheLeft = $body.scrollLeft === 0;
+                    this.scrollOnTheRight = $body.scrollWidth === $body.scrollLeft + $body.clientWidth;
                 });
             }
         },
         handleMouseIn(_index, rowKey) {
             if (this.disabledHover) return;
-            const objData = rowKey
-                ? this.getDataByRowKey(rowKey)
-                : this.objData[_index];
+            const objData = rowKey ? this.getDataByRowKey(rowKey) : this.objData[_index];
             if (objData._isHover) return;
             objData._isHover = true;
         },
         handleMouseOut(_index, rowKey) {
             if (this.disabledHover) return;
-            const objData = rowKey
-                ? this.getDataByRowKey(rowKey)
-                : this.objData[_index];
+            const objData = rowKey ? this.getDataByRowKey(rowKey) : this.objData[_index];
             objData._isHover = false;
         },
         // 通用处理 highlightCurrentRow 和 clearCurrentRow
         handleCurrentRow(type, _index, rowKey) {
-            const objData = rowKey
-                ? this.getDataByRowKey(rowKey)
-                : this.objData[_index];
+            const objData = rowKey ? this.getDataByRowKey(rowKey) : this.objData[_index];
 
             let oldData = null;
             let oldIndex = -1;
@@ -986,62 +804,33 @@ export default {
                     oldIndex = parseInt(i);
                     this.objData[i]._isHighlight = false;
                     break;
-                } else if (
-                    this.objData[i].children &&
-                    this.objData[i].children.length
-                ) {
-                    const resetData =
-                        this.handleResetChildrenRow(
-                            this.objData[i]
-                        );
-                    if (resetData)
-                        oldData = JSON.parse(
-                            JSON.stringify(resetData)
-                        );
+                } else if (this.objData[i].children && this.objData[i].children.length) {
+                    const resetData = this.handleResetChildrenRow(this.objData[i]);
+                    if (resetData) oldData = JSON.parse(JSON.stringify(resetData));
                 }
             }
-            if (type === 'highlight')
-                objData._isHighlight = true;
+            if (type === 'highlight') objData._isHighlight = true;
             if (oldIndex >= 0) {
-                oldData = JSON.parse(
-                    JSON.stringify(this.cloneData[oldIndex])
-                );
+                oldData = JSON.parse(JSON.stringify(this.cloneData[oldIndex]));
             }
             const newData =
                 type === 'highlight'
                     ? rowKey
-                        ? JSON.parse(
-                              JSON.stringify(
-                                  this.getBaseDataByRowKey(
-                                      rowKey
-                                  )
-                              )
-                          )
-                        : JSON.parse(
-                              JSON.stringify(
-                                  this.cloneData[_index]
-                              )
-                          )
+                        ? JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey)))
+                        : JSON.parse(JSON.stringify(this.cloneData[_index]))
                     : null;
             this.$emit('on-current-change', newData, oldData);
         },
         handleResetChildrenRow(objData) {
             let data = null;
             if (objData.children && objData.children.length) {
-                for (
-                    let i = 0;
-                    i < objData.children.length;
-                    i++
-                ) {
+                for (let i = 0; i < objData.children.length; i++) {
                     const item = objData.children[i];
                     if (item._isHighlight) {
                         item._isHighlight = false;
                         data = item;
                         break;
-                    } else if (
-                        item.children &&
-                        item.children.length
-                    ) {
+                    } else if (item.children && item.children.length) {
                         data = this.handleResetChildrenRow(item);
                     }
                 }
@@ -1049,11 +838,8 @@ export default {
             return data;
         },
         highlightCurrentRow(_index, rowKey) {
-            const objData = rowKey
-                ? this.getDataByRowKey(rowKey)
-                : this.objData[_index];
-            if (!this.highlightRow || objData._isHighlight)
-                return;
+            const objData = rowKey ? this.getDataByRowKey(rowKey) : this.objData[_index];
+            if (!this.highlightRow || objData._isHighlight) return;
             this.handleCurrentRow('highlight', _index, rowKey);
         },
         clearCurrentRow() {
@@ -1063,56 +849,26 @@ export default {
         clickCurrentRow(_index, rowKey) {
             this.highlightCurrentRow(_index, rowKey);
             if (rowKey) {
-                this.$emit(
-                    'on-row-click',
-                    JSON.parse(
-                        JSON.stringify(
-                            this.getBaseDataByRowKey(rowKey)
-                        )
-                    )
-                );
+                this.$emit('on-row-click', JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey))));
             } else {
-                this.$emit(
-                    'on-row-click',
-                    JSON.parse(
-                        JSON.stringify(this.cloneData[_index])
-                    ),
-                    _index
-                );
+                this.$emit('on-row-click', JSON.parse(JSON.stringify(this.cloneData[_index])), _index);
             }
         },
         dblclickCurrentRow(_index, rowKey) {
             this.highlightCurrentRow(_index, rowKey);
             if (rowKey) {
-                this.$emit(
-                    'on-row-dblclick',
-                    JSON.parse(
-                        JSON.stringify(
-                            this.getBaseDataByRowKey(rowKey)
-                        )
-                    )
-                );
+                this.$emit('on-row-dblclick', JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey))));
             } else {
-                this.$emit(
-                    'on-row-dblclick',
-                    JSON.parse(
-                        JSON.stringify(this.cloneData[_index])
-                    ),
-                    _index
-                );
+                this.$emit('on-row-dblclick', JSON.parse(JSON.stringify(this.cloneData[_index])), _index);
             }
         },
         contextmenuCurrentRow(_index, rowKey, event) {
-            if (this.contextMenuVisible)
-                this.handleClickContextMenuOutside();
+            if (this.contextMenuVisible) this.handleClickContextMenuOutside();
             this.$nextTick(() => {
                 const $TableWrap = this.$refs.tableWrap;
-                const TableBounding =
-                    $TableWrap.getBoundingClientRect();
+                const TableBounding = $TableWrap.getBoundingClientRect();
                 const position = {
-                    left: `${
-                        event.clientX - TableBounding.left
-                    }px`,
+                    left: `${event.clientX - TableBounding.left}px`,
                     top: `${event.clientY - TableBounding.top}px`
                 };
                 this.contextMenuStyles = position;
@@ -1120,25 +876,12 @@ export default {
                 if (rowKey) {
                     this.$emit(
                         'on-contextmenu',
-                        JSON.parse(
-                            JSON.stringify(
-                                this.getBaseDataByRowKey(rowKey)
-                            )
-                        ),
+                        JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey))),
                         event,
                         position
                     );
                 } else {
-                    this.$emit(
-                        'on-contextmenu',
-                        JSON.parse(
-                            JSON.stringify(
-                                this.cloneData[_index]
-                            )
-                        ),
-                        event,
-                        position
-                    );
+                    this.$emit('on-contextmenu', JSON.parse(JSON.stringify(this.cloneData[_index])), event, position);
                 }
             });
         },
@@ -1148,17 +891,10 @@ export default {
             let selectionRowKeys = [];
             for (let i in this.objData) {
                 const objData = this.objData[i];
-                if (objData._isChecked)
-                    selectionIndexes.push(parseInt(i));
-                if (
-                    objData.children &&
-                    objData.children.length
-                ) {
+                if (objData._isChecked) selectionIndexes.push(parseInt(i));
+                if (objData.children && objData.children.length) {
                     selectionRowKeys = selectionRowKeys.concat(
-                        this.getSelectionChildrenRowKeys(
-                            objData,
-                            selectionRowKeys
-                        )
+                        this.getSelectionChildrenRowKeys(objData, selectionRowKeys)
                     );
                 }
             }
@@ -1172,18 +908,8 @@ export default {
                 if (selectionIndexes.indexOf(index) > -1) {
                     selection = selection.concat(item);
                 }
-                if (
-                    item.children &&
-                    item.children.length &&
-                    selectionRowKeys.length
-                ) {
-                    selection = selection.concat(
-                        this.getSelectionChildren(
-                            item,
-                            selection,
-                            selectionRowKeys
-                        )
-                    );
+                if (item.children && item.children.length && selectionRowKeys.length) {
+                    selection = selection.concat(this.getSelectionChildren(item, selection, selectionRowKeys));
                 }
             });
 
@@ -1193,16 +919,11 @@ export default {
         getSelectionChildrenRowKeys(objData, selectionRowKeys) {
             if (objData.children && objData.children.length) {
                 objData.children.forEach(item => {
-                    if (item._isChecked)
-                        selectionRowKeys.push(item._rowKey);
+                    if (item._isChecked) selectionRowKeys.push(item._rowKey);
                     if (item.children && item.children.length) {
-                        selectionRowKeys =
-                            selectionRowKeys.concat(
-                                this.getSelectionChildrenRowKeys(
-                                    item,
-                                    selectionRowKeys
-                                )
-                            );
+                        selectionRowKeys = selectionRowKeys.concat(
+                            this.getSelectionChildrenRowKeys(item, selectionRowKeys)
+                        );
                     }
                 });
             }
@@ -1211,21 +932,11 @@ export default {
         getSelectionChildren(data, selection, selectionRowKeys) {
             if (data.children && data.children.length) {
                 data.children.forEach(item => {
-                    if (
-                        selectionRowKeys.indexOf(
-                            item[this.rowKey]
-                        ) > -1
-                    ) {
+                    if (selectionRowKeys.indexOf(item[this.rowKey]) > -1) {
                         selection = selection.concat(item);
                     }
                     if (item.children && item.children.length) {
-                        selection = selection.concat(
-                            this.getSelectionChildren(
-                                item,
-                                selection,
-                                selectionRowKeys
-                            )
-                        );
+                        selection = selection.concat(this.getSelectionChildren(item, selection, selectionRowKeys));
                     }
                 });
             }
@@ -1248,14 +959,8 @@ export default {
 
             data._isChecked = status;
             const selection = this.getSelection();
-            const selectedData = rowKey
-                ? this.getBaseDataByRowKey(rowKey, this.data)
-                : this.data[_index];
-            this.$emit(
-                status ? 'on-select' : 'on-select-cancel',
-                selection,
-                JSON.parse(JSON.stringify(selectedData))
-            );
+            const selectedData = rowKey ? this.getBaseDataByRowKey(rowKey, this.data) : this.data[_index];
+            this.$emit(status ? 'on-select' : 'on-select-cancel', selection, JSON.parse(JSON.stringify(selectedData)));
             this.$emit('on-selection-change', selection);
             this.$emit('update:selectedRowList', selection);
         },
@@ -1270,13 +975,7 @@ export default {
             }
             const status = !data._isExpanded;
             this.objData[_index]._isExpanded = status;
-            this.$emit(
-                'on-expand',
-                JSON.parse(
-                    JSON.stringify(this.cloneData[_index])
-                ),
-                status
-            );
+            this.$emit('on-expand', JSON.parse(JSON.stringify(this.cloneData[_index])), status);
 
             if (this.height || this.maxHeight) {
                 this.$nextTick(() => this.fixedBody());
@@ -1286,36 +985,19 @@ export default {
             const data = this.getDataByRowKey(rowKey);
             // async loading
             if ('_loading' in data && data._loading) return;
-            if (
-                '_loading' in data &&
-                !data._loading &&
-                data.children.length === 0
-            ) {
-                const sourceData = this.getBaseDataByRowKey(
-                    rowKey,
-                    this.data
-                );
+            if ('_loading' in data && !data._loading && data.children.length === 0) {
+                const sourceData = this.getBaseDataByRowKey(rowKey, this.data);
                 this.$set(sourceData, '_loading', true);
                 this.loadData(sourceData, children => {
                     this.$set(sourceData, '_loading', false);
                     if (children.length) {
-                        this.$set(
-                            sourceData,
-                            'children',
-                            children
-                        );
+                        this.$set(sourceData, 'children', children);
                         this.$nextTick(() => {
-                            const newData =
-                                this.getDataByRowKey(rowKey);
-                            newData._isShowChildren =
-                                !newData._isShowChildren;
+                            const newData = this.getDataByRowKey(rowKey);
+                            newData._isShowChildren = !newData._isShowChildren;
                             // 由于 updateDataStatus 是基于原数据修改，导致单选、多选等状态重置，所以暂不处理 _showChildren 状态，而是通过事件 @on-expand-tree
                             // 异步时，需设置 _showChildren，否则嵌套子集展开，会自动收起父级
-                            this.updateDataStatus(
-                                rowKey,
-                                '_showChildren',
-                                newData._isShowChildren
-                            );
+                            this.updateDataStatus(rowKey, '_showChildren', newData._isShowChildren);
                         });
                     }
                 });
@@ -1325,17 +1007,8 @@ export default {
             data._isShowChildren = !data._isShowChildren;
             // 由于 updateDataStatus 是基于原数据修改，导致单选、多选等状态重置，所以暂不处理 _showChildren 状态，而是通过事件 @on-expand-tree
             // #675，增加 updateShowChildren
-            if (this.updateShowChildren)
-                this.updateDataStatus(
-                    rowKey,
-                    '_showChildren',
-                    data._isShowChildren
-                );
-            this.$emit(
-                'on-expand-tree',
-                rowKey,
-                data._isShowChildren
-            );
+            if (this.updateShowChildren) this.updateDataStatus(rowKey, '_showChildren', data._isShowChildren);
+            this.$emit('on-expand-tree', rowKey, data._isShowChildren);
         },
         /**
          * @description 当修改某内置属性，如 _isShowChildren 时，因当将原 data 对应 _showChildren 也修改，否则修改 data 时，状态会重置
@@ -1345,10 +1018,7 @@ export default {
          * */
         // todo 单选、多选等状态可能也需要更新原数据
         updateDataStatus(rowKey, key, value) {
-            const data = this.getBaseDataByRowKey(
-                rowKey,
-                this.data
-            );
+            const data = this.getBaseDataByRowKey(rowKey, this.data);
             this.$set(data, key, value);
         },
         getDataByRowKey(rowKey, objData = this.objData) {
@@ -1358,14 +1028,8 @@ export default {
                 if (thisData._rowKey === rowKey) {
                     data = thisData;
                     break;
-                } else if (
-                    thisData.children &&
-                    thisData.children.length
-                ) {
-                    data = this.getChildrenByRowKey(
-                        rowKey,
-                        thisData
-                    );
+                } else if (thisData.children && thisData.children.length) {
+                    data = this.getChildrenByRowKey(rowKey, thisData);
                     if (data) {
                         break;
                     }
@@ -1376,23 +1040,13 @@ export default {
         getChildrenByRowKey(rowKey, objData) {
             let data = null;
             if (objData.children && objData.children.length) {
-                for (
-                    let i = 0;
-                    i < objData.children.length;
-                    i++
-                ) {
+                for (let i = 0; i < objData.children.length; i++) {
                     const item = objData.children[i];
                     if (item._rowKey === rowKey) {
                         data = item;
                         break;
-                    } else if (
-                        item.children &&
-                        item.children.length
-                    ) {
-                        data = this.getChildrenByRowKey(
-                            rowKey,
-                            item
-                        );
+                    } else if (item.children && item.children.length) {
+                        data = this.getChildrenByRowKey(rowKey, item);
                         if (data) {
                             break;
                         }
@@ -1401,53 +1055,30 @@ export default {
             }
             return data;
         },
-        getBaseDataByRowKey(
-            rowKey,
-            sourceData = this.cloneData
-        ) {
+        getBaseDataByRowKey(rowKey, sourceData = this.cloneData) {
             let data = null;
             for (let i = 0; i < sourceData.length; i++) {
                 const thisData = sourceData[i];
                 if (thisData[this.rowKey] === rowKey) {
                     data = thisData;
                     break;
-                } else if (
-                    thisData.children &&
-                    thisData.children.length
-                ) {
-                    data = this.getChildrenDataByRowKey(
-                        rowKey,
-                        thisData
-                    );
-                    if (data && data[this.rowKey] === rowKey)
-                        return data;
+                } else if (thisData.children && thisData.children.length) {
+                    data = this.getChildrenDataByRowKey(rowKey, thisData);
+                    if (data && data[this.rowKey] === rowKey) return data;
                 }
             }
             return data;
         },
         getChildrenDataByRowKey(rowKey, cloneData) {
             let data = null;
-            if (
-                cloneData.children &&
-                cloneData.children.length
-            ) {
-                for (
-                    let i = 0;
-                    i < cloneData.children.length;
-                    i++
-                ) {
+            if (cloneData.children && cloneData.children.length) {
+                for (let i = 0; i < cloneData.children.length; i++) {
                     const item = cloneData.children[i];
                     if (item[this.rowKey] === rowKey) {
                         data = item;
                         break;
-                    } else if (
-                        item.children &&
-                        item.children.length
-                    ) {
-                        data = this.getChildrenDataByRowKey(
-                            rowKey,
-                            item
-                        );
+                    } else if (item.children && item.children.length) {
+                        data = this.getChildrenDataByRowKey(rowKey, item);
                         if (data) {
                             break;
                         }
@@ -1497,30 +1128,13 @@ export default {
         fixedHeader() {
             if (this.height || this.maxHeight) {
                 this.$nextTick(() => {
-                    const titleHeight =
-                        parseInt(
-                            getStyle(this.$refs.title, 'height')
-                        ) || 0;
-                    const headerHeight =
-                        parseInt(
-                            getStyle(this.$refs.header, 'height')
-                        ) || 0;
-                    const footerHeight =
-                        parseInt(
-                            getStyle(this.$refs.footer, 'height')
-                        ) || 0;
+                    const titleHeight = parseInt(getStyle(this.$refs.title, 'height')) || 0;
+                    const headerHeight = parseInt(getStyle(this.$refs.header, 'height')) || 0;
+                    const footerHeight = parseInt(getStyle(this.$refs.footer, 'height')) || 0;
                     if (this.height) {
-                        this.bodyHeight =
-                            this.height -
-                            titleHeight -
-                            headerHeight -
-                            footerHeight;
+                        this.bodyHeight = this.height - titleHeight - headerHeight - footerHeight;
                     } else if (this.maxHeight) {
-                        this.bodyHeight =
-                            this.maxHeight -
-                            titleHeight -
-                            headerHeight -
-                            footerHeight;
+                        this.bodyHeight = this.maxHeight - titleHeight - headerHeight - footerHeight;
                     }
                     this.$nextTick(() => this.fixedBody());
                 });
@@ -1531,71 +1145,46 @@ export default {
         },
         fixedBody() {
             if (this.$refs.header) {
-                this.headerWidth =
-                    this.$refs.header.children[0].offsetWidth;
-                this.headerHeight =
-                    this.$refs.header.children[0].offsetHeight;
+                this.headerWidth = this.$refs.header.children[0].offsetWidth;
+                this.headerHeight = this.$refs.header.children[0].offsetHeight;
                 //this.showHorizontalScrollBar = this.headerWidth>this.$refs.header.offsetWidth;
             }
 
-            if (
-                !this.$refs.tbody ||
-                !this.data ||
-                this.data.length === 0
-            ) {
+            if (!this.$refs.tbody || !this.data || this.data.length === 0) {
                 this.showVerticalScrollBar = false;
             } else {
                 let bodyContentEl = this.$refs.tbody.$el;
                 let bodyEl = bodyContentEl.parentElement;
-                let bodyContentHeight =
-                    bodyContentEl.offsetHeight;
+                let bodyContentHeight = bodyContentEl.offsetHeight;
                 let bodyHeight = bodyEl.offsetHeight;
 
                 this.showHorizontalScrollBar =
                     bodyEl.offsetWidth <
-                    bodyContentEl.offsetWidth +
-                        (this.showVerticalScrollBar
-                            ? this.scrollBarWidth
-                            : 0);
+                    bodyContentEl.offsetWidth + (this.showVerticalScrollBar ? this.scrollBarWidth : 0);
                 this.showVerticalScrollBar = this.bodyHeight
-                    ? bodyHeight -
-                          (this.showHorizontalScrollBar
-                              ? this.scrollBarWidth
-                              : 0) <
-                      bodyContentHeight
+                    ? bodyHeight - (this.showHorizontalScrollBar ? this.scrollBarWidth : 0) < bodyContentHeight
                     : false;
 
                 if (this.showVerticalScrollBar) {
-                    bodyEl.classList.add(
-                        this.prefixCls + '-overflowY'
-                    );
+                    bodyEl.classList.add(this.prefixCls + '-overflowY');
                 } else {
-                    bodyEl.classList.remove(
-                        this.prefixCls + '-overflowY'
-                    );
+                    bodyEl.classList.remove(this.prefixCls + '-overflowY');
                 }
                 if (this.showHorizontalScrollBar) {
-                    bodyEl.classList.add(
-                        this.prefixCls + '-overflowX'
-                    );
+                    bodyEl.classList.add(this.prefixCls + '-overflowX');
                 } else {
-                    bodyEl.classList.remove(
-                        this.prefixCls + '-overflowX'
-                    );
+                    bodyEl.classList.remove(this.prefixCls + '-overflowX');
                 }
             }
         },
 
         hideColumnFilter() {
-            this.cloneColumns.forEach(
-                col => (col._filterVisible = false)
-            );
+            this.cloneColumns.forEach(col => (col._filterVisible = false));
         },
         onTableScroll(v, h, native) {
             // this.onVirtualScroll(v, h, native);
             this.handleBodyScroll(native);
-            const { v: verticalProgress } =
-                this.$refs['body'].getScrollProcess();
+            const { v: verticalProgress } = this.$refs['body'].getScrollProcess();
             if (verticalProgress === 1) {
                 this.$emit('scrollBottom');
             }
@@ -1603,23 +1192,12 @@ export default {
         handleBodyScroll(event) {
             // 4.7.0
             this.scrollOnTheLeft = event.target.scrollLeft === 0;
-            this.scrollOnTheRight =
-                event.target.scrollWidth ===
-                event.target.scrollLeft +
-                    event.target.clientWidth;
+            this.scrollOnTheRight = event.target.scrollWidth === event.target.scrollLeft + event.target.clientWidth;
 
-            if (this.showHeader)
-                this.$refs.header.scrollLeft =
-                    event.target.scrollLeft;
-            if (this.isLeftFixed)
-                this.$refs.fixedBody.scrollTop =
-                    event.target.scrollTop;
-            if (this.isRightFixed)
-                this.$refs.fixedRightBody.scrollTop =
-                    event.target.scrollTop;
-            if (this.showSummary && this.$refs.summary)
-                this.$refs.summary.$el.scrollLeft =
-                    event.target.scrollLeft;
+            if (this.showHeader) this.$refs.header.scrollLeft = event.target.scrollLeft;
+            if (this.isLeftFixed) this.$refs.fixedBody.scrollTop = event.target.scrollTop;
+            if (this.isRightFixed) this.$refs.fixedRightBody.scrollTop = event.target.scrollTop;
+            if (this.showSummary && this.$refs.summary) this.$refs.summary.$el.scrollLeft = event.target.scrollLeft;
             this.hideColumnFilter();
         },
         handleFixedMousewheel(event) {
@@ -1639,11 +1217,7 @@ export default {
             if (deltaY < 0 && currentScrollTop !== 0) {
                 event.preventDefault();
             }
-            if (
-                deltaY > 0 &&
-                body.scrollHeight - body.clientHeight >
-                    currentScrollTop
-            ) {
+            if (deltaY > 0 && body.scrollHeight - body.clientHeight > currentScrollTop) {
                 event.preventDefault();
             }
             //body.scrollTop += deltaY;
@@ -1674,11 +1248,7 @@ export default {
             const key = this.cloneColumns[index].key;
             data.sort((a, b) => {
                 if (this.cloneColumns[index].sortMethod) {
-                    return this.cloneColumns[index].sortMethod(
-                        a[key],
-                        b[key],
-                        type
-                    );
+                    return this.cloneColumns[index].sortMethod(a[key], b[key], type);
                 } else {
                     if (type === 'asc') {
                         return a[key] > b[key] ? 1 : -1;
@@ -1688,24 +1258,15 @@ export default {
                 }
             });
             for (let i = 0; i < data.length; i++) {
-                if (
-                    data[i].children &&
-                    data[i].children.length
-                ) {
-                    data[i].children = this.sortData(
-                        data[i].children,
-                        type,
-                        index
-                    );
+                if (data[i].children && data[i].children.length) {
+                    data[i].children = this.sortData(data[i].children, type, index);
                 }
             }
             return data;
         },
         handleSort(_index, type) {
             const index = this.GetOriginalIndex(_index);
-            this.cloneColumns.forEach(
-                col => (col._sortType = 'normal')
-            );
+            this.cloneColumns.forEach(col => (col._sortType = 'normal'));
 
             const key = this.cloneColumns[index].key;
             if (this.cloneColumns[index].sortable !== 'custom') {
@@ -1713,48 +1274,29 @@ export default {
                 if (type === 'normal') {
                     this.rebuildData = this.makeDataWithFilter();
                 } else {
-                    this.rebuildData = this.sortData(
-                        this.rebuildData,
-                        type,
-                        index
-                    );
+                    this.rebuildData = this.sortData(this.rebuildData, type, index);
                 }
             }
             this.cloneColumns[index]._sortType = type;
 
             this.$emit('on-sort-change', {
-                column: JSON.parse(
-                    JSON.stringify(
-                        this.allColumns[
-                            this.cloneColumns[index]._index
-                        ]
-                    )
-                ),
+                column: JSON.parse(JSON.stringify(this.allColumns[this.cloneColumns[index]._index])),
                 key: key,
                 order: type
             });
         },
         handleFilterHide(index) {
             // clear checked that not filter now
-            if (!this.cloneColumns[index]._isFiltered)
-                this.cloneColumns[index]._filterChecked = [];
+            if (!this.cloneColumns[index]._isFiltered) this.cloneColumns[index]._filterChecked = [];
         },
         filterData(data, column) {
             return data.filter(row => {
                 //如果定义了远程过滤方法则忽略此方法
-                if (typeof column.filterRemote === 'function')
-                    return true;
+                if (typeof column.filterRemote === 'function') return true;
 
                 let status = !column._filterChecked.length;
-                for (
-                    let i = 0;
-                    i < column._filterChecked.length;
-                    i++
-                ) {
-                    status = column.filterMethod(
-                        column._filterChecked[i],
-                        row
-                    );
+                for (let i = 0; i < column._filterChecked.length; i++) {
+                    status = column.filterMethod(column._filterChecked[i], row);
                     if (status) break;
                 }
                 return status;
@@ -1763,12 +1305,7 @@ export default {
         filterOtherData(data, index) {
             let column = this.cloneColumns[index];
             if (typeof column.filterRemote === 'function') {
-                column.filterRemote.call(
-                    this.$parent,
-                    column._filterChecked,
-                    column.key,
-                    column
-                );
+                column.filterRemote.call(this.$parent, column._filterChecked, column.key, column);
             }
 
             this.cloneColumns.forEach((col, colIndex) => {
@@ -1784,10 +1321,7 @@ export default {
 
             // filter others first, after filter this column
             filterData = this.filterOtherData(filterData, index);
-            this.rebuildData = this.filterData(
-                filterData,
-                column
-            );
+            this.rebuildData = this.filterData(filterData, column);
 
             this.cloneColumns[index]._isFiltered = true;
             this.cloneColumns[index]._filterVisible = false;
@@ -1801,9 +1335,7 @@ export default {
          * 所以，此方法用来获取正确的 index
          * */
         GetOriginalIndex(_index) {
-            return this.cloneColumns.findIndex(
-                item => item._index === _index
-            );
+            return this.cloneColumns.findIndex(item => item._index === _index);
         },
         handleFilterSelect(_index, value) {
             const index = this.GetOriginalIndex(_index);
@@ -1819,19 +1351,13 @@ export default {
             let filterData = this.makeDataWithSort();
             filterData = this.filterOtherData(filterData, index);
             this.rebuildData = filterData;
-            this.$emit(
-                'on-filter-change',
-                this.cloneColumns[index]
-            );
+            this.$emit('on-filter-change', this.cloneColumns[index]);
         },
         makeData() {
             let data = deepCopy(this.data);
             data.forEach((row, index) => {
                 row._index = index;
-                row._rowKey =
-                    typeof this.rowKey === 'string'
-                        ? row[this.rowKey]
-                        : rowKey++;
+                row._rowKey = typeof this.rowKey === 'string' ? row[this.rowKey] : rowKey++;
                 if (row.children && row.children.length) {
                     row.children = this.makeChildrenData(row);
                 }
@@ -1843,16 +1369,9 @@ export default {
                 return data.children.map((row, index) => {
                     const newRow = deepCopy(row);
                     newRow._index = index;
-                    newRow._rowKey =
-                        typeof this.rowKey === 'string'
-                            ? newRow[this.rowKey]
-                            : rowKey++;
-                    if (
-                        newRow.children &&
-                        newRow.children.length
-                    ) {
-                        newRow.children =
-                            this.makeChildrenData(newRow);
+                    newRow._rowKey = typeof this.rowKey === 'string' ? newRow[this.rowKey] : rowKey++;
+                    if (newRow.children && newRow.children.length) {
+                        newRow.children = this.makeChildrenData(newRow);
                     }
                     return newRow;
                 });
@@ -1867,33 +1386,24 @@ export default {
             let isCustom = false;
 
             for (let i = 0; i < this.cloneColumns.length; i++) {
-                if (
-                    this.cloneColumns[i]._sortType !== 'normal'
-                ) {
+                if (this.cloneColumns[i]._sortType !== 'normal') {
                     sortType = this.cloneColumns[i]._sortType;
                     sortIndex = i;
-                    isCustom =
-                        this.cloneColumns[i].sortable ===
-                        'custom';
+                    isCustom = this.cloneColumns[i].sortable === 'custom';
                     break;
                 }
             }
-            if (sortType !== 'normal' && !isCustom)
-                data = this.sortData(data, sortType, sortIndex);
+            if (sortType !== 'normal' && !isCustom) data = this.sortData(data, sortType, sortIndex);
             return data;
         },
         makeDataWithFilter() {
             let data = this.makeData();
-            this.cloneColumns.forEach(
-                col => (data = this.filterData(data, col))
-            );
+            this.cloneColumns.forEach(col => (data = this.filterData(data, col)));
             return data;
         },
         makeDataWithSortAndFilter() {
             let data = this.makeDataWithSort();
-            this.cloneColumns.forEach(
-                col => (data = this.filterData(data, col))
-            );
+            this.cloneColumns.forEach(col => (data = this.filterData(data, col)));
             return data;
         },
         makeObjBaseData(row) {
@@ -1930,13 +1440,11 @@ export default {
                 const newRow = this.makeObjBaseData(row);
                 if (newRow.children && newRow.children.length) {
                     if (newRow._showChildren) {
-                        newRow._isShowChildren =
-                            newRow._showChildren;
+                        newRow._isShowChildren = newRow._showChildren;
                     } else {
                         newRow._isShowChildren = false;
                     }
-                    newRow.children =
-                        this.makeChildrenObjData(newRow);
+                    newRow.children = this.makeChildrenObjData(newRow);
                 }
                 // else if ('_loading' in newRow && newRow.children && newRow.children.length === 0) {
                 //     newRow._isShowChildren = false;
@@ -1950,17 +1458,12 @@ export default {
                 return data.children.map(row => {
                     const newRow = this.makeObjBaseData(row);
                     if (newRow._showChildren) {
-                        newRow._isShowChildren =
-                            newRow._showChildren;
+                        newRow._isShowChildren = newRow._showChildren;
                     } else {
                         newRow._isShowChildren = false;
                     }
-                    if (
-                        newRow.children &&
-                        newRow.children.length
-                    ) {
-                        newRow.children =
-                            this.makeChildrenObjData(newRow);
+                    if (newRow.children && newRow.children.length) {
+                        newRow.children = this.makeChildrenObjData(newRow);
                     }
                     return newRow;
                 });
@@ -1971,8 +1474,7 @@ export default {
         // 修改列，设置一个隐藏的 id，便于后面的多级表头寻找对应的列，否则找不到
         makeColumnsId(columns) {
             return columns.map(item => {
-                if ('children' in item)
-                    this.makeColumnsId(item.children);
+                if ('children' in item) this.makeColumnsId(item.children);
                 item.__id = getRandomStr(6);
                 return item;
             });
@@ -1995,8 +1497,7 @@ export default {
                 column._filterChecked = [];
 
                 if ('filterMultiple' in column) {
-                    column._filterMultiple =
-                        column.filterMultiple;
+                    column._filterMultiple = column.filterMultiple;
                 } else {
                     column._filterMultiple = true;
                 }
@@ -2011,10 +1512,7 @@ export default {
 
                 if (column.fixed && column.fixed === 'left') {
                     left.push(column);
-                } else if (
-                    column.fixed &&
-                    column.fixed === 'right'
-                ) {
+                } else if (column.fixed && column.fixed === 'right') {
                     right.push(column);
                 } else {
                     center.push(column);
@@ -2042,11 +1540,8 @@ export default {
                 datas = params.data;
             } else {
                 columns = this.allColumns;
-                if (!('original' in params))
-                    params.original = true;
-                datas = params.original
-                    ? this.data
-                    : this.rebuildData;
+                if (!('original' in params)) params.original = true;
+                datas = params.original ? this.data : this.rebuildData;
             }
 
             let noHeader = false;
@@ -2075,6 +1570,7 @@ export default {
 
         on(window, 'resize', this.handleResize);
         this.observer = elementResizeDetectorMaker();
+
         this.observer.listenTo(this.$el, this.handleResize);
 
         this.$on('on-visible-change', val => {
@@ -2097,8 +1593,7 @@ export default {
             handler() {
                 const oldDataLen = this.rebuildData.length;
                 this.objData = this.makeObjData();
-                this.rebuildData =
-                    this.makeDataWithSortAndFilter();
+                this.rebuildData = this.makeDataWithSortAndFilter();
                 this.handleResize();
                 if (!oldDataLen) {
                     this.fixedHeader();
@@ -2113,26 +1608,14 @@ export default {
         columns: {
             handler() {
                 // todo 这里有性能问题，可能是左右固定计算属性影响的
-                const colsWithId = this.makeColumnsId(
-                    this.columns
-                );
+                const colsWithId = this.makeColumnsId(this.columns);
                 this.allColumns = getAllColumns(colsWithId);
                 this.cloneColumns = this.makeColumns(colsWithId);
 
-                this.columnRows = this.makeColumnRows(
-                    false,
-                    colsWithId
-                );
-                this.leftFixedColumnRows = this.makeColumnRows(
-                    'left',
-                    colsWithId
-                );
-                this.rightFixedColumnRows = this.makeColumnRows(
-                    'right',
-                    colsWithId
-                );
-                this.rebuildData =
-                    this.makeDataWithSortAndFilter();
+                this.columnRows = this.makeColumnRows(false, colsWithId);
+                this.leftFixedColumnRows = this.makeColumnRows('left', colsWithId);
+                this.rightFixedColumnRows = this.makeColumnRows('right', colsWithId);
+                this.rebuildData = this.makeDataWithSortAndFilter();
                 this.handleResize();
             },
             deep: true

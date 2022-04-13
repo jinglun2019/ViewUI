@@ -1,5 +1,5 @@
 <style lang="less">
-    @import "../src/styles/index.less";
+@import '../src/styles/index.less';
 </style>
 <template>
     <div class="container">
@@ -45,6 +45,7 @@
                 <span><router-link to="/date">Date</router-link></span>
                 <span><router-link to="/form">Form</router-link></span>
                 <span><router-link to="/table">Table</router-link></span>
+                <span><router-link to="/table2">Table2</router-link></span>
                 <span><router-link to="/loading-bar">LoadingBar</router-link></span>
                 <span><router-link to="/modal">Modal</router-link></span>
                 <span><router-link to="/message">Message</router-link></span>
@@ -67,20 +68,12 @@
     </div>
 </template>
 <script>
-    module.exports = {
-        data: function() {
-            return {
-
-            }
-        },
-        mounted: function() {
-
-        },
-        beforeDestroy: function() {
-
-        },
-        methods: {
-
-        }
-    }
+module.exports = {
+    data: function () {
+        return {};
+    },
+    mounted: function () {},
+    beforeDestroy: function () {},
+    methods: {}
+};
 </script>

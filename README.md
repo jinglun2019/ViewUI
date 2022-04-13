@@ -26,8 +26,10 @@ table 添加 current、pageSize 字段，行 type 为 index 时，根据传入�
 
 table 的 cell 添加 title；将 head 中的’#‘修改为’‘；
 
-table 列默认 align 改为 center；
+<!-- table 列默认 align 改为 center； -->
 
 table 添加 enableIndeterminate 字段，type 为 selection 自动启用，可用.selectedRowList.sync 获取当前选中的行
 
 table 添加滚到底部 bottom 事件（scrollBottom）
+
+table 内容为空时，添加 ivu-table-empty 类
