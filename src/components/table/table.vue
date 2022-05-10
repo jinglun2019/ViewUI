@@ -464,7 +464,8 @@ export default {
                     [`${prefixCls}-with-footer`]: this.showSlotFooter,
                     [`${prefixCls}-with-summary`]: this.showSummary,
                     [`${prefixCls}-wrapper-with-border`]: this.border,
-                    [`${prefixCls}-empty`]: this.data.length
+                    [`${prefixCls}-empty`]: this.data.length,
+                    [`${prefixCls}-empty-with-page`]: this.data.length && this.current && this.pageSize
                 }
             ];
         },

@@ -5,10 +5,7 @@
                 column.indexMethod
                     ? column.indexMethod(row, naturalIndex)
                     : tableRoot.current && tableRoot.pageSize
-                    ? naturalIndex +
-                      1 +
-                      (tableRoot.current - 1) *
-                          tableRoot.pageSize
+                    ? naturalIndex + 1 + (tableRoot.current - 1) * tableRoot.pageSize
                     : naturalIndex + 1
             }}</span></template
         >
@@ -20,11 +17,7 @@
                 :disabled="disabled"
             ></Checkbox>
         </template>
-        <div
-            class="ivu-table-cell-tree-level"
-            v-if="showLevel"
-            :style="treeLevelStyle"
-        ></div>
+        <div class="ivu-table-cell-tree-level" v-if="showLevel" :style="treeLevelStyle"></div>
         <div
             class="ivu-table-cell-tree"
             :class="{
@@ -33,54 +26,33 @@
             v-if="showChildren"
             @click.prevent.stop="handleToggleTree"
         >
-            <Icon
-                type="ios-loading"
-                v-if="childrenLoading"
-                class="ivu-load-loop"
-            />
+            <Icon type="ios-loading" v-if="childrenLoading" class="ivu-load-loop" />
             <Icon type="ios-add" v-else-if="!childrenExpand" />
             <Icon type="ios-remove" v-else />
         </div>
-        <div
-            class="ivu-table-cell-tree ivu-table-cell-tree-empty"
-            v-else-if="showTreeNode"
-        ></div>
-        <template v-if="renderType === 'html'"
-            ><span v-html="row[column.key]"></span
-        ></template>
+        <div class="ivu-table-cell-tree ivu-table-cell-tree-empty" v-else-if="showTreeNode"></div>
+        <template v-if="renderType === 'html'"><span v-html="row[column.key]"></span></template>
         <template v-if="renderType === 'normal'">
             <template v-if="column.tooltip">
                 <Tooltip
                     transfer
                     :content="row[column.key]"
-                    :theme="
-                        column.tooltipTheme
-                            ? column.tooltipTheme
-                            : tableRoot.tooltipTheme
-                    "
+                    :theme="column.tooltipTheme ? column.tooltipTheme : tableRoot.tooltipTheme"
                     :disabled="!showTooltip"
-                    :max-width="
-                        column.tooltipMaxWidth
-                            ? column.tooltipMaxWidth
-                            : tableRoot.tooltipMaxWidth
-                    "
+                    :max-width="column.tooltipMaxWidth ? column.tooltipMaxWidth : tableRoot.tooltipMaxWidth"
                     class="ivu-table-cell-tooltip"
                 >
-                    <span
-                        ref="content"
-                        @mouseenter="handleTooltipIn"
-                        class="ivu-table-cell-tooltip-content"
-                        >{{ row[column.key] }}</span
-                    >
+                    <span ref="content" @mouseenter="handleTooltipIn" class="ivu-table-cell-tooltip-content">{{
+                        row[column.key]
+                    }}</span>
                 </Tooltip>
             </template>
-            <span v-else :title="row[column.key]">{{
-                row[column.key] || '--'
-            }}</span>
+            <template v-else>
+                {{ void (cellText = showCellValue()) }}
+                <span :class="cellClass" :title="cellText === '--' ? '' : cellText">{{ cellText }}</span>
+            </template>
         </template>
-        <template
-            v-if="renderType === 'expand' && !row._disableExpand"
-        >
+        <template v-if="renderType === 'expand' && !row._disableExpand">
             <div :class="expandCls" @click="toggleExpand">
                 <Icon type="ios-arrow-forward"></Icon>
             </div>
@@ -142,9 +114,7 @@ export default {
         return {
             renderType: '',
             uid: -1,
-            context:
-                this.$parent.$parent.$parent.$parent.$parent
-                    .currentContext,
+            context: this.$parent.$parent.$parent.$parent.$parent.currentContext,
             showTooltip: false // 鼠标滑过overflow文本时，再检查是否需要显示
         };
     },
@@ -156,14 +126,10 @@ export default {
                     [`${this.prefixCls}-hidden`]:
                         !this.fixed &&
                         this.column.fixed &&
-                        (this.column.fixed === 'left' ||
-                            this.column.fixed === 'right'),
-                    [`${this.prefixCls}-cell-ellipsis`]:
-                        this.column.ellipsis !== false,
-                    [`${this.prefixCls}-cell-with-expand`]:
-                        this.renderType === 'expand',
-                    [`${this.prefixCls}-cell-with-selection`]:
-                        this.renderType === 'selection'
+                        (this.column.fixed === 'left' || this.column.fixed === 'right'),
+                    [`${this.prefixCls}-cell-ellipsis`]: this.column.ellipsis !== false,
+                    [`${this.prefixCls}-cell-with-expand`]: this.renderType === 'expand',
+                    [`${this.prefixCls}-cell-with-selection`]: this.renderType === 'selection'
                 }
             ];
         },
@@ -171,8 +137,7 @@ export default {
             return [
                 `${this.prefixCls}-cell-expand`,
                 {
-                    [`${this.prefixCls}-cell-expand-expanded`]:
-                        this.expanded
+                    [`${this.prefixCls}-cell-expand-expanded`]: this.expanded
                 }
             ];
         },
@@ -185,10 +150,7 @@ export default {
                 this.renderType === 'slot'
             ) {
                 const data = this.row;
-                if (
-                    (data.children && data.children.length) ||
-                    '_loading' in data
-                ) {
+                if ((data.children && data.children.length) || '_loading' in data) {
                     if (this.column.tree) status = true;
                 }
             }
@@ -202,8 +164,7 @@ export default {
                 this.renderType === 'render' ||
                 this.renderType === 'slot'
             ) {
-                if (this.column.tree && this.treeNode)
-                    status = true;
+                if (this.column.tree && this.treeNode) status = true;
             }
             return status;
         },
@@ -215,48 +176,47 @@ export default {
                 this.renderType === 'render' ||
                 this.renderType === 'slot'
             ) {
-                if (this.column.tree && this.treeNode)
-                    status = true;
+                if (this.column.tree && this.treeNode) status = true;
             }
             return status;
         },
         treeLevelStyle() {
             return {
-                'padding-left':
-                    this.treeLevel * this.tableRoot.indentSize +
-                    'px'
+                'padding-left': this.treeLevel * this.tableRoot.indentSize + 'px'
             };
         },
         childrenExpand() {
-            const data = this.tableRoot.getDataByRowKey(
-                this.row._rowKey
-            );
+            const data = this.tableRoot.getDataByRowKey(this.row._rowKey);
             return data._isShowChildren;
         },
         childrenLoading() {
-            const data = this.tableRoot.getDataByRowKey(
-                this.row._rowKey
-            );
+            const data = this.tableRoot.getDataByRowKey(this.row._rowKey);
             return '_loading' in data && data._loading;
+        },
+        cellClass() {
+            const val = this.row[this.column.key];
+
+            if (this.column.valueMap && (val || val === 0 || val === '')) {
+                const matchItem = this.column.valueMap.find(item => {
+                    return String(val) === String(item.value);
+                });
+                if (!matchItem || !matchItem.className) {
+                    return '';
+                }
+                return matchItem.className;
+            }
         }
     },
     methods: {
         toggleSelect() {
             if (this.treeNode) {
-                this.$parent.$parent.$parent.$parent.$parent.toggleSelect(
-                    this.index,
-                    this.row._rowKey
-                );
+                this.$parent.$parent.$parent.$parent.$parent.toggleSelect(this.index, this.row._rowKey);
             } else {
-                this.$parent.$parent.$parent.$parent.$parent.toggleSelect(
-                    this.index
-                );
+                this.$parent.$parent.$parent.$parent.$parent.toggleSelect(this.index);
             }
         },
         toggleExpand() {
-            this.$parent.$parent.$parent.$parent.$parent.toggleExpand(
-                this.index
-            );
+            this.$parent.$parent.$parent.$parent.$parent.toggleExpand(this.index);
         },
         handleClick() {
             // 放置 Checkbox 冒泡
@@ -266,15 +226,34 @@ export default {
             let range = document.createRange();
             range.setStart($content, 0);
             range.setEnd($content, $content.childNodes.length);
-            const rangeWidth =
-                range.getBoundingClientRect().width;
+            const rangeWidth = range.getBoundingClientRect().width;
             this.showTooltip = rangeWidth > $content.offsetWidth;
             range = null;
         },
         handleToggleTree() {
-            this.$parent.$parent.$parent.$parent.$parent.toggleTree(
-                this.row._rowKey
-            );
+            this.$parent.$parent.$parent.$parent.$parent.toggleTree(this.row._rowKey);
+        },
+        showCellValue() {
+            const val = this.row[this.column.key];
+
+            if (this.column.valueMap) {
+                const matchItem = this.column.valueMap.find(item => {
+                    return String(val) === String(item.value);
+                });
+                return matchItem && matchItem.text;
+            }
+
+            if (val || val === 0) {
+                return val;
+            }
+
+            if (this.row.isChild || this.column.tree) {
+                return '';
+            }
+            if (!this.row.isChild && this.column.treeParent) {
+                return '...';
+            }
+            return '--';
         }
         // 改为 table-body 中触发，因为 cell 有padding间距
         // handleCellClick (event) {

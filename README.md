@@ -32,4 +32,8 @@ table 添加 enableIndeterminate 字段，type 为 selection 自动启用，可�
 
 table 添加滚到底部 bottom 事件（scrollBottom）
 
-table 内容为空时，添加 ivu-table-empty 类
+table 内容为空时，添加 ivu-table-empty 类;带 page 组件为 empty 时，添加 ivu-table-empty-with-page 类
+
+button 添加 ivu-btn-inner 类
+
+table cell 添加 valueMap 用于映射

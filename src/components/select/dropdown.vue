@@ -1,15 +1,11 @@
 <template>
-    <div
-        class="ivu-select-dropdown"
-        :class="className"
-        :style="styles"
-    >
+    <div class="ivu-select-dropdown" :class="className" :style="styles">
         <div
             class="vue-scroll-outer"
             :style="{
                 height: dropHeight,
                 overflow: 'auto',
-                maxHeight: '200px'
+                maxHeight: '186px'
             }"
             v-if="vueScrollEnable"
         >
@@ -27,14 +23,9 @@ const isServer = Vue.prototype.$isServer;
 import { getStyle } from '../../utils/assist';
 import vueScroll from 'vuescroll/dist/vuescroll-native';
 
-const Popper = isServer
-    ? function () {}
-    : require('popper.js/dist/umd/popper.js'); // eslint-disable-line
+const Popper = isServer ? function () {} : require('popper.js/dist/umd/popper.js'); // eslint-disable-line
 
-import {
-    transferIndex,
-    transferIncrease
-} from '../../utils/transfer-queue';
+import { transferIndex, transferIncrease } from '../../utils/transfer-queue';
 import vueScrollConfig from '../../mixins/vueScrollConfig';
 import deepmerge from 'deepmerge';
 
@@ -80,17 +71,12 @@ export default {
             let style = {};
             if (this.width) style.minWidth = `${this.width}px`;
 
-            if (this.transfer)
-                style['z-index'] = 1060 + this.tIndex;
+            if (this.transfer) style['z-index'] = 1060 + this.tIndex;
 
             return style;
         },
         dropHeight() {
-            if (
-                this.$parent &&
-                this.$parent.selectOptions &&
-                this.$parent.selectOptions.length > 6
-            ) {
+            if (this.$parent && this.$parent.selectOptions && this.$parent.selectOptions.length > 6) {
                 return '200px';
             } else {
                 return 'auto';
@@ -105,37 +91,29 @@ export default {
                     this.popper.update();
                     this.popperStatus = true;
                 } else {
-                    this.popper = new Popper(
-                        this.$parent.$refs.reference,
-                        this.$el,
-                        {
-                            eventsEnabled: this.eventsEnabled,
-                            placement: this.placement,
-                            modifiers: {
-                                computeStyle: {
-                                    gpuAcceleration: false
-                                },
-                                preventOverflow: {
-                                    boundariesElement: 'window'
-                                }
+                    this.popper = new Popper(this.$parent.$refs.reference, this.$el, {
+                        eventsEnabled: this.eventsEnabled,
+                        placement: this.placement,
+                        modifiers: {
+                            computeStyle: {
+                                gpuAcceleration: false
                             },
-                            onCreate: () => {
-                                this.resetTransformOrigin();
-                                this.$nextTick(
-                                    this.popper.update()
-                                );
-                            },
-                            onUpdate: () => {
-                                this.resetTransformOrigin();
+                            preventOverflow: {
+                                boundariesElement: 'window'
                             }
+                        },
+                        onCreate: () => {
+                            this.resetTransformOrigin();
+                            this.$nextTick(this.popper.update());
+                        },
+                        onUpdate: () => {
+                            this.resetTransformOrigin();
                         }
-                    );
+                    });
                 }
                 // set a height for parent is Modal and Select's width is 100%
                 if (this.$parent.$options.name === 'iSelect') {
-                    this.width = parseInt(
-                        getStyle(this.$parent.$el, 'width')
-                    );
+                    this.width = parseInt(getStyle(this.$parent.$el, 'width'));
                 }
                 this.tIndex = this.handleGetIndex();
             });
@@ -145,8 +123,7 @@ export default {
                 setTimeout(() => {
                     if (this.popper && !this.popperStatus) {
                         //fix:#910
-                        this.popper.popper.style.display =
-                            'none';
+                        this.popper.popper.style.display = 'none';
                         this.popper.destroy();
                         this.popper = null;
                     }
@@ -158,18 +135,13 @@ export default {
             // 不判断，Select 会报错，不知道为什么
             if (!this.popper) return;
 
-            let x_placement =
-                this.popper.popper.getAttribute('x-placement');
+            let x_placement = this.popper.popper.getAttribute('x-placement');
             let placementStart = x_placement.split('-')[0];
             let placementEnd = x_placement.split('-')[1];
-            const leftOrRight =
-                x_placement === 'left' ||
-                x_placement === 'right';
+            const leftOrRight = x_placement === 'left' || x_placement === 'right';
             if (!leftOrRight) {
                 this.popper.popper.style.transformOrigin =
-                    placementStart === 'bottom' ||
-                    (placementStart !== 'top' &&
-                        placementEnd === 'start')
+                    placementStart === 'bottom' || (placementStart !== 'top' && placementEnd === 'start')
                         ? 'center top'
                         : 'center bottom';
             }

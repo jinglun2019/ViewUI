@@ -1,22 +1,10 @@
 <template>
-    <component
-        :is="tagName"
-        :class="classes"
-        :disabled="itemDisabled"
-        @click="handleClickLink"
-        v-bind="tagProps"
-    >
-        <Icon
-            class="ivu-load-loop"
-            type="ios-loading"
-            v-if="loading"
-        ></Icon>
-        <Icon
-            :type="icon"
-            :custom="customIcon"
-            v-if="(icon || customIcon) && !loading"
-        ></Icon>
-        <span v-if="showSlot" ref="slot"><slot></slot></span>
+    <component :is="tagName" :class="classes" :disabled="itemDisabled" @click="handleClickLink" v-bind="tagProps">
+        <Icon class="ivu-load-loop" type="ios-loading" v-if="loading"></Icon>
+        <Icon :type="icon" :custom="customIcon" v-if="(icon || customIcon) && !loading"></Icon>
+        <span class="ivu-btn-inner" v-if="showSlot" ref="slot">
+            <slot></slot>
+        </span>
     </component>
 </template>
 <script>
@@ -34,39 +22,21 @@ export default {
     props: {
         type: {
             validator(value) {
-                return oneOf(value, [
-                    'default',
-                    'primary',
-                    'dashed',
-                    'text',
-                    'info',
-                    'success',
-                    'warning',
-                    'error'
-                ]);
+                return oneOf(value, ['default', 'primary', 'dashed', 'text', 'info', 'success', 'warning', 'error']);
             },
             default: 'default'
         },
         shape: {
             validator(value) {
-                return oneOf(value, [
-                    'circle',
-                    'circle-outline'
-                ]);
+                return oneOf(value, ['circle', 'circle-outline']);
             }
         },
         size: {
             validator(value) {
-                return oneOf(value, [
-                    'small',
-                    'large',
-                    'default'
-                ]);
+                return oneOf(value, ['small', 'large', 'default']);
             },
             default() {
-                return !this.$IVIEW || this.$IVIEW.size === ''
-                    ? 'default'
-                    : this.$IVIEW.size;
+                return !this.$IVIEW || this.$IVIEW.size === '' ? 'default' : this.$IVIEW.size;
             }
         },
         loading: Boolean,
@@ -74,11 +44,7 @@ export default {
         htmlType: {
             default: 'button',
             validator(value) {
-                return oneOf(value, [
-                    'button',
-                    'submit',
-                    'reset'
-                ]);
+                return oneOf(value, ['button', 'submit', 'reset']);
             }
         },
         icon: {
@@ -109,15 +75,9 @@ export default {
                 {
                     [`${prefixCls}-long`]: this.long,
                     [`${prefixCls}-${this.shape}`]: !!this.shape,
-                    [`${prefixCls}-${this.size}`]:
-                        this.size !== 'default',
-                    [`${prefixCls}-loading`]:
-                        this.loading != null && this.loading,
-                    [`${prefixCls}-icon-only`]:
-                        !this.showSlot &&
-                        (!!this.icon ||
-                            !!this.customIcon ||
-                            this.loading),
+                    [`${prefixCls}-${this.size}`]: this.size !== 'default',
+                    [`${prefixCls}-loading`]: this.loading != null && this.loading,
+                    [`${prefixCls}-icon-only`]: !this.showSlot && (!!this.icon || !!this.customIcon || this.loading),
                     [`${prefixCls}-ghost`]: this.ghost
                 }
             ];
@@ -146,8 +106,7 @@ export default {
         // Ctrl or CMD and click, open in new window when use `to`
         handleClickLink(event) {
             this.$emit('click', event);
-            const openInNewWindow =
-                event.ctrlKey || event.metaKey;
+            const openInNewWindow = event.ctrlKey || event.metaKey;
 
             this.handleCheckClick(event, openInNewWindow);
         }

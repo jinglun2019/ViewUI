@@ -2,18 +2,15 @@
     <div v-if="visible" class="empty-box">
         <div>
             <img
-                v-if="showImg"
+                v-if="isShowImg"
                 class="empty-img"
                 :style="{
                     display: 'block',
-                    marginBottom: `${showText ? 10 : 0}px`
+                    marginBottom: `${isShowImg ? 10 : 0}px`
                 }"
                 :src="require('../../assets/empty.png')"
             />
-            <div
-                style="color: #7a7a7a; text-align: center"
-                v-if="showText"
-            >
+            <div style="color: #7a7a7a; text-align: center" v-if="isShowText">
                 {{ text }}
             </div>
         </div>
