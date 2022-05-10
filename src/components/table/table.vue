@@ -246,13 +246,13 @@ export default {
     },
     props: {
         pageSize: {
-            type: Number,
-            default: 0
+            type: Number
+            // default: 0
         },
         //页码
         current: {
-            type: Number,
-            default: 1
+            type: Number
+            // default: 1
         },
         data: {
             type: Array,
@@ -464,8 +464,8 @@ export default {
                     [`${prefixCls}-with-footer`]: this.showSlotFooter,
                     [`${prefixCls}-with-summary`]: this.showSummary,
                     [`${prefixCls}-wrapper-with-border`]: this.border,
-                    [`${prefixCls}-empty`]: this.data.length,
-                    [`${prefixCls}-empty-with-page`]: this.data.length && this.current && this.pageSize
+                    [`${prefixCls}-empty`]: !this.data.length,
+                    [`${prefixCls}-empty-with-page`]: !this.data.length && this.pageSize
                 }
             ];
         },
