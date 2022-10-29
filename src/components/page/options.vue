@@ -10,11 +10,7 @@
                 :eventsEnabled="eventsEnabled"
                 @on-change="changeSize"
             >
-                <i-option
-                    v-for="item in pageSizeOpts"
-                    :key="item"
-                    :value="item"
-                    style="text-align: center"
+                <i-option v-for="item in pageSizeOpts" :key="item" :value="item" style="text-align: center"
                     >{{ item }} {{ t('i.page.page') }}</i-option
                 >
             </i-select>
@@ -32,9 +28,7 @@
                 :min="1"
             />
             {{ t('i.page.p') }}
-            <i-button class="btn1 jump-btn" @click="changePage"
-                >跳转</i-button
-            >
+            <i-button class="ivu-page-item jump-btn" @click="changePage">GO</i-button>
         </div>
     </div>
 </template>
@@ -168,21 +162,10 @@ export default {
     }
 }
 
-.btn1 {
-    .btn-small();
-
-    background: linear-gradient(90deg, #0fc1fc 0%, #1da4fe 100%);
-
-    &:hover {
-        background: linear-gradient(
-            90deg,
-            #1da4fe 0%,
-            #1da4fe 100%
-        ) !important;
-    }
-}
 .jump-btn {
-    min-width: 60px;
+    width: 30px;
+    padding: 0 !important;
+    font-size: 12px;
     margin-left: 8px;
 }
 </style>

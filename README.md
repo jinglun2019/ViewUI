@@ -28,7 +28,7 @@ table 的 cell 添加 title；将 head 中的’#‘修改为’‘；
 
 <!-- table 列默认 align 改为 center； -->
 
-table 添加 enableIndeterminate 字段，type 为 selection 自动启用，可用.selectedRowList.sync 获取当前选中的行
+table 添加 enableIndeterminate 字段，type 为 selection 自动启用，可用:selectedRowList.sync 获取当前选中的行
 
 table 添加滚到底部 bottom 事件（scrollBottom）
 
@@ -37,3 +37,5 @@ table 内容为空时，添加 ivu-table-empty 类;带 page 组件为 empty 时�
 button 添加 ivu-btn-inner 类
 
 table cell 添加 valueMap 用于映射
+
+select remoteMethod空字符串时仍然发送事件

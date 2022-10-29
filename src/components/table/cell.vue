@@ -240,7 +240,7 @@ export default {
                 const matchItem = this.column.valueMap.find(item => {
                     return String(val) === String(item.value);
                 });
-                return matchItem && matchItem.text;
+                return (matchItem && matchItem.text) || '--';
             }
 
             if (val || val === 0) {

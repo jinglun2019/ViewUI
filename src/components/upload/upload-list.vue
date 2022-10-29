@@ -1,31 +1,24 @@
 <template>
     <ul :class="[prefixCls + '-list']">
-        <li
-            v-for="file in files"
-            :class="fileCls(file)"
-            @click="handleClick(file)"
-        >
-            <span @click="handlePreview(file)">
+        <li v-for="file in files" :class="fileCls(file)" @click="handleClick(file)">
+            <span class="ivu-upload-list-file-name" @click="handlePreview(file)">
                 <Icon :type="format(file)"></Icon>
                 {{ file.name }}
             </span>
+
             <Icon
                 type="ios-close"
                 :class="[prefixCls + '-list-remove']"
                 v-show="file.status === 'finished'"
                 @click.native="handleRemove(file)"
             ></Icon>
+            <span v-if="preview" class="ivu-upload-preview" @click="handlePreview(file)">预览</span>
             <transition name="fade">
                 <i-progress
                     v-if="file.showProgress"
                     :stroke-width="2"
                     :percent="parsePercentage(file.percentage)"
-                    :status="
-                        file.status === 'finished' &&
-                        file.showProgress
-                            ? 'success'
-                            : 'normal'
-                    "
+                    :status="file.status === 'finished' && file.showProgress ? 'success' : 'normal'"
                 ></i-progress>
             </transition>
         </li>
@@ -45,6 +38,10 @@ export default {
             default() {
                 return [];
             }
+        },
+        preview: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -57,8 +54,7 @@ export default {
             return [
                 `${prefixCls}-list-file`,
                 {
-                    [`${prefixCls}-list-file-finish`]:
-                        file.status === 'finished'
+                    [`${prefixCls}-list-file-finish`]: file.status === 'finished'
                 }
             ];
         },
@@ -72,71 +68,25 @@ export default {
             this.$emit('on-file-remove', file);
         },
         format(file) {
-            const format =
-                file.name.split('.').pop().toLocaleLowerCase() ||
-                '';
+            const format = file.name.split('.').pop().toLocaleLowerCase() || '';
             let type = 'ios-document-outline';
 
-            if (
-                [
-                    'gif',
-                    'jpg',
-                    'jpeg',
-                    'png',
-                    'bmp',
-                    'webp'
-                ].indexOf(format) > -1
-            ) {
+            if (['gif', 'jpg', 'jpeg', 'png', 'bmp', 'webp'].indexOf(format) > -1) {
                 type = 'ios-image';
             }
-            if (
-                [
-                    'mp4',
-                    'm3u8',
-                    'rmvb',
-                    'avi',
-                    'swf',
-                    '3gp',
-                    'mkv',
-                    'flv'
-                ].indexOf(format) > -1
-            ) {
+            if (['mp4', 'm3u8', 'rmvb', 'avi', 'swf', '3gp', 'mkv', 'flv'].indexOf(format) > -1) {
                 type = 'ios-film';
             }
-            if (
-                [
-                    'mp3',
-                    'wav',
-                    'wma',
-                    'ogg',
-                    'aac',
-                    'flac'
-                ].indexOf(format) > -1
-            ) {
+            if (['mp3', 'wav', 'wma', 'ogg', 'aac', 'flac'].indexOf(format) > -1) {
                 type = 'ios-musical-notes';
             }
-            if (
-                [
-                    'doc',
-                    'txt',
-                    'docx',
-                    'pages',
-                    'epub',
-                    'pdf'
-                ].indexOf(format) > -1
-            ) {
+            if (['doc', 'txt', 'docx', 'pages', 'epub', 'pdf'].indexOf(format) > -1) {
                 type = 'md-document';
             }
-            if (
-                ['numbers', 'csv', 'xls', 'xlsx'].indexOf(
-                    format
-                ) > -1
-            ) {
+            if (['numbers', 'csv', 'xls', 'xlsx'].indexOf(format) > -1) {
                 type = 'ios-stats';
             }
-            if (
-                ['keynote', 'ppt', 'pptx'].indexOf(format) > -1
-            ) {
+            if (['keynote', 'ppt', 'pptx'].indexOf(format) > -1) {
                 type = 'ios-videocam';
             }
 

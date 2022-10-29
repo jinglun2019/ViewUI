@@ -1,11 +1,7 @@
 <template>
     <div :class="wrapClasses">
         <template v-if="type !== 'textarea'">
-            <div
-                :class="[prefixCls + '-group-prepend']"
-                v-if="prepend"
-                v-show="slotReady"
-            >
+            <div :class="[prefixCls + '-group-prepend']" v-if="prepend" v-show="slotReady">
                 <slot name="prepend"></slot>
             </div>
             <i
@@ -19,70 +15,34 @@
                 v-if="clearable && currentValue && !itemDisabled"
                 @click="handleClear"
                 :style="{
-                    right:
-                        search || showSuffix || password
-                            ? $refs.searchIco &&
-                              $refs.searchIco.offsetWidth -
-                                  5 +
-                                  'px'
-                            : 0
+                    right: closeRight
                 }"
             ></i>
             <i
                 class="ivu-icon"
-                :class="[
-                    'ivu-icon-' + icon,
-                    prefixCls + '-icon',
-                    prefixCls + '-icon-normal'
-                ]"
+                :class="['ivu-icon-' + icon, prefixCls + '-icon', prefixCls + '-icon-normal']"
                 v-else-if="icon"
                 @click="handleIconClick"
             ></i>
             <i
                 class="ivu-icon ivu-icon-ios-search"
-                :class="[
-                    prefixCls + '-icon',
-                    prefixCls + '-icon-normal',
-                    prefixCls + '-search-icon'
-                ]"
+                :class="[prefixCls + '-icon', prefixCls + '-icon-normal', prefixCls + '-search-icon']"
                 v-if="search && enterButton === false"
                 @click="handleSearch"
                 ref="searchIco"
             ></i>
             <span class="ivu-input-suffix" v-else-if="showSuffix"
-                ><slot name="suffix"
-                    ><i
-                        class="ivu-icon"
-                        :class="['ivu-icon-' + suffix]"
-                        v-if="suffix"
-                    ></i></slot
+                ><slot name="suffix"><i class="ivu-icon" :class="['ivu-icon-' + suffix]" v-if="suffix"></i></slot
             ></span>
-            <span
-                class="ivu-input-word-count"
-                v-else-if="showWordLimit"
-                >{{ textLength }}/{{ upperLimit }}</span
-            >
-            <span
-                class="ivu-input-suffix"
-                v-else-if="password"
-                @click="handleToggleShowPassword"
-            >
-                <i
-                    class="ivu-icon ivu-icon-ios-eye-outline"
-                    v-if="showPassword"
-                ></i>
-                <i
-                    class="ivu-icon ivu-icon-ios-eye-off-outline"
-                    v-else
-                ></i>
+            <span class="ivu-input-word-count" v-else-if="showWordLimit">{{ textLength }}/{{ upperLimit }}</span>
+            <span class="ivu-input-suffix" v-else-if="password" @click="handleToggleShowPassword">
+                <i class="ivu-icon ivu-icon-ios-eye-outline" v-if="showPassword"></i>
+                <i class="ivu-icon ivu-icon-ios-eye-off-outline" v-else></i>
             </span>
             <transition name="fade">
                 <i
                     class="ivu-icon ivu-icon-ios-loading ivu-load-loop"
-                    :class="[
-                        prefixCls + '-icon',
-                        prefixCls + '-icon-validate'
-                    ]"
+                    :class="[prefixCls + '-icon', prefixCls + '-icon-validate']"
                     v-if="!icon"
                 ></i>
             </transition>
@@ -113,34 +73,19 @@
                 @input="handleInput"
                 @change="handleChange"
             />
-            <div
-                :class="[prefixCls + '-group-append']"
-                v-if="append"
-                v-show="slotReady"
-            >
+            <div :class="[prefixCls + '-group-append']" v-if="append" v-show="slotReady">
                 <slot name="append"></slot>
             </div>
             <div
-                :class="[
-                    prefixCls + '-group-append',
-                    prefixCls + '-search'
-                ]"
+                :class="[prefixCls + '-group-append', prefixCls + '-search']"
                 v-else-if="search && enterButton"
                 @click="handleSearch"
             >
-                <i
-                    class="ivu-icon ivu-icon-ios-search"
-                    v-if="enterButton === true"
-                ></i>
+                <i class="ivu-icon ivu-icon-ios-search" v-if="enterButton === true"></i>
                 <template v-else>{{ enterButton }}</template>
             </div>
             <span class="ivu-input-prefix" v-else-if="showPrefix"
-                ><slot name="prefix"
-                    ><i
-                        class="ivu-icon"
-                        :class="['ivu-icon-' + prefix]"
-                        v-if="prefix"
-                    ></i></slot
+                ><slot name="prefix"><i class="ivu-icon" :class="['ivu-icon-' + prefix]" v-if="prefix"></i></slot
             ></span>
         </template>
         <template v-else>
@@ -172,11 +117,7 @@
                 @input="handleInput"
             >
             </textarea>
-            <span
-                class="ivu-input-word-count"
-                v-if="showWordLimit"
-                >{{ textLength }}/{{ upperLimit }}</span
-            >
+            <span class="ivu-input-word-count" v-if="showWordLimit">{{ textLength }}/{{ upperLimit }}</span>
         </template>
     </div>
 </template>
@@ -194,16 +135,7 @@ export default {
     props: {
         type: {
             validator(value) {
-                return oneOf(value, [
-                    'text',
-                    'textarea',
-                    'password',
-                    'url',
-                    'email',
-                    'date',
-                    'number',
-                    'tel'
-                ]);
+                return oneOf(value, ['text', 'textarea', 'password', 'url', 'email', 'date', 'number', 'tel']);
             },
             default: 'text'
         },
@@ -213,16 +145,10 @@ export default {
         },
         size: {
             validator(value) {
-                return oneOf(value, [
-                    'small',
-                    'large',
-                    'default'
-                ]);
+                return oneOf(value, ['small', 'large', 'default']);
             },
             default() {
-                return !this.$IVIEW || this.$IVIEW.size === ''
-                    ? 'default'
-                    : this.$IVIEW.size;
+                return !this.$IVIEW || this.$IVIEW.size === '' ? 'default' : this.$IVIEW.size;
             }
         },
         placeholder: {
@@ -326,69 +252,43 @@ export default {
     computed: {
         currentType() {
             let type = this.type;
-            if (
-                type === 'password' &&
-                this.password &&
-                this.showPassword
-            )
-                type = 'text';
+            if (type === 'password' && this.password && this.showPassword) type = 'text';
             return type;
         },
         prepend() {
             let state = false;
-            if (this.type !== 'textarea')
-                state = this.$slots.prepend !== undefined;
+            if (this.type !== 'textarea') state = this.$slots.prepend !== undefined;
             return state;
         },
         append() {
             let state = false;
-            if (this.type !== 'textarea')
-                state = this.$slots.append !== undefined;
+            if (this.type !== 'textarea') state = this.$slots.append !== undefined;
             return state;
         },
         showPrefix() {
             let state = false;
-            if (this.type !== 'textarea')
-                state =
-                    this.prefix !== '' ||
-                    this.$slots.prefix !== undefined;
+            if (this.type !== 'textarea') state = this.prefix !== '' || this.$slots.prefix !== undefined;
             return state;
         },
         showSuffix() {
             let state = false;
-            if (this.type !== 'textarea')
-                state =
-                    this.suffix !== '' ||
-                    this.$slots.suffix !== undefined;
+            if (this.type !== 'textarea') state = this.suffix !== '' || this.$slots.suffix !== undefined;
             return state;
         },
         wrapClasses() {
             return [
                 `${prefixCls}-wrapper`,
                 {
-                    [`${prefixCls}-wrapper-${this.size}`]:
-                        !!this.size,
-                    [`${prefixCls}-type-${this.type}`]:
-                        this.type,
-                    [`${prefixCls}-group`]:
-                        this.prepend ||
-                        this.append ||
-                        (this.search && this.enterButton),
+                    [`${prefixCls}-wrapper-${this.size}`]: !!this.size,
+                    [`${prefixCls}-type-${this.type}`]: this.type,
+                    [`${prefixCls}-group`]: this.prepend || this.append || (this.search && this.enterButton),
                     [`${prefixCls}-group-${this.size}`]:
-                        (this.prepend ||
-                            this.append ||
-                            (this.search && this.enterButton)) &&
-                        !!this.size,
-                    [`${prefixCls}-group-with-prepend`]:
-                        this.prepend,
-                    [`${prefixCls}-group-with-append`]:
-                        this.append ||
-                        (this.search && this.enterButton),
+                        (this.prepend || this.append || (this.search && this.enterButton)) && !!this.size,
+                    [`${prefixCls}-group-with-prepend`]: this.prepend,
+                    [`${prefixCls}-group-with-append`]: this.append || (this.search && this.enterButton),
                     [`${prefixCls}-hide-icon`]: this.append, // #554
-                    [`${prefixCls}-with-search`]:
-                        this.search && this.enterButton,
-                    [`${prefixCls}-wrapper-disabled`]:
-                        this.itemDisabled // #685
+                    [`${prefixCls}-with-search`]: this.search && this.enterButton,
+                    [`${prefixCls}-wrapper-disabled`]: this.itemDisabled // #685
                 }
             ];
         },
@@ -399,12 +299,8 @@ export default {
                     [`${prefixCls}-${this.size}`]: !!this.size,
                     [`${prefixCls}-disabled`]: this.itemDisabled,
                     [`${prefixCls}-no-border`]: !this.border,
-                    [`${prefixCls}-with-prefix`]:
-                        this.showPrefix,
-                    [`${prefixCls}-with-suffix`]:
-                        this.showSuffix ||
-                        (this.search &&
-                            this.enterButton === false)
+                    [`${prefixCls}-with-prefix`]: this.showPrefix,
+                    [`${prefixCls}-with-suffix`]: this.showSuffix || (this.search && this.enterButton === false)
                 }
             ];
         },
@@ -426,13 +322,18 @@ export default {
             }
 
             return (this.value || '').length;
+        },
+        closeRight() {
+            const hasIcon = (this.search && this.enterButton === false) || this.showSuffix || this.password ? 25 : 0;
+            const hasEnterButton = this.search && this.enterButton ? 48 : 0;
+            const hasWordLimit = this.showWordLimit ? 34 : 0;
+            return (hasIcon || hasEnterButton || hasWordLimit) + 'px';
         }
     },
     methods: {
         handleEnter(event) {
             this.$emit('on-enter', event);
-            if (this.search)
-                this.$emit('on-search', this.currentValue);
+            if (this.search) this.$emit('on-search', this.currentValue);
         },
         handleKeydown(event) {
             this.$emit('on-keydown', event);
@@ -451,19 +352,8 @@ export default {
         },
         handleBlur(event) {
             this.$emit('on-blur', event);
-            if (
-                !findComponentUpward(this, [
-                    'DatePicker',
-                    'TimePicker',
-                    'Cascader',
-                    'Search'
-                ])
-            ) {
-                this.dispatch(
-                    'FormItem',
-                    'on-form-blur',
-                    this.currentValue
-                );
+            if (!findComponentUpward(this, ['DatePicker', 'TimePicker', 'Cascader', 'Search'])) {
+                this.dispatch('FormItem', 'on-form-blur', this.currentValue);
             }
         },
         handleComposition(event) {
@@ -479,10 +369,7 @@ export default {
             if (this.isOnComposition) return;
 
             let value = event.target.value;
-            if (this.number && value !== '')
-                value = Number.isNaN(Number(value))
-                    ? value
-                    : Number(value);
+            if (this.number && value !== '') value = Number.isNaN(Number(value)) ? value : Number(value);
             this.$emit('input', value);
             this.setCurrentValue(value);
             this.$emit('on-change', event);
@@ -496,19 +383,8 @@ export default {
                 this.resizeTextarea();
             });
             this.currentValue = value;
-            if (
-                !findComponentUpward(this, [
-                    'DatePicker',
-                    'TimePicker',
-                    'Cascader',
-                    'Search'
-                ])
-            ) {
-                this.dispatch(
-                    'FormItem',
-                    'on-form-change',
-                    value
-                );
+            if (!findComponentUpward(this, ['DatePicker', 'TimePicker', 'Cascader', 'Search'])) {
+                this.dispatch('FormItem', 'on-form-change', value);
             }
         },
         resizeTextarea() {
@@ -520,17 +396,10 @@ export default {
             const minRows = autosize.minRows;
             const maxRows = autosize.maxRows;
 
-            this.textareaStyles = calcTextareaHeight(
-                this.$refs.textarea,
-                minRows,
-                maxRows
-            );
+            this.textareaStyles = calcTextareaHeight(this.$refs.textarea, minRows, maxRows);
         },
         focus(option) {
-            const $el =
-                this.type === 'textarea'
-                    ? this.$refs.textarea
-                    : this.$refs.input;
+            const $el = this.type === 'textarea' ? this.$refs.textarea : this.$refs.input;
             $el.focus(option);
             // Selection content
             const { cursor } = option || {};

@@ -1,14 +1,15 @@
 {
-    "name": "view-design",
-    "version": "4.7.0",
+    "name": "@jinglun/view-design",
+    "version": "4.7.19",
     "lockfileVersion": 2,
     "requires": true,
     "packages": {
         "": {
-            "name": "view-design",
-            "version": "4.7.0",
+            "name": "@jinglun/view-design",
+            "version": "4.7.19",
             "license": "MIT",
             "dependencies": {
+                "@vue/composition-api": "^1.7.0",
                 "async-validator": "^3.3.0",
                 "deepmerge": "^2.2.1",
                 "element-resize-detector": "^1.2.0",
@@ -205,6 +206,14 @@
             "resolved": "https://registry.npmmirror.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz",
             "integrity": "sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==",
             "dev": true
+        },
+        "node_modules/@vue/composition-api": {
+            "version": "1.7.0",
+            "resolved": "https://registry.npmjs.org/@vue/composition-api/-/composition-api-1.7.0.tgz",
+            "integrity": "sha512-hxOgLYR+wjuPX9bkP2pAPlqUs98XxBoa9DSLyp1z6+YR92wC42PZcZKs4d+VRtcv4udOv041Kss+F6ap5nj8YA==",
+            "peerDependencies": {
+                "vue": ">= 2.5 < 2.7"
+            }
         },
         "node_modules/abbrev": {
             "version": "1.0.9",
@@ -19186,6 +19195,12 @@
             "resolved": "https://registry.npmmirror.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz",
             "integrity": "sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==",
             "dev": true
+        },
+        "@vue/composition-api": {
+            "version": "1.7.0",
+            "resolved": "https://registry.npmjs.org/@vue/composition-api/-/composition-api-1.7.0.tgz",
+            "integrity": "sha512-hxOgLYR+wjuPX9bkP2pAPlqUs98XxBoa9DSLyp1z6+YR92wC42PZcZKs4d+VRtcv4udOv041Kss+F6ap5nj8YA==",
+            "requires": {}
         },
         "abbrev": {
             "version": "1.0.9",

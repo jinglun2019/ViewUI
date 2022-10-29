@@ -22,6 +22,7 @@
         <slot name="tip"></slot>
         <upload-list
             v-if="showUploadList"
+            :preview="preview"
             :files="fileList"
             @on-file-remove="handleRemove"
             @on-file-preview="handlePreview"
@@ -150,6 +151,10 @@ export default {
         webkitdirectory: {
             type: Boolean,
             default: false
+        },
+        preview: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -165,11 +170,9 @@ export default {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-select`]:
-                        this.type === 'select',
+                    [`${prefixCls}-select`]: this.type === 'select',
                     [`${prefixCls}-drag`]: this.type === 'drag',
-                    [`${prefixCls}-dragOver`]:
-                        this.type === 'drag' && this.dragOver
+                    [`${prefixCls}-dragOver`]: this.type === 'drag' && this.dragOver
                 }
             ];
         }
@@ -201,8 +204,7 @@ export default {
         },
         uploadFiles(files) {
             let postFiles = Array.prototype.slice.call(files);
-            if (!this.multiple)
-                postFiles = postFiles.slice(0, 1);
+            if (!this.multiple) postFiles = postFiles.slice(0, 1);
 
             if (postFiles.length === 0) return;
 
@@ -219,11 +221,7 @@ export default {
             if (before && before.then) {
                 before.then(
                     processedFile => {
-                        if (
-                            Object.prototype.toString.call(
-                                processedFile
-                            ) === '[object File]'
-                        ) {
+                        if (Object.prototype.toString.call(processedFile) === '[object File]') {
                             this.post(processedFile);
                         } else {
                             this.post(file);
@@ -242,14 +240,8 @@ export default {
         post(file) {
             // check format
             if (this.format.length) {
-                const _file_format = file.name
-                    .split('.')
-                    .pop()
-                    .toLocaleLowerCase();
-                const checked = this.format.some(
-                    item =>
-                        item.toLocaleLowerCase() === _file_format
-                );
+                const _file_format = file.name.split('.').pop().toLocaleLowerCase();
+                const checked = this.format.some(item => item.toLocaleLowerCase() === _file_format);
                 if (!checked) {
                     this.onFormatError(file, this.fileList);
                     return false;
@@ -321,11 +313,7 @@ export default {
                 _file.response = res;
 
                 this.onSuccess(res, _file, this.fileList);
-                this.dispatch(
-                    'FormItem',
-                    'on-form-change',
-                    _file
-                );
+                this.dispatch('FormItem', 'on-form-change', _file);
 
                 setTimeout(() => {
                     _file.showProgress = false;
@@ -352,6 +340,7 @@ export default {
                 this.onPreview(file);
             }
         },
+
         clearFiles() {
             this.fileList = [];
         }

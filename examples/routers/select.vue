@@ -1,60 +1,27 @@
 <template>
     <div style="margin: 100px">
-        <Select
-            v-model="model1"
-            filterable
-            style="width: 200px"
-            prefix="ios-albums"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model1" filterable style="width: 200px" prefix="ios-albums">
+            <Option v-for="item in cityList2" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
-        <Select
-            v-model="model10"
-            filterable
-            :max-tag-count="2"
-            multiple
-            style="width: 400px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model10" filterable :max-tag-count="2" multiple style="width: 400px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
-        <Select
-            v-model="model10"
-            filterable
-            :max-tag-count="2"
-            multiple
-            style="width: 400px"
-            prefix="ios-albums"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model10" filterable :max-tag-count="2" multiple style="width: 400px" prefix="ios-albums">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
         <br /><br />
 
-        <Select v-model="model1" style="width: 200px">
-            <Icon type="ios-alarm" slot="prefix" color="red" />
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select
+            :wrapperStyles="{ marginTop: '80px' }"
+            v-model="model1"
+            style="width: 200px"
+            @handle-scroll="handleScroll"
+            virtualScrollEnable
+        >
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
         <Select v-model="model1" style="width: 200px">
@@ -63,12 +30,7 @@
                 slot="prefix"
                 size="small"
             />
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
         <Select
@@ -79,254 +41,74 @@
             style="width: 400px"
             prefix="ios-albums"
         >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
         <br /><br />
 
-        <Select
-            size="small"
-            v-model="model1"
-            style="width: 200px"
-            prefix="ios-albums"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select size="small" v-model="model1" style="width: 200px" prefix="ios-albums">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
-        <Select
-            size="small"
-            v-model="model10"
-            multiple
-            style="width: 400px"
-            prefix="ios-albums"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select size="small" v-model="model10" multiple style="width: 400px" prefix="ios-albums">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
         <br /><br />
 
-        <Select
-            size="large"
-            v-model="model1"
-            style="width: 200px"
-            prefix="ios-albums"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select size="large" v-model="model1" style="width: 200px" prefix="ios-albums">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
-        <Select
-            size="large"
-            v-model="model10"
-            multiple
-            style="width: 400px"
-            prefix="ios-albums"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select size="large" v-model="model10" multiple style="width: 400px" prefix="ios-albums">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <Divider></Divider>
-        <Select
-            v-model="model13"
-            filterable
-            allow-create
-            @on-create="handleCreate"
-            style="width: 260px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model13" filterable allow-create @on-create="handleCreate" style="width: 260px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
-        <Select
-            v-model="model12"
-            multiple
-            filterable
-            allow-create
-            @on-create="handleCreate"
-            style="width: 260px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model12" multiple filterable allow-create @on-create="handleCreate" style="width: 260px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <Divider></Divider>
-        <Select
-            v-model="model31"
-            size="small"
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model31" size="small" style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <Select v-model="model31" style="width: 200px">
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
-        <Select
-            v-model="model31"
-            size="large"
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model31" size="large" style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <Divider></Divider>
-        <Select
-            v-model="model31"
-            filterable
-            size="small"
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model31" filterable size="small" style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
-        <Select
-            v-model="model31"
-            filterable
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model31" filterable style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
-        <Select
-            v-model="model31"
-            filterable
-            size="large"
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model31" filterable size="large" style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <Divider></Divider>
-        <Select
-            v-model="model34"
-            multiple
-            size="small"
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model34" multiple size="small" style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <Select v-model="model34" multiple style="width: 200px">
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
-        <Select
-            v-model="model34"
-            multiple
-            size="large"
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model34" multiple size="large" style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <Divider></Divider>
-        <Select
-            v-model="model34"
-            filterable
-            multiple
-            size="small"
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model34" filterable multiple size="small" style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
-        <Select
-            v-model="model34"
-            filterable
-            multiple
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model34" filterable multiple style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
-        <Select
-            v-model="model34"
-            filterable
-            allow-create
-            multiple
-            size="large"
-            style="width: 200px"
-        >
-            <Option
-                v-for="item in cityList"
-                :value="item.value"
-                :key="item.value"
-                >{{ item.label }}</Option
-            >
+        <Select v-model="model34" filterable allow-create multiple size="large" style="width: 200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
     </div>
 </template>
@@ -334,6 +116,32 @@
 export default {
     data() {
         return {
+            cityList2: [
+                {
+                    value: 'New York',
+                    label: 'New York纽约'
+                },
+                {
+                    value: 'London',
+                    label: 'London'
+                },
+                {
+                    value: 'Sydney',
+                    label: 'Sydney'
+                },
+                {
+                    value: 'Ottawa',
+                    label: 'Ottawa'
+                },
+                {
+                    value: 'Paris',
+                    label: 'Paris'
+                },
+                {
+                    value: 'Canberr1a',
+                    label: 'Canberr1a'
+                }
+            ],
             cityList: [
                 {
                     value: 'New York',
@@ -394,6 +202,9 @@ export default {
                 value: val,
                 label: val
             });
+        },
+        handleScroll(x) {
+            console.log(x);
         }
     }
 };

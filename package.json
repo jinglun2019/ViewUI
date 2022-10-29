@@ -1,6 +1,6 @@
 {
     "name": "@jinglun/view-design",
-    "version": "4.7.10",
+    "version": "4.7.25",
     "title": "ViewUI",
     "description": "A high quality UI components Library with Vue.js",
     "homepage": "http://www.iviewui.com",
@@ -47,6 +47,7 @@
         "url": "https://github.com/view-design/ViewUI/issues"
     },
     "dependencies": {
+        "@vue/composition-api": "^1.7.0",
         "async-validator": "^3.3.0",
         "deepmerge": "^2.2.1",
         "element-resize-detector": "^1.2.0",

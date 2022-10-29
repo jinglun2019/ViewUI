@@ -31,7 +31,7 @@
             &:hover{
                 background: @input-disabled-bg;
                 & > span{
-                    color: @primary-color;
+                    
                     i{
                         color: @text-color;
                     }
@@ -51,6 +51,18 @@
             transition: all @transition-time ease;
             &:hover{
                 color: #444;
+            }
+        }
+        .ivu-upload-preview {
+            float: right;
+            margin-right:4px;
+            &:hover {
+              color: @primary-color;
+            }
+        }
+        .ivu-upload-list-file-name {
+            cursor: default;
+            &:hover {
             }
         }
     }
@@ -76,4 +88,5 @@
     &-dragOver{
         border: 2px dashed @primary-color;
     }
+
 }

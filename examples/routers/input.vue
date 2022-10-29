@@ -1,29 +1,17 @@
 <template>
     <div>
-        <Input
-            v-model="value"
-            placeholder="Enter something..."
-            style="width: 300px"
-        ></Input>
+        <Input v-model="value" placeholder="Enter something..." style="width: 300px"></Input>
         <Input v-model="value11">
             <span slot="prepend">http://</span>
             <span slot="append">.com</span>
         </Input>
         <br />
         <Input v-model="value12">
-            <Select
-                v-model="select1"
-                slot="prepend"
-                style="width: 80px"
-            >
+            <Select v-model="select1" slot="prepend" style="width: 80px">
                 <Option value="http">http://</Option>
                 <Option value="https">https://</Option>
             </Select>
-            <Select
-                v-model="select2"
-                slot="append"
-                style="width: 70px"
-            >
+            <Select v-model="select2" slot="append" style="width: 70px">
                 <Option value="com">.com</Option>
                 <Option value="org">.org</Option>
                 <Option value="io">.io</Option>
@@ -31,11 +19,7 @@
         </Input>
         <br />
         <Input v-model="value13">
-            <Select
-                v-model="select3"
-                slot="prepend"
-                style="width: 80px"
-            >
+            <Select v-model="select3" slot="prepend" style="width: 80px">
                 <Option value="day">Day</Option>
                 <Option value="month">Month</Option>
             </Select>
@@ -43,6 +27,8 @@
         </Input>
         <br />
         <Input clearable search style="width: 130px" />
+        <Input clearable search enterButton style="width: 130px" />
+        <Input clearable show-word-limit maxlength="100" style="width: 130px" />
 
         <!--<Input v-model="value11" size="small">-->
         <!--<span slot="prepend">http://</span>-->

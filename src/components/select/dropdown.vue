@@ -9,7 +9,7 @@
             }"
             v-if="vueScrollEnable"
         >
-            <vue-scroll :ops="vueScrollOpts">
+            <vue-scroll :ops="vueScrollOpts" @handle-scroll="v => $emit('handle-scroll', v)">
                 <slot></slot>
             </vue-scroll>
         </div>

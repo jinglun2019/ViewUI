@@ -430,7 +430,8 @@ export default {
             },
             scrollOnTheLeft: false,
             scrollOnTheRight: false,
-            vueScrollOpts
+            vueScrollOpts,
+            tmpTableWidth: 0
         };
     },
     computed: {
@@ -770,6 +771,7 @@ export default {
                 this.cloneColumns.map(cell => cell._width).reduce((a, b) => a + b, 0) +
                 (this.showVerticalScrollBar ? this.scrollBarWidth : 0) +
                 1;
+            console.log(this.tableWidth);
             this.columnsWidth = columnsWidth;
             this.fixedHeader();
 
@@ -1113,6 +1115,7 @@ export default {
                 this.$emit('on-select-all-cancel', selection);
             }
             this.$emit('on-selection-change', selection);
+            this.$emit('update:selectedRowList', selection);
         },
         selectAllChildren(data, status) {
             if (data.children && data.children.length) {

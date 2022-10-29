@@ -2,7 +2,7 @@
     <div style="display: flex">
         <div style="width: 200px"></div>
         <div style="flex-grow: 1">
-            <Table :columns="columns4" :data="data11"></Table>
+            <Table :columns="columns4" :height="700" :data="data11"></Table>
         </div>
     </div>
 </template>

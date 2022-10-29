@@ -37,12 +37,7 @@
             ></i-input>
         </slot>
         <slot>
-            <i-option
-                v-for="item in filteredData"
-                :value="item"
-                :key="item"
-                >{{ item }}</i-option
-            >
+            <i-option v-for="item in filteredData" :value="item" :key="item">{{ item }}</i-option>
         </slot>
     </i-select>
 </template>
@@ -84,16 +79,10 @@ export default {
         },
         size: {
             validator(value) {
-                return oneOf(value, [
-                    'small',
-                    'large',
-                    'default'
-                ]);
+                return oneOf(value, ['small', 'large', 'default']);
             },
             default() {
-                return !this.$IVIEW || this.$IVIEW.size === ''
-                    ? 'default'
-                    : this.$IVIEW.size;
+                return !this.$IVIEW || this.$IVIEW.size === '' ? 'default' : this.$IVIEW.size;
             }
         },
         icon: {
@@ -105,24 +94,14 @@ export default {
         },
         placement: {
             validator(value) {
-                return oneOf(value, [
-                    'top',
-                    'bottom',
-                    'top-start',
-                    'bottom-start',
-                    'top-end',
-                    'bottom-end'
-                ]);
+                return oneOf(value, ['top', 'bottom', 'top-start', 'bottom-start', 'top-end', 'bottom-end']);
             },
             default: 'bottom-start'
         },
         transfer: {
             type: Boolean,
             default() {
-                return !this.$IVIEW ||
-                    this.$IVIEW.transfer === ''
-                    ? false
-                    : this.$IVIEW.transfer;
+                return !this.$IVIEW || this.$IVIEW.transfer === '' ? false : this.$IVIEW.transfer;
             }
         },
         name: {
@@ -145,6 +124,10 @@ export default {
         eventsEnabled: {
             type: Boolean,
             default: false
+        },
+        syncValue: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -156,11 +139,7 @@ export default {
     computed: {
         inputIcon() {
             let icon = '';
-            if (
-                this.clearable &&
-                this.currentValue &&
-                !this.disabled
-            ) {
+            if (this.clearable && this.currentValue && !this.disabled) {
                 icon = 'ios-close-circle';
             } else if (this.icon) {
                 icon = this.icon;
@@ -169,9 +148,7 @@ export default {
         },
         filteredData() {
             if (this.filterMethod) {
-                return this.data.filter(item =>
-                    this.filterMethod(this.currentValue, item)
-                );
+                return this.data.filter(item => this.filterMethod(this.currentValue, item));
             } else {
                 return this.data;
             }
@@ -202,7 +179,7 @@ export default {
         handleSelect(option) {
             const val = option.value;
             if (val === undefined || val === null) return;
-            this.currentValue = val;
+            if (this.syncValue) this.currentValue = val;
             this.$refs.input.blur();
             this.$emit('on-select', val);
         },

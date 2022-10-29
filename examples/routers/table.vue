@@ -18,6 +18,7 @@
             :data="data0"
             row-key="id"
             :load-data="loadData"
+            :selectedRowList.sync="selectedRowList"
         >
             <template slot-scope="{ row }" slot="age">
                 <strong>{{ row.age }}</strong>
@@ -26,12 +27,8 @@
         <br /><br />
         <Button @click="addData">添加数据</Button>
         <Button @click="addData2">添加数据2</Button>
-        <Button @click="handleSelectAll(true)"
-            >Set all selected</Button
-        >
-        <Button @click="handleSelectAll(false)"
-            >Cancel all selected</Button
-        >
+        <Button @click="handleSelectAll(true)">Set all selected</Button>
+        <Button @click="handleSelectAll(false)">Cancel all selected</Button>
         <Divider>合计&page组件集成</Divider>
         <Table
             size="small"
@@ -44,162 +41,64 @@
             :pageSize="12"
         ></Table>
         <br />
-        <Table
-            border
-            :columns="columns4"
-            :data="data11"
-            show-summary
-            :height="200"
-        ></Table>
+        <Table border :columns="columns4" :data="data11" show-summary :height="200"></Table>
         <br />
-        <Table
-            size="large"
-            border
-            :columns="columns4"
-            :data="data11"
-            show-summary
-            :height="200"
-        ></Table>
+        <Table size="large" border :columns="columns4" :data="data11" show-summary :height="200"></Table>
         <br />
-        <Table
-            border
-            :columns="columns4"
-            :data="data11"
-            show-summary
-        ></Table>
+        <Table border :columns="columns4" :data="data11" show-summary></Table>
         <br />
-        <Table
-            border
-            :columns="columns5"
-            :data="data11"
-            show-summary
-        ></Table>
+        <Table border :columns="columns5" :data="data11" show-summary></Table>
         <br />
-        <Table
-            border
-            :columns="columns8"
-            :data="data11"
-            show-summary
-        ></Table>
+        <Table border :columns="columns8" :data="data11" show-summary></Table>
         <br />
-        <Table
-            border
-            :columns="columns5"
-            :data="data11"
-            show-summary
-            :height="200"
-        ></Table>
+        <Table border :columns="columns5" :data="data11" show-summary :height="200"></Table>
         <Divider>合并单元格</Divider>
-        <Table
-            border
-            :columns="columns1"
-            :data="data1"
-            :span-method="handleSpan"
-        ></Table>
+        <Table border :columns="columns1" :data="data1" :span-method="handleSpan"></Table>
         <br />
-        <Table
-            border
-            :columns="columns1"
-            :data="data1"
-            :span-method="handleSpan2"
-        ></Table>
+        <Table border :columns="columns1" :data="data1" :span-method="handleSpan2"></Table>
         <Divider>拖拽调整列宽</Divider>
         <Table border :columns="columns1" :data="data1"></Table>
         <Divider>排序筛选</Divider>
         <div style="margin: 0 0px">
-            <Table
-                @on-column-width-resize="handleResize"
-                border
-                :columns="columns6"
-                :data="data5"
-            ></Table>
+            <Table @on-column-width-resize="handleResize" border :columns="columns6" :data="data5"></Table>
         </div>
         <Divider>普通表格</Divider>
-        <Table
-            size="small"
-            :columns="columns1"
-            :data="data1"
-        ></Table>
+        <Table size="small" :columns="columns1" :data="data1"></Table>
         <br />
         <Table :columns="columns1" :data="data1"></Table>
         <br />
-        <Table
-            size="large"
-            :columns="columns1"
-            :data="data1"
-        ></Table>
+        <Table size="large" :columns="columns1" :data="data1"></Table>
         <Divider>斑马纹</Divider>
         <Table stripe :columns="columns1" :data="data1"></Table>
         <Divider>带边框</Divider>
         <Table border :columns="columns1" :data="data1"></Table>
         <Divider>头固定（普通）</Divider>
-        <Table
-            height="200"
-            :columns="columns1"
-            :data="data2"
-        ></Table>
+        <Table height="200" :columns="columns1" :data="data2"></Table>
         <Divider>头固定（边框）</Divider>
-        <Table
-            height="200"
-            border
-            :columns="columns1"
-            :data="data2"
-        ></Table>
+        <Table height="200" border :columns="columns1" :data="data2"></Table>
         <Divider>列固定（普通）</Divider>
-        <Table
-            width="550"
-            :columns="columns2"
-            :data="data3"
-        ></Table>
+        <Table width="550" :columns="columns2" :data="data3"></Table>
         <Divider>列固定（边框）</Divider>
-        <Table
-            width="550"
-            border
-            :columns="columns2"
-            :data="data3"
-        ></Table>
+        <Table width="550" border :columns="columns2" :data="data3"></Table>
         <Divider>都固定（普通）</Divider>
-        <Table
-            width="550"
-            height="200"
-            :columns="columns2"
-            :data="data4"
-        ></Table>
+        <Table width="550" height="200" :columns="columns2" :data="data4"></Table>
         <Divider>都固定（边框）</Divider>
-        <Table
-            width="550"
-            height="200"
-            border
-            :columns="columns2"
-            :data="data4"
-        ></Table>
+        <Table width="550" height="200" border :columns="columns2" :data="data4"></Table>
         <Divider>表头分组（普通）</Divider>
-        <Table
-            :columns="columns11"
-            :data="data10"
-            height="500"
-        ></Table>
+        <Table :columns="columns11" :data="data10" height="500"></Table>
         <Divider>表头分组（边框）</Divider>
-        <Table
-            border
-            :columns="columns11"
-            :data="data10"
-            height="500"
-        ></Table>
+        <Table border :columns="columns11" :data="data10" height="500"></Table>
         <Divider>筛选</Divider>
         <Table border :columns="columns6" :data="data5"></Table>
         <Divider>Loading</Divider>
-        <Table
-            :loading="true"
-            :columns="columns6"
-            :data="data5"
-        ></Table>
+        <Table :loading="true" :columns="columns6" :data="data5"></Table>
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
+            selectedRowList: [],
             columns4: [
                 {
                     type: 'index',
@@ -1087,8 +986,7 @@ export default {
                             id: '10100',
                             name: '张三',
                             age: 235,
-                            address:
-                                '发动机莲富大厦放假了开始的',
+                            address: '发动机莲富大厦放假了开始的',
                             date: '2016-10-01',
                             level: 1
                         },
@@ -1104,8 +1002,7 @@ export default {
                             id: '10102',
                             name: '王五',
                             age: 290,
-                            address:
-                                '分离的付款就说个就是范德萨发生',
+                            address: '分离的付款就说个就是范德萨发生',
                             date: '2016-10-03',
                             _showChildren: true,
                             level: 1,
@@ -1122,8 +1019,7 @@ export default {
                                     id: '10102101',
                                     name: '丁八',
                                     age: 272,
-                                    address:
-                                        '法第三方的范德萨范德萨发送到',
+                                    address: '法第三方的范德萨范德萨发送到',
                                     date: '2016-10-06',
                                     _showChildren: true,
                                     level: 2,
@@ -1132,8 +1028,7 @@ export default {
                                             id: '10102101100',
                                             name: '第九',
                                             age: 123,
-                                            address:
-                                                '9梵蒂冈人太热疼我',
+                                            address: '9梵蒂冈人太热疼我',
                                             date: '2016-10-07',
                                             _disabled: true,
                                             level: 3
@@ -1142,8 +1037,7 @@ export default {
                                             id: '10102101101',
                                             name: '第十',
                                             age: 254,
-                                            address:
-                                                '10法第三方的范德萨范德萨发送到',
+                                            address: '10法第三方的范德萨范德萨发送到',
                                             date: '2016-10-08',
                                             level: 3
                                         }
@@ -1167,8 +1061,7 @@ export default {
                             id: '10200',
                             name: '张三3',
                             age: 235,
-                            address:
-                                '发动机莲富大厦放假了开始的',
+                            address: '发动机莲富大厦放假了开始的',
                             date: '2016-10-01',
                             level: 1
                         },
@@ -1176,8 +1069,7 @@ export default {
                             id: '10201',
                             name: '张三4',
                             age: 235,
-                            address:
-                                '发动机莲富大厦放假了开始的',
+                            address: '发动机莲富大厦放假了开始的',
                             date: '2016-10-01',
                             level: 1
                         }
