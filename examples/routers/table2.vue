@@ -1,7 +1,7 @@
 <template>
-    <div style="display: flex">
-        <div style="width: 200px"></div>
-        <div style="flex-grow: 1">
+    <div>
+        <div style="width: 200px; display: inline-block; height: 100px"></div>
+        <div style="width: calc(100vw - 600px); display: inline-block">
             <Table :columns="columns4" :height="700" :data="data11"></Table>
         </div>
     </div>

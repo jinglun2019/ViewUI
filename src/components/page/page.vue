@@ -7,19 +7,10 @@
         }"
         v-if="simple"
     >
-        <li
-            :title="t('i.page.prev')"
-            :class="prevClasses"
-            @click="prev"
-        >
-            <a
-                ><i class="ivu-icon ivu-icon-ios-arrow-back"></i
-            ></a>
+        <li :title="t('i.page.prev')" :class="prevClasses" @click="prev">
+            <a><i class="ivu-icon ivu-icon-ios-arrow-back"></i></a>
         </li>
-        <div
-            :class="simplePagerClasses"
-            :title="currentPage + '/' + allPages"
-        >
+        <div :class="simplePagerClasses" :title="currentPage + '/' + allPages">
             <input
                 type="text"
                 :value="currentPage"
@@ -33,16 +24,8 @@
             <span>/</span>
             {{ allPages }}
         </div>
-        <li
-            :title="t('i.page.next')"
-            :class="nextClasses"
-            @click="next"
-        >
-            <a
-                ><i
-                    class="ivu-icon ivu-icon-ios-arrow-forward"
-                ></i
-            ></a>
+        <li :title="t('i.page.next')" :class="nextClasses" @click="next">
+            <a><i class="ivu-icon ivu-icon-ios-arrow-forward"></i></a>
         </li>
     </ul>
     <ul
@@ -53,7 +36,7 @@
         }"
         v-else
     >
-        <span :class="[prefixCls + '-total']" v-if="showTotal">
+        <!-- <span :class="[prefixCls + '-total']" v-if="showTotal">
             <slot
                 >{{ t('i.page.total') }} {{ total }}
                 <template v-if="total <= 1">{{
@@ -63,27 +46,14 @@
                     t('i.page.items')
                 }}</template></slot
             >
-        </span>
-        <li
-            :title="t('i.page.prev')"
-            :class="prevClasses"
-            @click="prev"
-        >
+        </span> -->
+        <li :title="t('i.page.prev')" :class="prevClasses" @click="prev">
             <a
-                ><template v-if="prevText !== ''">{{
-                    prevText
-                }}</template
-                ><i
-                    v-else
-                    class="ivu-icon ivu-icon-ios-arrow-back"
-                ></i
+                ><template v-if="prevText !== ''">{{ prevText }}</template
+                ><i v-else class="ivu-icon ivu-icon-ios-arrow-back"></i
             ></a>
         </li>
-        <li
-            title="1"
-            :class="firstPageClasses"
-            @click="changePage(1)"
-        >
+        <li title="1" :class="firstPageClasses" @click="changePage(1)">
             <a>1</a>
         </li>
         <li
@@ -92,10 +62,7 @@
             :class="[prefixCls + '-item-jump-prev']"
             @click="fastPrev"
         >
-            <a
-                ><i class="ivu-icon ivu-icon-ios-arrow-back"></i
-                ><i class="ivu-icon ivu-icon-ios-more"></i
-            ></a>
+            <a><i class="ivu-icon ivu-icon-ios-arrow-back"></i><i class="ivu-icon ivu-icon-ios-more"></i></a>
         </li>
         <li
             :title="currentPage - 3"
@@ -124,10 +91,7 @@
         <li
             :title="currentPage"
             v-if="currentPage != 1 && currentPage != allPages"
-            :class="[
-                prefixCls + '-item',
-                prefixCls + '-item-active'
-            ]"
+            :class="[prefixCls + '-item', prefixCls + '-item-active']"
         >
             <a>{{ currentPage }}</a>
         </li>
@@ -161,36 +125,18 @@
             :class="[prefixCls + '-item-jump-next']"
             @click="fastNext"
         >
-            <a
-                ><i
-                    class="ivu-icon ivu-icon-ios-arrow-forward"
-                ></i
-                ><i class="ivu-icon ivu-icon-ios-more"></i
-            ></a>
+            <a><i class="ivu-icon ivu-icon-ios-arrow-forward"></i><i class="ivu-icon ivu-icon-ios-more"></i></a>
         </li>
-        <li
-            :title="allPages"
-            v-if="allPages > 1"
-            :class="lastPageClasses"
-            @click="changePage(allPages)"
-        >
+        <li :title="allPages" v-if="allPages > 1" :class="lastPageClasses" @click="changePage(allPages)">
             <a>{{ allPages }}</a>
         </li>
-        <li
-            :title="t('i.page.next')"
-            :class="nextClasses"
-            @click="next"
-        >
+        <li :title="t('i.page.next')" :class="nextClasses" @click="next">
             <a
-                ><template v-if="nextText !== ''">{{
-                    nextText
-                }}</template
-                ><i
-                    v-else
-                    class="ivu-icon ivu-icon-ios-arrow-forward"
-                ></i
+                ><template v-if="nextText !== ''">{{ nextText }}</template
+                ><i v-else class="ivu-icon ivu-icon-ios-arrow-forward"></i
             ></a>
         </li>
+        <div class="page-total">共{{ allPages }}页</div>
         <Options
             :show-sizer="showSizer"
             :page-size="currentPageSize"
@@ -249,10 +195,7 @@ export default {
         transfer: {
             type: Boolean,
             default() {
-                return !this.$IVIEW ||
-                    this.$IVIEW.transfer === ''
-                    ? false
-                    : this.$IVIEW.transfer;
+                return !this.$IVIEW || this.$IVIEW.transfer === '' ? false : this.$IVIEW.transfer;
             }
         },
         size: {
@@ -326,9 +269,7 @@ export default {
             return this.size === 'small';
         },
         allPages() {
-            const allPage = Math.ceil(
-                this.total / this.currentPageSize
-            );
+            const allPage = Math.ceil(this.total / this.currentPageSize);
             return allPage === 0 ? 1 : allPage;
         },
         simpleWrapClasses() {
@@ -348,8 +289,7 @@ export default {
                 `${prefixCls}`,
                 {
                     [`${this.className}`]: !!this.className,
-                    [`${prefixCls}-with-disabled`]:
-                        this.disabled,
+                    [`${prefixCls}-with-disabled`]: this.disabled,
                     mini: this.size === 'small'
                 }
             ];
@@ -358,10 +298,8 @@ export default {
             return [
                 `${prefixCls}-prev`,
                 {
-                    [`${prefixCls}-disabled`]:
-                        this.currentPage === 1 || this.disabled,
-                    [`${prefixCls}-custom-text`]:
-                        this.prevText !== ''
+                    [`${prefixCls}-disabled`]: this.currentPage === 1 || this.disabled,
+                    [`${prefixCls}-custom-text`]: this.prevText !== ''
                 }
             ];
         },
@@ -369,11 +307,8 @@ export default {
             return [
                 `${prefixCls}-next`,
                 {
-                    [`${prefixCls}-disabled`]:
-                        this.currentPage === this.allPages ||
-                        this.disabled,
-                    [`${prefixCls}-custom-text`]:
-                        this.nextText !== ''
+                    [`${prefixCls}-disabled`]: this.currentPage === this.allPages || this.disabled,
+                    [`${prefixCls}-custom-text`]: this.nextText !== ''
                 }
             ];
         },
@@ -381,8 +316,7 @@ export default {
             return [
                 `${prefixCls}-item`,
                 {
-                    [`${prefixCls}-item-active`]:
-                        this.currentPage === 1
+                    [`${prefixCls}-item-active`]: this.currentPage === 1
                 }
             ];
         },
@@ -390,8 +324,7 @@ export default {
             return [
                 `${prefixCls}-item`,
                 {
-                    [`${prefixCls}-item-active`]:
-                        this.currentPage === this.allPages
+                    [`${prefixCls}-item-active`]: this.currentPage === this.allPages
                 }
             ];
         }
@@ -455,11 +388,7 @@ export default {
         keyDown(e) {
             const key = e.keyCode;
             const condition =
-                (key >= 48 && key <= 57) ||
-                (key >= 96 && key <= 105) ||
-                key === 8 ||
-                key === 37 ||
-                key === 39;
+                (key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key === 8 || key === 37 || key === 39;
 
             if (!condition) {
                 e.preventDefault();
@@ -491,3 +420,9 @@ export default {
     }
 };
 </script>
+<style scoped lang="less">
+.page-total {
+    display: inline-block;
+    margin-left: 8px;
+}
+</style>

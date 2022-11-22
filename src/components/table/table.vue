@@ -677,7 +677,6 @@ export default {
         handleResize() {
             // let tableWidth = parseInt(getStyle(this.$el, 'width')) - 1;
             let tableWidth = this.$el.offsetWidth - 1;
-
             let columnsWidth = {};
             let sumMinWidth = 0;
             let hasWidthColumns = [];
@@ -771,7 +770,6 @@ export default {
                 this.cloneColumns.map(cell => cell._width).reduce((a, b) => a + b, 0) +
                 (this.showVerticalScrollBar ? this.scrollBarWidth : 0) +
                 1;
-            console.log(this.tableWidth);
             this.columnsWidth = columnsWidth;
             this.fixedHeader();
 

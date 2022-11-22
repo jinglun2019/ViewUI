@@ -16,7 +16,7 @@
             </i-select>
         </div>
         <div v-if="showElevator" :class="ElevatorClasses">
-            {{ t('i.page.goto') }}
+            {{ '到' }}
             <input
                 ref="input"
                 type="number"
